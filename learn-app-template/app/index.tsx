@@ -1,18 +1,19 @@
-import { Link } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import ListItem from "@/components/core/ListItem";
+import { FlatList, StyleSheet, View } from "react-native";
 
 export default function Index() {
+  const days = [1,2,3, 4, 5];
+
   return (
-    <View style={styles.container}
-    >
-      <Text>About</Text>
-      <Link href="/lessons" style={styles.button}>
-        Go to About screen
-      </Link>
+    <View style={styles.container}>
+      <FlatList 
+        data={days}
+        contentContainerStyle={styles.content} 
+        renderItem={({item}) => <ListItem item={item} />}      
+      />
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -21,11 +22,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  text: {
-    color: '#fff',
-  },
-  button: {
-    fontSize: 20,
-    textDecorationLine: 'underline',
-  },
+  content: {
+    gap: 10
+  }
 });
