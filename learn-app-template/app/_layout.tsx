@@ -1,11 +1,12 @@
 import GrammanaHeader from "@/components/GrammanaHeader";
+import * as NavigationBar from 'expo-navigation-bar';
 import { Stack } from "expo-router";
-import { StyleSheet } from 'react-native';
-
+import React from "react";
 
 export default function RootLayout() {
-
-
+  React.useEffect(()=>{
+    NavigationBar.setBackgroundColorAsync("transparent");
+  });
   
   return (
     <Stack
@@ -21,19 +22,7 @@ export default function RootLayout() {
         headerShadowVisible: false
       }}
     > 
-      <Stack.Screen name="index" options={{ headerTitle: (props) => <GrammanaHeader/> }}/>
+      <Stack.Screen name="index" options={{ headerTitle: () => <GrammanaHeader/> }}/>
     </Stack>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  image: {
-    width: 50,
-    height: 50,
-  },
-});

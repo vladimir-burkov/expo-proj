@@ -1,28 +1,35 @@
 import ListItem from "@/components/core/ListItem";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, SafeAreaView, StyleSheet } from "react-native";
 
 export default function Index() {
-  const days = [1,2,3, 4, 5];
+  const days = [1,2,3,4,5,6,7,8];
 
   return (
-    <View style={styles.container}>
-      <FlatList 
+    <SafeAreaView style={styles.container}>
+      <FlatList
         data={days}
         contentContainerStyle={styles.content} 
-        renderItem={({item}) => <ListItem item={item} />}      
+        renderItem={({ item }) => (
+          <ListItem item={item}/>
+        )}     
       />
-    </View>
+    </SafeAreaView>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fffaf7',
-    alignItems: 'center',
+    flexGrow: 1,
+    // backgroundColor: '#fffaf7',
+    alignItems: 'stretch',
     justifyContent: 'center',
   },
   content: {
-    gap: 10
+    flexGrow: 1,
+    gap: 15,
+    padding: 15
+  },
+  item: {
+    flexGrow: 1,
   }
 });
