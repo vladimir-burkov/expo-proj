@@ -1,13 +1,9 @@
-import { Ionicons } from "@expo/vector-icons";
-import { Link, router } from "expo-router";
-import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Lesson } from "@/context/LessonsContext";
+import { FontAwesome } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-type ListItemProps = {
-  id: string;
-  title: string;
-};
-
-export default function ListItem ({id}: ListItemProps) { 
+export default function ListItem ({id, title, icon}: Lesson) { 
 
   
   return (
@@ -20,12 +16,12 @@ export default function ListItem ({id}: ListItemProps) {
       });
     }}>
       <View style={styles.iconBox}>
-        <Ionicons name="book" size={24} color="#fff" />
+        <FontAwesome name={icon || 'info'} size={24} color="#686868" />
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.title}>Title</Text>
+        <Text style={styles.title}>{title}</Text>
       </View>
-      <Ionicons name="chevron-forward" size={24} color="#333" />
+      <FontAwesome name="angle-right" size={24} color="#333" />
     </TouchableOpacity>
   )
 }
@@ -43,7 +39,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 10,
-    backgroundColor: '#999',
+    backgroundColor: '#eeeeee',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,

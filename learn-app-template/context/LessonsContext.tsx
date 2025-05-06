@@ -1,10 +1,11 @@
 // context/LessonContext.tsx
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
 export type Lesson = {
   id: string;
   title: string;
-  icon?: string;
+  icon?: keyof typeof FontAwesome.glyphMap;
 };
 
 export type Lessons = {
