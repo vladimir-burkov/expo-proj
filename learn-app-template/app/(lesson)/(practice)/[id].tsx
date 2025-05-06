@@ -1,8 +1,8 @@
 import { loadEncryptedMarkdown } from '@/lib/decrypt';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
-import { Markdown } from 'react-native-markdown-display';
+import { ActivityIndicator, ScrollView, StyleSheet, View, Text } from 'react-native';
+import Markdown from 'react-native-markdown-display';
 
 const markdownStyle = { 
 
@@ -36,10 +36,20 @@ const Practice = () => {
   }, []);
   
   return (
-    <ScrollView style={styles.container}>
-      {loading &&<ActivityIndicator style={{justifyContent: "center"}} size="large" color="#684bbc" />}
-      {!loading && <Markdown style={markdownStyle}>{markdownContent}</Markdown>}
-    </ScrollView>
+    <>
+      {!loading && 
+        <ScrollView style={styles.container}>
+          <Markdown style={markdownStyle}>{markdownContent}</Markdown>
+        </ScrollView>
+      }
+      {loading && 
+        <View style={styles.loader}>
+            <ActivityIndicator  size="large" color="#684bbc" />
+            <Text>Загрузка...</Text>
+        </View>
+      }
+    </>
+
   )
 }
 
@@ -50,6 +60,11 @@ const styles = StyleSheet.create({
   container: {
     padding: 16,
   },
+  loader: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  }
 });
 
 
