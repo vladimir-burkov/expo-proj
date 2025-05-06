@@ -1,39 +1,62 @@
-import { Link } from "expo-router";
-import { Pressable, StyleSheet, Text } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { Link, router } from "expo-router";
+import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-type DayListItem = {
-  item: number;
+type ListItemProps = {
+  id: string;
+  title: string;
 };
 
-export default function ListItem ({item}: {item: number}) { 
+export default function ListItem ({id}: ListItemProps) { 
   
   return (
-      <Link 
-        asChild
-        style={styles.link}  
-        href={{pathname: '/(lesson)/[id]', params: { id: item }}}
-      >
-        <Pressable style={styles.box}>
-          <Text style={styles.text}>{item}</Text>
-        </Pressable>
-      </Link>
+    <TouchableOpacity style={styles.itemContainer} onPress={() => {
+      router.push({
+        pathname: '/(lesson)/[id]',
+        params: {
+          id,
+        },
+      });
+    }}>
+      <View style={styles.iconBox}>
+        <Text style={styles.iconText}>icon</Text>
+      </View>
+      <View style={styles.textContainer}>
+        <Text style={styles.title}>Title</Text>
+      </View>
+      <Ionicons name="chevron-forward" size={24} color="#333" />
+    </TouchableOpacity>
   )
 }
 
 
 const styles = StyleSheet.create({
-  box: {
-    backgroundColor: 'gray',
-    height: 90,
-    borderRadius: 15,
+  itemContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
+    padding: 12,
+    backgroundColor: '#fff',
+
+  },
+  iconBox: {
+    width: 60,
+    height: 60,
+    borderRadius: 10,
+    backgroundColor: '#999',
     justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
   },
-  text: {
-    color: 'yellow',
-    fontSize: 50
+  iconText: {
+    color: '#fff',
+    fontSize: 14,
   },
-  link: {
-    color: 'green',
+  textContainer: {
+    flex: 1,
+  },
+  title: {
+    fontWeight: '600',
+    fontSize: 16,
+    color: '#333',
   }
 });

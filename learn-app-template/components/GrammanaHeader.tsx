@@ -12,9 +12,8 @@ const GrammanaHeader = () => {
         resizeMode="contain"
       />
       <View style={styles.textContainer}>
-        {/* <Text style={styles.title}>Grammie | Ελληνικά</Text> */}
         <Text style={styles.title}>
-          Grammie <Text  style={styles.split}>|</Text> <Text style={styles.subtitle}>Ελληνικά</Text>
+        Grammny <Text  style={styles.split}>|</Text> <Text style={styles.subtitle}>Ελληνικά</Text>
         </Text>
       </View>
     </View>
@@ -26,18 +25,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
-    backgroundColor: 'transparent', // change if you need background
+    backgroundColor: 'transparent',
   },
   image: {
     width: 30,
     height: 30,
-    // position: 'relative',
-    // bottom: 4,
   },
   textContainer: {
     justifyContent: 'center',
-    // position: 'relative',
-    // bottom: -4,
   },
   title: {
     fontSize: 18,
