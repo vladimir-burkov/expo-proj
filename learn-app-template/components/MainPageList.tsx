@@ -18,7 +18,7 @@ export default function MainPageList() {
 
 const styles = StyleSheet.create({
   separator: {
-    height: 0.5,
-    backgroundColor: '#eee',
+    borderTopColor: '#eee',
+    borderTopWidth: 1
   },
 });

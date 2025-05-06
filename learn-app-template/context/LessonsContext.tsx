@@ -18,12 +18,13 @@ type LessonContextType = {
 };
 
 const initialLessons: Lesson[] = [
-  { id: '1', title: 'Area on\nthe map', icon: 'book' },
-  { id: '2', title: 'Area on\nthe map', icon: 'comments-o' },
-  { id: '3', title: 'Area on\nthe map' },
-  { id: '4', title: 'Area on\nthe map' },
-  { id: '5', title: 'Area on\nthe map' },
-  { id: '6', title: 'Area on\nthe map' },
+  { id: '1', title: 'Алфавит. Правила чтения', icon: 'book' },
+  { id: '2', title: 'Базовый диалог. Приветствие', icon: 'comments-o' },
+  { id: '3', title: 'Глагол είμαι. Определенный артикль', icon: 'book' },
+  { id: '4', title: 'Описание объектов', icon: 'comments-o' },
+  { id: '4', title: 'Числа и числительные', icon: 'comments-o' },
+  { id: '5', title: 'Рассказ о себе', icon: 'comments-o' },
+  { id: '6', title: 'Виды глаголов', icon: 'book' },
   { id: '7', title: 'Area on\nthe map' },
   { id: '8', title: 'Area on\nthe map' },
   { id: '39', title: 'Area on\nthe map' },
