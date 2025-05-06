@@ -4,7 +4,7 @@ import ListItem from '@/components/core/ListItem';
 import { useLessons } from '@/context/LessonsContext';
 
 export default function MainPageList() {
-  const lessons = useLessons();
+  const {lessons} = useLessons();
 
   return (
     <FlatList

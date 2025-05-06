@@ -8,6 +8,7 @@ type ListItemProps = {
 };
 
 export default function ListItem ({id}: ListItemProps) { 
+
   
   return (
     <TouchableOpacity style={styles.itemContainer} onPress={() => {
@@ -19,7 +20,7 @@ export default function ListItem ({id}: ListItemProps) {
       });
     }}>
       <View style={styles.iconBox}>
-        <Text style={styles.iconText}>icon</Text>
+        <Ionicons name="book" size={24} color="#fff" />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.title}>Title</Text>
@@ -39,8 +40,8 @@ const styles = StyleSheet.create({
 
   },
   iconBox: {
-    width: 60,
-    height: 60,
+    width: 40,
+    height: 40,
     borderRadius: 10,
     backgroundColor: '#999',
     justifyContent: 'center',
