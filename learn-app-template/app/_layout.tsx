@@ -17,9 +17,11 @@ export default function RootLayout() {
         headerTintColor: '#fff',
         headerTitleAlign: "center",
         headerTitleStyle: {
-          fontWeight: 'bold',
+          // fontWeight: 'bold',
+          fontSize: 14,
+          paddingLeft: 15
         },
-        headerShadowVisible: false
+        headerShadowVisible: false,
       }}
     > 
       <Stack.Screen name="index" options={{ headerTitle: () => <GrammanaHeader/> }}/>

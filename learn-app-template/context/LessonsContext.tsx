@@ -6,6 +6,7 @@ export type Lesson = {
   id: string;
   title: string;
   icon?: keyof typeof FontAwesome.glyphMap;
+  article_url: string;
 };
 
 export type Lessons = {
@@ -18,22 +19,26 @@ type LessonContextType = {
 };
 
 const initialLessons: Lesson[] = [
-  { id: '1', title: 'Алфавит. Правила чтения', icon: 'book' },
-  { id: '2', title: 'Базовый диалог. Приветствие', icon: 'comments-o' },
-  { id: '3', title: 'Глагол είμαι. Определенный артикль', icon: 'book' },
-  { id: '4', title: 'Описание объектов', icon: 'comments-o' },
-  { id: '4', title: 'Числа и числительные', icon: 'comments-o' },
-  { id: '5', title: 'Рассказ о себе', icon: 'comments-o' },
-  { id: '6', title: 'Виды глаголов', icon: 'book' },
-  { id: '7', title: 'Area on\nthe map' },
-  { id: '8', title: 'Area on\nthe map' },
-  { id: '39', title: 'Area on\nthe map' },
-  { id: '11', title: 'Area on\nthe map' },
-  { id: '12', title: 'Area on\nthe map' },
-  { id: '13', title: 'Area on\nthe map' },
-  { id: '14', title: 'Area on\nthe map' },
-  { id: '15', title: 'Area on\nthe map' },
-  { id: '16', title: 'Area on\nthe map' },
+  { id: '1', 
+    title: 'Алфавит. Правила чтения', 
+    icon: 'book',
+    article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' 
+  },
+  { id: '2', title: 'Базовый диалог. Приветствие', icon: 'comments-o', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
+  { id: '3', title: 'Глагол είμαι. Определенный артикль', icon: 'book', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
+  { id: '4', title: 'Описание объектов', icon: 'comments-o', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
+  { id: '5', title: 'Числа и числительные', icon: 'comments-o', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
+  { id: '6', title: 'Рассказ о себе', icon: 'comments-o', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
+  { id: '7', title: 'Виды глаголов', icon: 'book', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
+  { id: '8', title: 'Числа и числительные, Числа и числительные', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
+  { id: '9', title: 'Area on\nthe map', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
+  { id: '10', title: 'Area on\nthe map', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
+  { id: '11', title: 'Area on\nthe map', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
+  { id: '12', title: 'Area on\nthe map', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
+  { id: '13', title: 'Area on\nthe map', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
+  { id: '14', title: 'Area on\nthe map', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
+  { id: '15', title: 'Area on\nthe map', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
+  { id: '16', title: 'Area on\nthe map', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
 ];
 
 const mapLessonsById = (lessons: Lesson[]): Lessons =>
