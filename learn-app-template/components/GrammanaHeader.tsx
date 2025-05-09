@@ -13,7 +13,7 @@ const GrammanaHeader = () => {
       />
       <View style={styles.textContainer}>
         <Text style={styles.title}>
-        Grammny <Text  style={styles.split}>|</Text> <Text style={styles.subtitle}>Ελληνικά</Text>
+        Grammny <Text  style={styles.split}>|</Text> <Text style={styles.subtitle}>Ελληνικά-A1</Text>
         </Text>
       </View>
     </View>
