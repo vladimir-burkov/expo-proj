@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 const logo = require('@/assets/images/book1.svg');
 
-const GrammanaHeader = () => {
+const AppHeader = () => {
   return (
     <View style={styles.headerTitleContainer}>
       <View style={styles.textContainer}>
@@ -59,4 +59,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default GrammanaHeader;
+export default AppHeader;

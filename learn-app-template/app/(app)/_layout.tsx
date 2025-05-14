@@ -1,13 +1,11 @@
-import GrammanaHeader from "@/components/GrammanaHeader";
+import AppHeader from "@/components/AppHeader";
 import AppModal from '@/components/AppModal';
+import LinkButton from "@/components/core/LinkButton";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Stack } from "expo-router";
 import { useState } from "react";
-import { Pressable, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
-
-// export const unstable_settings = {
-//   initialRouteName: "index",
-// };
+import { Pressable, StyleSheet, View, Text } from "react-native";
 
 type Props = {
   onPress: () => void;
@@ -28,7 +26,7 @@ export default function AppLayout() {
                   fontSize: 14,
                   paddingLeft: 15
                 },
-                headerTitle: GrammanaHeader,
+                headerTitle: AppHeader,
                 headerLeft: HeaderButton
               }}
           />
@@ -50,10 +48,62 @@ function HeaderButton() {
     <View style={styles.headerButton}>
       <MenuButton onPress={onModalOpen}/>
       <AppModal isVisible={isModalVisible} onClose={onModalClose}>
-        A list of emoji component will go here
+        <MenuLinks/>
       </AppModal>
     </View>
   );
+}
+
+function MenuLinks() {
+
+  return <>
+      <LinkButton href={{
+        pathname: "/(app)/note/[note]",
+        params: {
+          note: 1,
+        },
+      }}>
+        <View style={styles.buttonContent}>
+          <MaterialIcons name="login" size={24} color="black" />
+          <Text>Войти</Text>
+        </View>
+      </LinkButton>
+      <LinkButton href={{
+        pathname: "/(app)/note/[note]",
+        params: {
+          note: 1,
+        },
+      }}>
+        <View style={styles.buttonContent}>
+          <MaterialIcons name="app-registration" size={24} color="black" />
+          <Text>Регистрация</Text>
+        </View>
+      </LinkButton>
+      <LinkButton href={{
+          pathname: "/(app)/note/[note]",
+          params: {
+            note: 1,
+          },
+        }} 
+        type="primary" 
+      >
+        <View style={styles.buttonContent}>
+          <MaterialIcons name="attach-money" size={24} color="white" />
+          <Text>Купить подписку</Text>
+        </View>
+      </LinkButton>
+      <LinkButton href={{
+          pathname: "/(app)/note/[note]",
+          params: {
+            note: 1,
+          },
+        }}>
+          <View style={styles.buttonContent}>
+            <MaterialIcons name="wallet-giftcard" size={24} color="black" />
+            <Text>Промо код</Text>
+          </View>
+      </LinkButton> 
+  </>
 }
 
 function MenuButton({ onPress }: Props) {
@@ -71,33 +121,11 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     alignItems: 'center',
     color: 'white'
+  },
+  buttonContent: {
+    flex: 1,
+    gap: 8,
+    flexDirection: "row",
+    alignItems: "center"
   }
 });
-
-      // <Link
-      //     href="/sign-out"
-      //     onPress={(ev) => {
-      //       ev.preventDefault();
-      //     }}
-      //     asChild
-      // >
-      //   <Pressable
-      //       style={{
-      //         flexDirection: "row",
-      //         display: "flex",
-      //         alignItems: "center",
-      //         paddingRight: 8,
-      //       }}
-      //   >
-      //     <Text
-      //         style={{
-      //           fontWeight: "normal",
-      //           paddingHorizontal: 8,
-      //           fontSize: 16,
-      //         }}
-      //     >
-      //       Sign Out 
-      //     </Text>
-      //     <FontAwesome name="sign-out" size={24} color="black" />
-      //   </Pressable>
-      // </Link>

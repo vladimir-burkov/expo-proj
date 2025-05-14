@@ -1,6 +1,6 @@
 import { Stack, Tabs } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
-import GrammanaHeader from '@/components/GrammanaHeader';
+import AppHeader from '@/components/AppHeader';
 
 export default function LessonLayout() {
 
@@ -20,7 +20,7 @@ export default function LessonLayout() {
       headerShadowVisible: false,
     }}
   > 
-    <Stack.Screen name="(lesson)" options={{ headerTitle: () => <GrammanaHeader/> }}/>
+    <Stack.Screen name="(lesson)" options={{ headerTitle: () => <AppHeader/> }}/>
   </Stack>
   //   <Stack
   //   screenOptions={{

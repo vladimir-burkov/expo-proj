@@ -23,8 +23,10 @@ export default function AppModal({ isVisible, title = 'Menu', children, onClose 
           <TouchableWithoutFeedback onPress={onClose}>
             <View style={styles.modalOverlay} />
           </TouchableWithoutFeedback>
-        }  
-        {children}
+        }
+        <View style={styles.headerModalMenuContainer}>
+          {children}
+        </View>  
       </View>
     </Modal>
     </View>
@@ -33,11 +35,9 @@ export default function AppModal({ isVisible, title = 'Menu', children, onClose 
 
 const styles = StyleSheet.create({
   modalContent: {
-    height: '50%',
+    height: '45%',
     width: '100%',
     backgroundColor: '#25292e',
-    borderTopRightRadius: 18,
-    borderTopLeftRadius: 18,
     position: 'absolute',
     bottom: 0,
   },
@@ -45,8 +45,6 @@ const styles = StyleSheet.create({
     height: '14%',
     backgroundColor: '#464C55',
     gap: 16,
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
     paddingHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',
@@ -59,10 +57,14 @@ const styles = StyleSheet.create({
   modalOverlay: {
     position: 'fixed',
     top: 0,
-    bottom: 0,
+    height: '55%',
     left: 0,
     right: 0,
     zIndex: -9999,
     backgroundColor: 'rgba(0,0,0,0.5)'
   },
+  headerModalMenuContainer: {
+    flex: 1,
+    padding: 16,
+  }
 });
