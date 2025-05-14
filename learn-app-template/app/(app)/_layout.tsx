@@ -1,9 +1,9 @@
 import GrammanaHeader from "@/components/GrammanaHeader";
-import UserModal from '@/components/UserModal';
+import AppModal from '@/components/AppModal';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { Stack } from "expo-router";
 import { useState } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 
 // export const unstable_settings = {
 //   initialRouteName: "index",
@@ -49,9 +49,9 @@ function HeaderButton() {
   return (
     <View style={styles.headerButton}>
       <MenuButton onPress={onModalOpen}/>
-      <UserModal isVisible={isModalVisible} onClose={onModalClose}>
+      <AppModal isVisible={isModalVisible} onClose={onModalClose}>
         A list of emoji component will go here
-      </UserModal>  
+      </AppModal>
     </View>
   );
 }
