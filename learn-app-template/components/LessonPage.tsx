@@ -17,13 +17,13 @@ const LessonPage = () => {
   const [markdownContent, setMarkdownContent] = useState('');
   const [loading, setLoading] = useState(true);
   
-  useEffect(() => {
-    const lesson = lessonsById[id as string];
+  // useEffect(() => {
+  //   const lesson = lessonsById[id as string];
     
-    if (id) {
-      navigation.setOptions({ title: `${lesson.title}` });
-    }
-  }, [id]);
+  //   if (id) {
+  //     navigation.setOptions({ title: `${lesson.title}` });
+  //   }
+  // }, [id]);
 
 
 

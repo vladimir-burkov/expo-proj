@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import ListItem from '@/components/core/ListItem';
 import { useLessons } from '@/context/LessonsContext';
+import GrammanaHeader from './GrammanaHeader';
+import { useNavigation } from 'expo-router';
 
 export default function MainPageList() {
   const {lessons} = useLessons();
+  const navigation = useNavigation();
 
   return (
     <FlatList

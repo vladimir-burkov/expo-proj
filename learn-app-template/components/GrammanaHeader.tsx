@@ -5,34 +5,39 @@ const logo = require('@/assets/images/book1.svg');
 
 const GrammanaHeader = () => {
   return (
-    <View style={styles.container}>
-      <Image
-        source={logo}
-        style={styles.image}
-        resizeMode="contain"
-      />
+    <View style={styles.headerTitleContainer}>
       <View style={styles.textContainer}>
-        <Text style={styles.title}>
-        Grammny <Text  style={styles.split}>|</Text> <Text style={styles.subtitle}>Ελληνικά</Text>
-        </Text>
+        <Image
+          source={logo}
+          style={styles.image}
+          resizeMode="contain"
+        />
+        <Text style={styles.title}>Gramm<Text style={styles.up}>UP</Text></Text>
+      </View>
+      <View>
+        <Text style={styles.subtitle}>Ελληνικά-A1</Text>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
+  headerTitleContainer: {
+    flexDirection: 'column',
     alignItems: 'center',
-    gap: 6,
     backgroundColor: 'transparent',
   },
   image: {
     width: 30,
     height: 30,
+    position: 'relative',
+    top: 4,
   },
   textContainer: {
+    flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
+    gap: 6
   },
   title: {
     fontSize: 18,
@@ -40,13 +45,17 @@ const styles = StyleSheet.create({
     fontFamily: 'serif',
     color: 'white',
   },
+  up: {
+    color: 'chartreuse'
+  },
   subtitle: {
     fontSize: 12,
-    color: 'chartreuse',
+    color: 'magenta',
+    position: 'relative',
+    bottom: 6,
+    fontWeight: 500,    
+    left: 16
   },
-  split: {
-    color: "magenta"
-  },  
 
 });
 
