@@ -14,14 +14,14 @@ type LinkButtonProps = PropsWithChildren<{
 const buttonSizes = {
   large: {
     paddingHorizontal: 20,
-    paddingVertical: 12, 
+    paddingVertical: 20, 
     fontSize: 18,
     chevronSize: 16,
     maxHeight: 64
   },
   medium: {
     paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingVertical: 12,
     fontSize: 16,
     chevronSize: 14,
     maxHeight: 56
@@ -112,7 +112,6 @@ const LinkButton = (props: LinkButtonProps) => {
                     fontSize: buttonSizes[size].fontSize, 
                     color: buttonColors[type].color, 
                     fontWeight: "bold",
-                    minWidth: 150,
                     textAlign: "center"
                   }}>
                   {children} 

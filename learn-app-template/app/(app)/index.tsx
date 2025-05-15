@@ -1,13 +1,19 @@
+import LinkButton from "@/components/core/LinkButton";
+import { useLessons } from "@/context/LessonsContext";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Link } from "expo-router";
 import React from "react";
 import {
-  Pressable,
   ScrollView, 
   Text, 
   View,
   StyleSheet
 } from "react-native";
+
+type LessonItemProps = {
+  id: string,
+  title: string,
+  iconName?: keyof typeof FontAwesome.glyphMap
+};
 
 export default function App() {
   return (
@@ -15,147 +21,52 @@ export default function App() {
         <View style={styles.headerNotificationBar}>
           <Text>Войдите или зарегистрируйтесь, чтобы управлять своей подпиской!</Text>
         </View>
-        <NotesList />
+        <LessonsList />
       </>
   );
 }
 
 
-function NotesList() {
+function LessonsList() {
+  const {lessons} = useLessons();
 
   return (
       <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           contentContainerStyle={[styles.scrollView]}
       >
-        <Item1/>
-        <Item2/>
-
+        {lessons.map((item) => 
+          <LessonItem 
+            key={item.id}
+            id={item.id} 
+            title={item.title} 
+            iconName={item.icon as keyof typeof FontAwesome.glyphMap}
+          />
+        )}
       </ScrollView>
   );
 }
 
-function Item1() {
-  return <Link
-  style={{
-    minWidth: 300,
-    padding: 4,
-    flex: 1,
-    flexBasis: 300,
-  }}
+function LessonItem(props: LessonItemProps) {
+  const {id, title, iconName="info"} = props;
 
-  href={{
-    pathname: "/(app)/lesson/[lesson]",
-    params: {
-      lesson: 1,
-    },
-  }}
-  asChild
->
-<Pressable>
-  {({ hovered, pressed }) => (
-      <View
-          style={{
-            backgroundColor: "white",
-            borderRadius: 12,
-            overflow: "hidden",
-            flex: 1,
-          }}
-      >
-        <View
-            style={[
-              {
-                flex: 1,
-                paddingHorizontal: 20,
-                paddingVertical: 12,
-                transitionDuration: "200ms",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              },
-              hovered && { backgroundColor: "rgba(0,0,0,0.1)" },
-              pressed && { backgroundColor: "rgba(0,0,0,0.2)" },
-            ]}
-        >
-          <View>
-            <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-              item text 1 
-            </Text>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <FontAwesome
-                name="chevron-right"
-                size={16}
-                color="#919497"
-            />
-          </View>
-        </View>
+  return <>
+    <LinkButton
+      href={{
+        pathname: "/(app)/lesson/[lesson]",
+        params: {
+          lesson: id,
+        },
+      }}
+      arrowVisible={true}
+      size={"large"}
+    >
+      <View style={styles.lessonButtonContent}>
+        <FontAwesome style={styles.lessonButtonIcon} name={iconName} size={20} color="black" />
+        <Text style={styles.lessonButtonText}>{title}</Text>
       </View>
-  )}
-</Pressable>
-</Link>
-}
-
-
-function Item2() {
-  return <Link
-  style={{
-    minWidth: 300,
-    padding: 4,
-    flex: 1,
-    flexBasis: 300,
-  }}
-
-  href={{
-    pathname: "/(app)/note/[note]",
-    params: {
-      note: 2,
-    },
-  }}
-  asChild
->
-<Pressable>
-  {({ hovered, pressed }) => (
-      <View
-          style={{
-            backgroundColor: "white",
-            borderRadius: 12,
-            overflow: "hidden",
-            flex: 1,
-          }}
-      >
-        <View
-            style={[
-              {
-                flex: 1,
-                paddingHorizontal: 20,
-                paddingVertical: 12,
-                transitionDuration: "200ms",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              },
-              hovered && { backgroundColor: "rgba(0,0,0,0.1)" },
-              pressed && { backgroundColor: "rgba(0,0,0,0.2)" },
-            ]}
-        >
-          <View>
-            <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-              item text 2 
-            </Text>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <FontAwesome
-                name="chevron-right"
-                size={16}
-                color="#919497"
-            />
-          </View>
-        </View>
-      </View>
-  )}
-</Pressable>
-</Link>
+    </LinkButton>
+  </>
 }
 
 
@@ -174,5 +85,22 @@ const styles = StyleSheet.create({
     padding: 4,
     paddingHorizontal: 8,
     paddingBottom: 6
+  },
+  lessonButtonText: {
+    textAlign: "left",
+    fontWeight: 400,
+    fontSize: 16,
+  },
+  lessonButtonIcon: {
+    minWidth: 20
+  },
+  lessonButtonContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 16,
+    flex: 1,
+    flexBasis: 300,
+    minHeight: 60,
+    maxWidth: 300
   }
 });
