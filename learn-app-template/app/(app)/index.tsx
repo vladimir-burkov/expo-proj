@@ -45,9 +45,9 @@ function Item1() {
   }}
 
   href={{
-    pathname: "/(app)/note/[note]",
+    pathname: "/(app)/lesson/[lesson]",
     params: {
-      note: 1,
+      lesson: 1,
     },
   }}
   asChild

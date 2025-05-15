@@ -71,7 +71,7 @@ function MenuLinks() {
       >
         <View style={styles.buttonContent}>
           <MaterialIcons name="attach-money" size={20} color="white" />
-          <Text>Купить подписку</Text>
+          <Text>Купить PREMIUM план</Text>
         </View>
       </LinkButton>
       <LinkButton 
@@ -89,7 +89,7 @@ function MenuLinks() {
       >
           <View style={styles.buttonContent}>
           <MaterialIcons name="mail-outline" size={20} color="black" />            
-          <Text>Контакты</Text>
+          <Text>Поддержка</Text>
           </View>
       </LinkButton>  
   </>

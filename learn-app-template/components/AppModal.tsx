@@ -21,7 +21,7 @@ export default function AppModal({ isVisible, title = 'Menu', children, onClose 
 
   return (
     <View>
-    <Modal animationType="fade" transparent={true} visible={isVisible}>
+    <Modal animationType="slide" transparent={true} visible={isVisible}>
       <View style={styles.modalContent}>
         <View style={styles.titleContainer}>
           {title && <Text style={styles.title}>{title}</Text>}
@@ -67,11 +67,10 @@ const styles = StyleSheet.create({
   modalOverlay: {
     position: 'fixed',
     top: 0,
-    height: '60%',
+    height: '100%',
     left: 0,
     right: 0,
     zIndex: -9999,
-    backgroundColor: 'rgba(0,0,0,0.5)'
   },
   headerModalMenuContainer: {
     flex: 1,
