@@ -13,7 +13,7 @@ export default function App() {
   return (
       <>
         <View style={styles.headerNotificationBar}>
-          <Text>Войдите или зарегистрируйтесь, чтобы без управлять своей подпиской!</Text>
+          <Text>Войдите или зарегистрируйтесь, чтобы управлять своей подпиской!</Text>
         </View>
         <NotesList />
       </>
@@ -171,6 +171,8 @@ const styles = StyleSheet.create({
   headerNotificationBar: {
     backgroundColor:'#f9f2d7',
     fontSize: 14,
-    padding: 4
+    padding: 4,
+    paddingHorizontal: 8,
+    paddingBottom: 6
   }
 });
