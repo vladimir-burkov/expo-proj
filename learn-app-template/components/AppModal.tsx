@@ -12,18 +12,30 @@ type Props = PropsWithChildren<{
   onClose: () => void;
 }>;
 
-export default function AppModal({ isVisible, title = 'Menu', children, onClose }: Props) {
+export default function AppModal({ isVisible, title, children, onClose }: Props) {
   const navigation = useNavigation(); 
   useEffect(() => { 
     const unsubscribe = navigation.addListener('state', () => { onClose(); }); 
     return unsubscribe; 
   }, [navigation]);
 
+  const containerStyles = StyleSheet.create({
+    titleContainer: {
+      height: '14%',
+      backgroundColor: '#464C55',
+      gap: 16,
+      paddingHorizontal: 16,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: title ? 'space-between' : "flex-end",
+    }
+  });
+  
   return (
     <View>
     <Modal animationType="slide" transparent={true} visible={isVisible}>
       <View style={styles.modalContent}>
-        <View style={styles.titleContainer}>
+        <View style={containerStyles.titleContainer}>
           {title && <Text style={styles.title}>{title}</Text>}
           <Pressable onPress={onClose}>
             <MaterialIcons name="close" color="#fff" size={22} />
@@ -50,15 +62,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#25292e',
     position: 'absolute',
     bottom: 0,
-  },
-  titleContainer: {
-    height: '14%',
-    backgroundColor: '#464C55',
-    gap: 16,
-    paddingHorizontal: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
   },
   title: {
     color: '#fff',
