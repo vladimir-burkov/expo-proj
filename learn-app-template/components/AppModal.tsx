@@ -1,6 +1,16 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { PropsWithChildren } from 'react';
 import { Modal, Pressable, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+// import { useNavigation } from '@react-navigation/native'; 
+// import { useEffect, useState } from 'react'; 
+// function MyComponent() { 
+//   const [modalVisible, setModalVisible] = useState(false); 
+//   const navigation = useNavigation(); 
+//   useEffect(() => { 
+//     const unsubscribe = navigation.addListener('state', () => { setModalVisible(false); }); 
+//     return unsubscribe; 
+//   }, [navigation]);
+
 
 type Props = PropsWithChildren<{
   isVisible: boolean;
@@ -35,7 +45,7 @@ export default function AppModal({ isVisible, title = 'Menu', children, onClose 
 
 const styles = StyleSheet.create({
   modalContent: {
-    height: '45%',
+    height: '40%',
     width: '100%',
     backgroundColor: '#25292e',
     position: 'absolute',
@@ -57,7 +67,7 @@ const styles = StyleSheet.create({
   modalOverlay: {
     position: 'fixed',
     top: 0,
-    height: '55%',
+    height: '60%',
     left: 0,
     right: 0,
     zIndex: -9999,
@@ -66,5 +76,6 @@ const styles = StyleSheet.create({
   headerModalMenuContainer: {
     flex: 1,
     padding: 16,
+    justifyContent: "center"
   }
 });

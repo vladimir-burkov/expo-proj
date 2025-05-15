@@ -6,8 +6,9 @@ import { FontAwesome } from '@expo/vector-icons'
 type LinkButtonProps = PropsWithChildren<{
   href: Href;
   arrowVisible?: boolean;
-  size?: "large"| "medium" |"small",
-  type?: "primary" | "secondary" | "confirm" | "reject"
+  size?: "large"| "medium" |"small";
+  type?: "primary" | "secondary" | "confirm" | "reject";
+  center?: boolean
 }>;
 
 const buttonSizes = {
@@ -15,19 +16,22 @@ const buttonSizes = {
     paddingHorizontal: 20,
     paddingVertical: 12, 
     fontSize: 18,
-    chevronSize: 16
+    chevronSize: 16,
+    maxHeight: 64
   },
   medium: {
     paddingHorizontal: 16,
     paddingVertical: 10,
     fontSize: 16,
-    chevronSize: 14
+    chevronSize: 14,
+    maxHeight: 56
   },
   small: {
     paddingHorizontal: 12,
     paddingVertical: 8,
     fontSize: 14,
-    chevronSize: 12
+    chevronSize: 12,
+    maxHeight: 48
   }
 }
 
@@ -50,14 +54,22 @@ const buttonColors = {
   },
 }
 
-const LinkButton = ({children, href, arrowVisible = false, size = 'medium', type="secondary" }: LinkButtonProps) => {
+const LinkButton = (props: LinkButtonProps) => {
+  const {
+    children, 
+    href, 
+    arrowVisible = false, 
+    size = 'medium', 
+    type = "secondary", 
+    center = false 
+  } = props;
 
   const styles = StyleSheet.create({
     link: {
-      minWidth: 300,
       padding: 4,
       flex: 1,
       flexBasis: 300,
+      maxHeight: buttonSizes[size].maxHeight
     },
     pressArea: {
       backgroundColor: buttonColors[type].bg,
@@ -71,7 +83,7 @@ const LinkButton = ({children, href, arrowVisible = false, size = 'medium', type
       paddingVertical: buttonSizes[size].paddingVertical,
       transitionDuration: "200ms",
       flexDirection: "row",
-      justifyContent: "space-between",
+      justifyContent: center ? "center" : "space-between",
       alignItems: "center",
     }
   });
@@ -96,7 +108,13 @@ const LinkButton = ({children, href, arrowVisible = false, size = 'medium', type
                 ]}
             >
               <View>
-                <Text style={{ fontSize: buttonSizes[size].fontSize, color: buttonColors[type].color, fontWeight: "bold" }}>
+                <Text style={{ 
+                    fontSize: buttonSizes[size].fontSize, 
+                    color: buttonColors[type].color, 
+                    fontWeight: "bold",
+                    minWidth: 150,
+                    textAlign: "center"
+                  }}>
                   {children} 
                 </Text>
               </View>

@@ -5,19 +5,24 @@ const logo = require('@/assets/images/book1.svg');
 
 const AppHeader = () => {
   return (
-    <View style={styles.headerTitleContainer}>
-      <View style={styles.textContainer}>
-        <Image
-          source={logo}
-          style={styles.image}
-          resizeMode="contain"
-        />
-        <Text style={styles.title}>Gramm<Text style={styles.up}>UP</Text></Text>
+    <>
+      <View style={styles.headerTitleContainer}>
+        <View style={styles.textContainer}>
+          <Image
+            source={logo}
+            style={styles.image}
+            resizeMode="contain"
+          />
+          <Text style={styles.title}>Gramm<Text style={styles.up}>UP</Text></Text>
+        </View>
+        <View>
+          <Text style={styles.subtitle}>Ελληνικά-A1</Text>
+        </View>
       </View>
-      <View>
-        <Text style={styles.subtitle}>Ελληνικά-A1</Text>
+      <View style={styles.headerNotificationBar}>
+        <Text>Войдите или зарегестрируйтесь что бы получить доступ ко всем матералам</Text>
       </View>
-    </View>
+    </>
   );
 };
 
@@ -56,7 +61,11 @@ const styles = StyleSheet.create({
     fontWeight: 500,    
     left: 16
   },
-
+  headerNotificationBar: {
+    backgroundColor:'#f9f2d7',
+    fontSize: 14,
+    padding: 4
+  }
 });
 
 export default AppHeader;

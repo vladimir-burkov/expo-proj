@@ -57,52 +57,60 @@ function HeaderButton() {
 function MenuLinks() {
 
   return <>
-      <LinkButton href={{
-        pathname: "/(app)/note/[note]",
-        params: {
-          note: 1,
-        },
-      }}>
+      <LinkButton 
+        href={{
+          pathname: "/auth"
+        }} 
+        center={true}
+      >
         <View style={styles.buttonContent}>
-          <MaterialIcons name="login" size={24} color="black" />
-          <Text>Войти</Text>
+        <MaterialCommunityIcons name="login-variant" size={20} color="black" />
+          <Text>Войти/Регистрация</Text>
         </View>
       </LinkButton>
-      <LinkButton href={{
-        pathname: "/(app)/note/[note]",
-        params: {
-          note: 1,
-        },
-      }}>
-        <View style={styles.buttonContent}>
-          <MaterialIcons name="app-registration" size={24} color="black" />
-          <Text>Регистрация</Text>
-        </View>
-      </LinkButton>
-      <LinkButton href={{
+      <LinkButton 
+        href={{
           pathname: "/(app)/note/[note]",
           params: {
             note: 1,
           },
         }} 
         type="primary" 
+        center={true}
       >
         <View style={styles.buttonContent}>
-          <MaterialIcons name="attach-money" size={24} color="white" />
+          <MaterialIcons name="attach-money" size={20} color="white" />
           <Text>Купить подписку</Text>
         </View>
       </LinkButton>
-      <LinkButton href={{
+      <LinkButton 
+        href={{
           pathname: "/(app)/note/[note]",
           params: {
             note: 1,
           },
-        }}>
+        }}
+        center={true}
+      >
           <View style={styles.buttonContent}>
-            <MaterialIcons name="wallet-giftcard" size={24} color="black" />
+            <MaterialIcons name="wallet-giftcard" size={20} color="black" />
             <Text>Промо код</Text>
           </View>
-      </LinkButton> 
+      </LinkButton>
+      <LinkButton 
+        href={{
+          pathname: "/(app)/note/[note]",
+          params: {
+            note: 1,
+          },
+        }}
+        center={true}
+      >
+          <View style={styles.buttonContent}>
+          <MaterialIcons name="mail-outline" size={20} color="black" />            
+          <Text>Контакты</Text>
+          </View>
+      </LinkButton>  
   </>
 }
 
@@ -124,8 +132,12 @@ const styles = StyleSheet.create({
   },
   buttonContent: {
     flex: 1,
-    gap: 8,
+    gap: 12,
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  menuLinksList: {
+    gap: 8
   }
 });
