@@ -3,16 +3,18 @@ import { Link } from "expo-router";
 import React from "react";
 import {
   Pressable,
-  ScrollView, Text, View
+  ScrollView, 
+  Text, 
+  View,
+  StyleSheet
 } from "react-native";
 
 export default function App() {
-  return <Index />;
-}
-
-function Index() {
   return (
       <>
+        <View style={styles.headerNotificationBar}>
+          <Text>Войдите или зарегистрируйтесь что бы получить доступ ко всем матералам</Text>
+        </View>
         <NotesList />
       </>
   );
@@ -24,17 +26,7 @@ function NotesList() {
   return (
       <ScrollView
           contentInsetAdjustmentBehavior="automatic"
-          contentContainerStyle={[
-            {
-              maxWidth: 960,
-              paddingVertical: 20,
-              paddingHorizontal: 20,
-              flexDirection: "row",
-              flexWrap: "wrap",
-              marginHorizontal: "auto",
-            },
-            {},
-          ]}
+          contentContainerStyle={[styles.scrollView]}
       >
         <Item1/>
         <Item2/>
@@ -165,3 +157,20 @@ function Item2() {
 </Pressable>
 </Link>
 }
+
+
+const styles = StyleSheet.create({
+  scrollView: {
+    maxWidth: 960,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginHorizontal: "auto",
+  },
+  headerNotificationBar: {
+    backgroundColor:'#f9f2d7',
+    fontSize: 14,
+    padding: 4
+  }
+});
