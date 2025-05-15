@@ -162,8 +162,8 @@ function Item2() {
 const styles = StyleSheet.create({
   scrollView: {
     maxWidth: 960,
-    paddingVertical: 20,
-    paddingHorizontal: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 12,
     flexDirection: "row",
     flexWrap: "wrap",
     marginHorizontal: "auto",
