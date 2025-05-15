@@ -1,15 +1,9 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { PropsWithChildren } from 'react';
 import { Modal, Pressable, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
-// import { useNavigation } from '@react-navigation/native'; 
-// import { useEffect, useState } from 'react'; 
-// function MyComponent() { 
-//   const [modalVisible, setModalVisible] = useState(false); 
-//   const navigation = useNavigation(); 
-//   useEffect(() => { 
-//     const unsubscribe = navigation.addListener('state', () => { setModalVisible(false); }); 
-//     return unsubscribe; 
-//   }, [navigation]);
+import { useEffect, useState } from 'react'; 
+import { useNavigation } from 'expo-router';
+
 
 
 type Props = PropsWithChildren<{
@@ -19,6 +13,12 @@ type Props = PropsWithChildren<{
 }>;
 
 export default function AppModal({ isVisible, title = 'Menu', children, onClose }: Props) {
+  const navigation = useNavigation(); 
+  useEffect(() => { 
+    const unsubscribe = navigation.addListener('state', () => { onClose(); }); 
+    return unsubscribe; 
+  }, [navigation]);
+
   return (
     <View>
     <Modal animationType="fade" transparent={true} visible={isVisible}>

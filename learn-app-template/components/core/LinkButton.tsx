@@ -94,7 +94,6 @@ const LinkButton = (props: LinkButtonProps) => {
     style={styles.link}
     href={href}
     asChild
-    disabled
   >
     <Pressable>
       {({ hovered, pressed }) => (
