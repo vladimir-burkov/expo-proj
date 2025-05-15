@@ -22,7 +22,7 @@ export default function AppLayout() {
           />
           <Stack.Screen name="buy"/>
           <Stack.Screen name="contact"/>
-          {/* <Stack.Screen name="auth"/> */}
+          <Stack.Screen name="auth"/>
         </Stack>
   );
 }

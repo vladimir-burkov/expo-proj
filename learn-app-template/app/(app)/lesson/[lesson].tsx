@@ -1,11 +1,11 @@
 import { Stack } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function Note() {
+export default function Lesson() {
 
   return (
       <>
-        <Stack.Screen options={{ title: "selected.id" }} />
+        <Stack.Screen options={{ title: "Lesson" }} />
         <View style={styles.container}>
           <View style={styles.main}>
             <Item/>
