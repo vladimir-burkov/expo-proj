@@ -9,11 +9,12 @@ export default function Lesson() {
   const navigation = useNavigation();
 
   useEffect(() => {
-    const lessonObj = lessonsById[lesson as string];
+    const {title} = lessonsById[lesson as string];
 
-    if (lessonObj) {
+    if (title) {
       navigation.setOptions({
-        title: `${lessonObj.title}`, headerTitleStyle: {
+        title: `${title}`, 
+        headerTitleStyle: {
           fontSize: 20,
           fontWeight: 'bold',
           color: '#4A90E2',
