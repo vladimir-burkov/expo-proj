@@ -155,7 +155,8 @@ const styles = StyleSheet.create({
     gap: 12,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    fontWeight: 400
   },
   menuLinksList: {
     gap: 8
