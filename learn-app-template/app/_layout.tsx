@@ -1,4 +1,3 @@
-import { HeaderProvider } from "@/context/HeaderContext";
 import { LessonProvider } from "@/context/LessonsContext";
 import { Slot } from "expo-router";
 import React from "react";
@@ -8,9 +7,7 @@ export default function RootLayout() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <LessonProvider>
-      <HeaderProvider>     
         <Slot />
-      </HeaderProvider>
       </LessonProvider>
     </SafeAreaView>
   )

@@ -1,33 +1,70 @@
+import Loader from "@/components/core/Loader";
 import { useLessons } from "@/context/LessonsContext";
+import { loadEncryptedMarkdown } from "@/lib/decrypt";
 import { Stack, useLocalSearchParams, useNavigation } from "expo-router";
-import { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { useEffect, useState } from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import Markdown from "react-native-markdown-display";
+
+type LessonTheoryProps = {
+  lessonId: string
+}
 
 export default function Lesson() {
   const { lesson } = useLocalSearchParams();
+  const navigation = useNavigation();
+  const { lessonsById } = useLessons();
 
   useEffect(() => {
-    setHeaderTitle(lesson);
+    const { title } = lessonsById[lesson as string];
+
+    navigation.setOptions({
+      title,
+      headerTitleStyle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        whiteSpace: 'initial'
+      },
+    });
   }, [lesson]);
 
   return (
     <>
       <View style={styles.container}>
         <View style={styles.main}>
-          <LessonTheory />
+          <LessonTheory lessonId={lesson as string}/>
         </View>
       </View>
     </>
   );
 }
 
-function LessonTheory() {
+function LessonTheory({ lessonId }: LessonTheoryProps) {
+  const [markdownContent, setMarkdownContent] = useState('');
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    setLoading(true);
+    loadEncryptedMarkdown("https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc")
+      .then(setMarkdownContent)
+      .catch(() => {
+        setMarkdownContent("Loading error")
+      })
+      .finally(() => { 
+          setLoading(false);
+      });
+  }, []);
+
   return (
-    <View style={{ paddingVertical: 12 }}>
-      <Text style={styles.title}>title</Text>
-      <Text style={{ fontSize: 16 }}>children</Text>
-    </View>
-  );
+    <>
+      {!loading && 
+        <ScrollView contentContainerStyle={styles.container}>
+          <Markdown style={styles.markdownStyle}>{markdownContent}</Markdown>
+        </ScrollView>
+      }
+      <Loader loading={loading}/>
+    </>
+  )
 }
 
 
@@ -48,8 +85,7 @@ const styles = StyleSheet.create({
     maxWidth: 960,
     marginHorizontal: "auto",
   },
+  markdownStyle: {
+    
+  }
 });
-
-function setHeaderTitle(lesson: string | string[]) {
-  throw new Error("Function not implemented.");
-}
