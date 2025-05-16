@@ -15,9 +15,9 @@ export default function Lesson() {
       navigation.setOptions({
         title: `${title}`, 
         headerTitleStyle: {
-          fontSize: 20,
+          fontSize: 16,
           fontWeight: 'bold',
-          color: '#4A90E2',
+          whiteSpace: 'initial'
         },
       });
     }
