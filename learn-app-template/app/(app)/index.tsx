@@ -48,7 +48,7 @@ function LessonsList() {
 }
 
 function LessonItem(props: LessonItemProps) {
-  const {id, title, iconName="info"} = props;
+  const {id, title, iconName="expeditedssl"} = props;
 
   return <>
     <LinkButton

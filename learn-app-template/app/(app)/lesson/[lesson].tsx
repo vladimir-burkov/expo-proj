@@ -1,28 +1,48 @@
-import { Stack } from "expo-router";
+import { useLessons } from "@/context/LessonsContext";
+import { Stack, useLocalSearchParams, useNavigation } from "expo-router";
+import { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 export default function Lesson() {
+  const { lessonsById } = useLessons();
+  const { lesson } = useLocalSearchParams();
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const lessonObj = lessonsById[lesson as string];
+
+    if (lessonObj) {
+      navigation.setOptions({
+        title: `${lessonObj.title}`, headerTitleStyle: {
+          fontSize: 20,
+          fontWeight: 'bold',
+          color: '#4A90E2',
+        },
+      });
+    }
+  }, [lesson]);
 
   return (
-      <>
-        <Stack.Screen options={{ title: "Lesson" }} />
-        <View style={styles.container}>
-          <View style={styles.main}>
-            <Item/>
-          </View>
+    <>
+      {/* <Stack.Screen options={{ title: "Lesson" }} /> */}
+      <View style={styles.container}>
+        <View style={styles.main}>
+          <LessonTheory />
         </View>
-      </>
+      </View>
+    </>
   );
 }
 
-function Item() {
+function LessonTheory() {
   return (
-      <View style={{ paddingVertical: 12 }}>
-        <Text style={styles.title}>title</Text>
-        <Text style={{ fontSize: 16 }}>children</Text>
-      </View>
+    <View style={{ paddingVertical: 12 }}>
+      <Text style={styles.title}>title</Text>
+      <Text style={{ fontSize: 16 }}>children</Text>
+    </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   title: {
