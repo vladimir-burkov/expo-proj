@@ -4,28 +4,14 @@ import { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 export default function Lesson() {
-  const { lessonsById } = useLessons();
   const { lesson } = useLocalSearchParams();
-  const navigation = useNavigation();
 
   useEffect(() => {
-    const {title} = lessonsById[lesson as string];
-
-    if (title) {
-      navigation.setOptions({
-        title: `${title}`, 
-        headerTitleStyle: {
-          fontSize: 16,
-          fontWeight: 'bold',
-          whiteSpace: 'initial'
-        },
-      });
-    }
+    setHeaderTitle(lesson);
   }, [lesson]);
 
   return (
     <>
-      {/* <Stack.Screen options={{ title: "Lesson" }} /> */}
       <View style={styles.container}>
         <View style={styles.main}>
           <LessonTheory />
@@ -63,3 +49,7 @@ const styles = StyleSheet.create({
     marginHorizontal: "auto",
   },
 });
+
+function setHeaderTitle(lesson: string | string[]) {
+  throw new Error("Function not implemented.");
+}
