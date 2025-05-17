@@ -30,11 +30,7 @@ export default function Lesson() {
 
   return (
     <>
-      <View style={styles.container}>
-        <View style={styles.main}>
-          <LessonTheory lessonId={lesson as string}/>
-        </View>
-      </View>
+      <LessonTheory lessonId={lesson as string}/>
     </>
   );
 }
@@ -58,7 +54,7 @@ function LessonTheory({ lessonId }: LessonTheoryProps) {
   return (
     <>
       {!loading && 
-        <ScrollView contentContainerStyle={styles.container}>
+        <ScrollView contentContainerStyle={styles.container} contentInsetAdjustmentBehavior="automatic">
           <Markdown style={styles.markdownStyle}>{markdownContent}</Markdown>
         </ScrollView>
       }
@@ -76,13 +72,11 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    alignItems: "center",
-    padding: 24,
+    padding: 16,
   },
   main: {
     flex: 1,
     justifyContent: "center",
-    maxWidth: 960,
     marginHorizontal: "auto",
   },
   markdownStyle: {
