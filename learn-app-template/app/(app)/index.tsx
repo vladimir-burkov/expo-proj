@@ -6,7 +6,8 @@ import {
   ScrollView, 
   Text, 
   View,
-  StyleSheet
+  StyleSheet,
+  FlatList
 } from "react-native";
 
 type LessonItemProps = {
@@ -35,14 +36,18 @@ function LessonsList() {
           contentInsetAdjustmentBehavior="automatic"
           contentContainerStyle={[styles.scrollView]}
       >
-        {lessons.map((item) => 
-          <LessonItem 
-            key={item.id}
-            id={item.id} 
-            title={item.title} 
-            iconName={item.icon as keyof typeof FontAwesome.glyphMap}
-          />
-        )}
+        <FlatList
+          data={lessons}
+          renderItem={({ item }) => (
+            <LessonItem 
+              id={item.id} 
+              title={item.title} 
+              iconName={item.icon as keyof typeof FontAwesome.glyphMap}
+            />)
+          }
+          keyExtractor={(item) => item.id}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+        />
       </ScrollView>
   );
 }
@@ -59,7 +64,7 @@ function LessonItem(props: LessonItemProps) {
         },
       }}
       arrowVisible={true}
-      size={"large"}
+      size={"medium"}
     >
       <View style={styles.lessonButtonContent}>
         <FontAwesome style={styles.lessonButtonIcon} name={iconName} size={20} color="black" />
@@ -73,18 +78,18 @@ function LessonItem(props: LessonItemProps) {
 const styles = StyleSheet.create({
   scrollView: {
     maxWidth: 960,
-    paddingVertical: 12,
     paddingHorizontal: 12,
+    paddingVertical: 6,
     flexDirection: "row",
     flexWrap: "wrap",
     marginHorizontal: "auto",
+    backgroundColor: "white"
   },
   headerNotificationBar: {
     backgroundColor:'#f9f2d7',
     fontSize: 14,
-    padding: 4,
-    paddingHorizontal: 8,
-    paddingBottom: 6
+    paddingHorizontal: 20,
+    paddingVertical: 12
   },
   lessonButtonText: {
     textAlign: "left",
@@ -99,8 +104,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 16,
     flex: 1,
-    flexBasis: 300,
     minHeight: 60,
-    maxWidth: 300
+  },
+  separator: {
+    borderTopColor: '#eee',
+    borderTopWidth: 1
   }
 });

@@ -21,13 +21,13 @@ const buttonSizes = {
   },
   medium: {
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 16,
     fontSize: 16,
     chevronSize: 14,
     maxHeight: 56
   },
   small: {
-    paddingHorizontal: 12,
+    paddingHorizontal: 8,
     paddingVertical: 8,
     fontSize: 14,
     chevronSize: 12,
@@ -68,7 +68,6 @@ const LinkButton = (props: LinkButtonProps) => {
     link: {
       padding: 4,
       flex: 1,
-      flexBasis: 300,
       maxHeight: buttonSizes[size].maxHeight
     },
     pressArea: {

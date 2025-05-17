@@ -20,7 +20,7 @@ export const AppHeader = () => {
           <Image
             source={logo}
             style={styles.image}
-            resizeMode="contain"
+            contentFit='contain'
           />
           <Text style={styles.title}>Gramm<Text style={styles.up}>UP</Text></Text>
         </View>
