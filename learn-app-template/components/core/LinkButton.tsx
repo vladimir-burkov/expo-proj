@@ -59,20 +59,18 @@ const LinkButton = (props: LinkButtonProps) => {
     children, 
     href, 
     arrowVisible = false, 
-    size = 'medium', 
+    size = 'large', 
     type = "secondary", 
     center = false 
   } = props;
 
   const styles = StyleSheet.create({
     link: {
-      padding: 4,
       flex: 1,
       maxHeight: buttonSizes[size].maxHeight
     },
     pressArea: {
       backgroundColor: buttonColors[type].bg,
-      borderRadius: 12,
       overflow: "hidden",
       flex: 1,
     },

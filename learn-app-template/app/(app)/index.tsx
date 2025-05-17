@@ -20,7 +20,7 @@ export default function App() {
   return (
       <>
         <View style={styles.headerNotificationBar}>
-          <Text>Войдите или зарегистрируйтесь, чтобы управлять своей подпиской!</Text>
+          <Text>Войдите или зарегистрируйтесь, чтобы управлять вашей подпиской!</Text>
         </View>
         <LessonsList />
       </>
