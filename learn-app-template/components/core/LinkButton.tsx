@@ -106,19 +106,10 @@ const LinkButton = (props: LinkButtonProps) => {
                   hovered && { backgroundColor: "rgba(0,0,0,0.1)" },
                   pressed && { backgroundColor: "rgba(0,0,0,0.2)" },
                 ]}
-            >
-              <View>
-                <Text style={{ 
-                    fontSize: buttonSizes[size].fontSize, 
-                    color: buttonColors[type].color, 
-                    fontWeight: "bold",
-                    textAlign: "center"
-                  }}>
-                  {children} 
-                </Text>
-              </View>
+            >  
+              {children} 
               {arrowVisible && 
-                <View style={{ flexDirection: "row" }}>
+                <View style={{ flexDirection: "row", paddingLeft: 16 }}>
                   <FontAwesome
                       name="chevron-right"
                       size={buttonSizes[size].chevronSize}
