@@ -71,7 +71,7 @@ function MenuLinks() {
       >
         <View style={styles.buttonContent}>
           <MaterialIcons name="attach-money" size={20} color="white" />
-          <Text>Купить PREMIUM план</Text>
+          <Text style={{color: 'white'}}>Купить PREMIUM план</Text>
         </View>
       </LinkButton>
       <LinkButton 
