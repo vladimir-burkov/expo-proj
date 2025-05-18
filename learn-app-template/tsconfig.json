@@ -1,8 +1,9 @@
 {
   "extends": "expo/tsconfig.base",
+  
   "compilerOptions": {
-    "module": "Node16",
-    "moduleResolution": "node16",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
     "strict": true,
     "paths": {
       "@/*": [

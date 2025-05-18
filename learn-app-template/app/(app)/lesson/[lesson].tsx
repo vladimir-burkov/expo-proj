@@ -1,7 +1,8 @@
 import Loader from "@/components/core/Loader";
 import { useLessons } from "@/context/LessonsContext";
 import { loadEncryptedMarkdown } from "@/lib/decrypt";
-import { Stack, useLocalSearchParams, useNavigation } from "expo-router";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Stack, Tabs, useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import Markdown from "react-native-markdown-display";
@@ -9,6 +10,8 @@ import Markdown from "react-native-markdown-display";
 type LessonTheoryProps = {
   lessonId: string
 }
+
+const Tab = createBottomTabNavigator();
 
 export default function Lesson() {
   const { lesson } = useLocalSearchParams();
@@ -31,8 +34,44 @@ export default function Lesson() {
   return (
     <>
       <LessonTheory lessonId={lesson as string}/>
+      <LessonPractice/>
+      {/* <Tabs
+        screenOptions={{
+          tabBarPosition: 'bottom',
+        }}
+      >
+        <Tabs.Screen
+          name="Theory"
+          // options={{
+          //   title: 'Lesson',
+          //   tabBarIcon: ({ }) => (
+          //     <MaterialIcons name="menu-book" size={24} color={"#000"} />
+          //   ),
+          // }}
+        />
+        <Tabs.Screen
+          name="Practivce"
+          // options={{
+          //   title: 'Practices',
+          //   tabBarIcon: ({ }) => (
+          //     <MaterialIcons name="menu-book" size={24} color={"#000"} />
+          //   ),
+          // }}
+          // component={LessonPractice}
+        />
+      </Tabs> */}
     </>
   );
+}
+
+
+function LessonPractice () {
+  return (
+    <View>
+      Practice
+      {/* here supposed to be a list of links to practice exercises  */}
+    </View>
+  )
 }
 
 function LessonTheory({ lessonId }: LessonTheoryProps) {
