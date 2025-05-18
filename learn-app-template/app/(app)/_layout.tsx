@@ -5,7 +5,17 @@ import { View } from "react-native";
 
 export default function AppLayout() {
   return (
-        <Stack>
+        <Stack 
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: '#684bbc', // Your custom background color
+            },
+            headerTintColor: '#fff', // Text and icon color (optional)
+            headerTitleStyle: {
+              fontWeight: 400,
+            },
+        }}
+        >
           <Stack.Screen
               name="index"
               options={{
