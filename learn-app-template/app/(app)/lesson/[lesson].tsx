@@ -33,33 +33,24 @@ export default function Lesson() {
 
   return (
     <>
-      <LessonTheory lessonId={lesson as string}/>
-      <LessonPractice/>
-      {/* <Tabs
-        screenOptions={{
-          tabBarPosition: 'bottom',
-        }}
-      >
-        <Tabs.Screen
-          name="Theory"
-          // options={{
-          //   title: 'Lesson',
-          //   tabBarIcon: ({ }) => (
-          //     <MaterialIcons name="menu-book" size={24} color={"#000"} />
-          //   ),
-          // }}
-        />
-        <Tabs.Screen
-          name="Practivce"
-          // options={{
-          //   title: 'Practices',
-          //   tabBarIcon: ({ }) => (
-          //     <MaterialIcons name="menu-book" size={24} color={"#000"} />
-          //   ),
-          // }}
-          // component={LessonPractice}
-        />
-      </Tabs> */}
+      {/* <LessonTheory lessonId={lesson as string}/>
+      <LessonPractice/> */}
+    <Tab.Navigator
+      screenOptions={{
+        tabBarLabelStyle: { fontWeight: "bold" },
+        tabBarActiveTintColor: "#000",
+        tabBarInactiveTintColor: "#999",
+      }}
+    >
+      <Tab.Screen
+        name="Theory"
+        children={() => <LessonTheory lessonId={lesson as string} />}
+      />
+      <Tab.Screen
+        name="Practice"
+        component={LessonPractice}
+      />
+    </Tab.Navigator>
     </>
   );
 }
