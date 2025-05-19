@@ -1,9 +1,10 @@
 import Loader from "@/components/core/Loader";
 import { useLessons } from "@/context/LessonsContext";
 import { loadEncryptedMarkdown } from "@/lib/decrypt";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Stack, Tabs, useLocalSearchParams, useNavigation } from "expo-router";
-import { useEffect, useState } from "react";
+import { Component, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import Markdown from "react-native-markdown-display";
 
@@ -33,24 +34,51 @@ export default function Lesson() {
 
   return (
     <>
-      {/* <LessonTheory lessonId={lesson as string}/>
-      <LessonPractice/> */}
-    <Tab.Navigator
-      screenOptions={{
-        tabBarLabelStyle: { fontWeight: "bold" },
-        tabBarActiveTintColor: "#000",
-        tabBarInactiveTintColor: "#999",
-      }}
-    >
-      <Tab.Screen
-        name="Theory"
-        children={() => <LessonTheory lessonId={lesson as string} />}
-      />
-      <Tab.Screen
-        name="Practice"
-        component={LessonPractice}
-      />
-    </Tab.Navigator>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarLabelStyle: { fontWeight: "bold" },
+          tabBarActiveTintColor: "#000",
+          tabBarInactiveTintColor: "#999",
+          // tabBarLabelPosition: "beside-icon",
+          headerShown: false,
+          tabBarIconStyle: {
+            height: 22
+          }
+        }}
+      >
+        <Tab.Screen
+          name="theory"
+          children={() => <LessonTheory lessonId={lesson as string} />}
+          options={{
+            title: "Теория",
+            tabBarIcon: ({focused}: {focused: boolean}) => (
+              <AntDesign name="form" size={16} color={focused ? "black" : 'gray'} />
+            ),
+          }}
+        />
+
+        <Tab.Screen
+          name="vocabulary"
+          component={LessonVocabulary}
+          options={{
+            title: "Словарь",
+            tabBarIcon: ({focused}: {focused: boolean}) => (
+              <AntDesign name="swap" size={16} style={{height: 16}} color={focused ? "black" : 'gray'} />
+            ),
+          }}
+        />
+
+        <Tab.Screen
+          name="practice"
+          component={LessonPractice}
+          options={{
+            title: "Практика",
+            tabBarIcon: ({focused}: {focused: boolean}) => (
+              <AntDesign name="form" size={16} color={focused ? "black" : 'gray'} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
     </>
   );
 }
@@ -60,6 +88,15 @@ function LessonPractice () {
   return (
     <View>
       Practice
+      {/* here supposed to be a list of links to practice exercises  */}
+    </View>
+  )
+}
+
+function LessonVocabulary () {
+  return (
+    <View>
+      Vocabulary
       {/* here supposed to be a list of links to practice exercises  */}
     </View>
   )
