@@ -1,11 +1,11 @@
 import Loader from "@/components/core/Loader";
 import { useLessons } from "@/context/LessonsContext";
 import { loadEncryptedMarkdown } from "@/lib/decrypt";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Stack, Tabs, useLocalSearchParams, useNavigation } from "expo-router";
-import { Component, useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import { useEffect, useState } from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
 import Markdown from "react-native-markdown-display";
 
 type LessonTheoryProps = {
@@ -25,7 +25,7 @@ export default function Lesson() {
     navigation.setOptions({
       title,
       headerTitleStyle: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: 'bold',
         whiteSpace: 'initial'
       },

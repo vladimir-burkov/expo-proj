@@ -55,9 +55,11 @@ export function HeaderButton() {
 function MenuLinks() {
 
   return <>
+    <View style={styles.menuLinksList}>
       <LinkButton 
         href={{pathname: "/auth"}} 
         center={true}
+        size='medium'
       >
         <View style={styles.buttonContent}>
         <MaterialCommunityIcons name="login-variant" size={20} color="black" />
@@ -68,6 +70,7 @@ function MenuLinks() {
         href={{pathname: "/buy"}} 
         type="primary" 
         center={true}
+        size='medium'
       >
         <View style={styles.buttonContent}>
           <MaterialIcons name="attach-money" size={20} color="white" />
@@ -77,6 +80,7 @@ function MenuLinks() {
       <LinkButton 
         href={{pathname: "/buy"}}
         center={true}
+        size='medium'
       >
           <View style={styles.buttonContent}>
             <MaterialIcons name="wallet-giftcard" size={20} color="black" />
@@ -86,12 +90,14 @@ function MenuLinks() {
       <LinkButton 
         href={{pathname: "/contact"}}
         center={true}
+        size='medium'
       >
           <View style={styles.buttonContent}>
           <MaterialIcons name="mail-outline" size={20} color="black" />            
           <Text>Поддержка</Text>
           </View>
       </LinkButton>  
+    </View>
   </>
 }
 
@@ -159,7 +165,7 @@ const styles = StyleSheet.create({
     fontWeight: 400
   },
   menuLinksList: {
-    gap: 8
+    gap: 12,
   }
 });
 

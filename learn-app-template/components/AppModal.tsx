@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   },
   headerModalMenuContainer: {
     flex: 1,
-    padding: 16,
-    justifyContent: "center"
+    padding: 12,
+    justifyContent: "center",
   }
 });

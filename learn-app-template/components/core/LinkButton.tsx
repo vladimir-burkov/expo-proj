@@ -20,7 +20,7 @@ const buttonSizes = {
     maxHeight: 64
   },
   medium: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     paddingVertical: 16,
     fontSize: 16,
     chevronSize: 14,
