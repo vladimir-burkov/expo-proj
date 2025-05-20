@@ -7,7 +7,16 @@ export type Lesson = {
   title: string;
   icon?: keyof typeof FontAwesome.glyphMap;
   article_url: string;
+  vocabulary_url: string;
+  practice: Practice[];
 };
+
+export type Practice = {
+  id: string;
+  title: string;
+  url: string
+};
+
 
 export type Lessons = {
   [key: string]: Lesson;
@@ -19,28 +28,136 @@ type LessonContextType = {
 };
 
 const initialLessons: Lesson[] = [
-  { id: 'abc', 
-    title: 'Алфавит. Правила чтения', 
+  {
+    id: 'abc',
+    title: 'Алфавит. Правила чтения',
     icon: 'book',
-    article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' 
+    article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    practice: [{
+      id: 'test',
+      title: "Practice",
+      url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
+    }]
   },
-  { id: 'noun', title: 'Существительные. Определенный Артикль', icon: 'book', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'},
-  { id: 'pronoun1', title: 'Личные местоимения', icon: 'book', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'},
-  { id: 'eimai', title: 'Личные местоимения. Глагол είμαι', icon: 'book', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
-  { id: 'adjective', title: 'Согласование прилагательных', icon: 'book', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
-  { id: 'describe', title: 'Описание объектов', icon: 'file-text-o', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
-  { id: 'numbers', title: 'Числа и числительные', icon: 'file-text-o', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
-  { id: 'about', title: 'Рассказ о себе(после винит и эхо)', icon: 'comments-o', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
-  { id: 'verd', title: 'Виды глаголов', icon: 'book', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
-  { id: '8', title: 'Числа и числительные, Числа и числительные', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
-  { id: '9', title: 'Area on\nthe map', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
-  { id: '10', title: 'Area on\nthe map', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
-  { id: '11', title: 'Area on\nthe map', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
-  { id: '12', title: 'Area on\nthe map', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
-  { id: '13', title: 'Area on\nthe map', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
-  { id: '14', title: 'Area on\nthe map', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
-  { id: '15', title: 'Area on\nthe map', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
-  { id: '16', title: 'Area on\nthe map', article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc' },
+  {
+    id: 'noun', 
+    title: 'Существительные. Определенный Артикль', 
+    icon: 'book', 
+    article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    practice: [{
+      id: 'test',
+      title: "Practice",
+      url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
+    }]
+  },
+  {
+    id: 'pronoun1', 
+    title: 'Личные местоимения', 
+    icon: 'book', 
+    article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    practice: [{
+      id: 'test',
+      title: "Practice",
+      url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
+    }]
+  },
+  {
+    id: 'eimai', 
+    title: 'Личные местоимения. Глагол είμαι', 
+    icon: 'book', 
+    article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    practice: [{
+      id: 'test',
+      title: "Practice",
+      url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
+    }]
+  },
+  {
+    id: 'adjective', 
+    title: 'Согласование прилагательных', 
+    icon: 'book', 
+    article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    practice: [{
+      id: 'test',
+      title: "Practice",
+      url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
+    }]
+  },
+  {
+    id: 'describe', 
+    title: 'Описание объектов', 
+    icon: 'file-text-o', 
+    article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    practice: [{
+      id: 'test',
+      title: "Practice",
+      url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
+    }]
+  },
+  {
+    id: 'numbers', 
+    title: 'Числа и числительные', 
+    icon: 'file-text-o', 
+    article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    practice: [{
+      id: 'test',
+      title: "Practice",
+      url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
+    }]
+  },
+  {
+    id: 'about', 
+    title: 'Рассказ о себе(после винит и эхо)', 
+    icon: 'comments-o', 
+    article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    practice: [{
+      id: 'test',
+      title: "Practice",
+      url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
+    }]
+  },
+  {
+    id: 'verd', 
+    title: 'Виды глаголов', 
+    icon: 'book', 
+    article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    practice: [{
+      id: 'test',
+      title: "Practice",
+      url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
+    }]
+  },
+  {
+    id: '8', 
+    title: 'Числа и числительные, Числа и числительные', 
+    article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    practice: [{
+      id: 'test',
+      title: "Practice",
+      url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
+    }]
+  },
+  {
+    id: '9', 
+    title: 'Area on\nthe map', 
+    article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
+    practice: [{
+      id: 'test',
+      title: "Practice",
+      url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
+    }]
+  },
 ];
 
 const mapLessonsById = (lessons: Lesson[]): Lessons =>
