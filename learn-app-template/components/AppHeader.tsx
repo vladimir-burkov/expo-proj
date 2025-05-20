@@ -7,6 +7,7 @@ import LinkButton from "@/components/core/LinkButton";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useState } from "react";
+import { FontAwesome } from '@expo/vector-icons';
 
 type HeaderButtonProps = {
   onPress: () => void;
@@ -73,7 +74,7 @@ function MenuLinks() {
   });
 
 
-  const buttonStyleOutline = {...buttonStyle,  plainButton: {...buttonStyle.plainButton, borderWidth: 2, borderColor: "#bea7ff"}}
+  const buttonStyleOutline = {...buttonStyle,  plainButton: {...buttonStyle.plainButton, borderWidth: 2, borderColor: "#c215f0"}}
 
   return <>
     <View style={styles.menuLinksList}>
@@ -91,17 +92,19 @@ function MenuLinks() {
         buttonStyle={buttonStyleOutline} 
       >
         <View style={styles.buttonContent}>
-          <MaterialIcons name="attach-money" size={20} color="#bea7ff" />
-          <Text style={{color: '#bea7ff', fontWeight: '800'}}>Купить PREMIUM план</Text>
+          {/* <MaterialIcons name="attach-money" size={20} color="#7fff00" /> */}
+          <MaterialIcons name="workspace-premium" size={20} color="#7fff00" />
+          <Text style={{color: '#7fff00', fontWeight: '800'}}>Купить PREMIUM план</Text>
         </View>
       </LinkButton>
       <LinkButton 
         href={{pathname: "/buy"}}
         buttonStyle={buttonStyle} 
-
       >
           <View style={styles.buttonContent}>
-            <MaterialIcons name="wallet-giftcard" size={20} color="white" />
+            {/* <MaterialIcons name="wallet-giftcard" size={20} color="white" /> */}
+            <MaterialCommunityIcons name="qrcode-plus" size={20} color="white" />
+            {/* <FontAwesome name="barcode" size={20} color="white" /> */}
             <Text style={styles.buttonText}>Промо код</Text>
           </View>
       </LinkButton>
@@ -171,6 +174,7 @@ const styles = StyleSheet.create({
   buttonContent: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     gap: 16,
     flex: 1,
     minHeight: 45,
