@@ -1,116 +1,57 @@
-import { View, Text, Pressable, StyleSheet } from 'react-native'
+import { View, Text, Pressable, StyleSheet, ViewStyle, StyleProp } from 'react-native'
 import React, { Children, PropsWithChildren } from 'react'
 import { Href, Link } from 'expo-router'
 import { FontAwesome } from '@expo/vector-icons'
 
-type LinkButtonProps = PropsWithChildren<{
+export type LinkButtonProps = PropsWithChildren<{
   href: Href;
-  arrowVisible?: boolean;
-  size?: "large"| "medium" |"small";
-  type?: "primary" | "secondary" | "confirm" | "reject";
-  center?: boolean
+  buttonStyle: ButtonStyleType;
+  chevronStyle?: ChevronStyleType;
 }>;
 
-const buttonSizes = {
-  large: {
-    paddingHorizontal: 20,
-    paddingVertical: 20, 
-    fontSize: 18,
-    chevronSize: 16,
-    maxHeight: 64
-  },
-  medium: {
-    paddingHorizontal: 12,
-    paddingVertical: 16,
-    fontSize: 16,
-    chevronSize: 14,
-    maxHeight: 56
-  },
-  small: {
-    paddingHorizontal: 8,
-    paddingVertical: 8,
-    fontSize: 14,
-    chevronSize: 12,
-    maxHeight: 48
-  }
+export type ButtonStyleType = {
+  plainButton: StyleProp<any>,
+  plainButtonHovered: StyleProp<any>,
+  plainButtonPressed: StyleProp<any>,
 }
 
-const buttonColors = {
-  primary: {
-    bg: '#684bbc',
-    color: 'white'
-  },
-  secondary: {
-    bg: 'white',
-    color: 'black'
-  },
-  confirm: {
-    bg: 'green',
-    color: 'white'
-  },
-  reject: {
-    bg: 'red',
-    color: 'white'
-  },
+export type ChevronStyleType = {
+  size: number,
+  color: string,
 }
+
 
 const LinkButton = (props: LinkButtonProps) => {
   const {
     children, 
-    href, 
-    arrowVisible = false, 
-    size = 'large', 
-    type = "secondary", 
-    center = false 
+    href,
+    buttonStyle, 
+    chevronStyle, 
   } = props;
 
-  const styles = StyleSheet.create({
-    link: {
-      flex: 1,
-      maxHeight: buttonSizes[size].maxHeight
-    },
-    pressArea: {
-      backgroundColor: buttonColors[type].bg,
-      overflow: "hidden",
-      flex: 1,
-    },
-    plainButton: {
-      flex: 1,
-      paddingHorizontal: buttonSizes[size].paddingHorizontal,
-      paddingVertical: buttonSizes[size].paddingVertical,
-      transitionDuration: "200ms",
-      flexDirection: "row",
-      justifyContent: center ? "center" : "space-between",
-      alignItems: "center",
-    }
-  });
-
-  
   return <>
   <Link
-    style={styles.link}
+    style={{flex: 1}}
     href={href}
     asChild
   >
     <Pressable>
       {({ hovered, pressed }) => (
-          <View
-              style={styles.pressArea}
-          >
+          <View style={{flex: 1}}>
             <View
                 style={[
-                  styles.plainButton,
-                  hovered && { backgroundColor: "rgba(0,0,0,0.1)" },
-                  pressed && { backgroundColor: "rgba(0,0,0,0.2)" },
+                  buttonStyle.plainButton,
+                  hovered && buttonStyle.plainButtonHovered, 
+                  pressed && buttonStyle.plainButtonPressed
                 ]}
             >  
               {children} 
-              {arrowVisible && 
+              {chevronStyle && 
                 <View style={{ flexDirection: "row", paddingLeft: 16 }}>
                   <FontAwesome
                       name="chevron-right"
-                      size={buttonSizes[size].chevronSize}
-                      color="#919497"
+                      size={chevronStyle.size}
+                      color={chevronStyle.color}
                   />
                 </View>
               }

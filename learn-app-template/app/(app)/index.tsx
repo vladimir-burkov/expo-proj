@@ -55,6 +55,28 @@ function LessonsList() {
 function LessonItem(props: LessonItemProps) {
   const {id, title, iconName="expeditedssl"} = props;
 
+  const buttonStyle = StyleSheet.create({
+    plainButton: {
+      flex: 1,
+      transitionDuration: "200ms",
+      flexDirection: "row",
+      alignItems: 'center',
+      paddingLeft: 20,
+      paddingRight: 16
+    },
+    plainButtonHovered: {
+      backgroundColor: "rgba(0,0,0,0.1)"
+    },
+    plainButtonPressed: {
+      backgroundColor: "rgba(0,0,0,0.1)"
+    },
+  });
+
+  const chevronStyle = {
+    size: 16,
+    color: "#919497"
+  };
+
   return <>
     <LinkButton
       href={{
@@ -63,8 +85,8 @@ function LessonItem(props: LessonItemProps) {
           lesson: id,
         },
       }}
-      arrowVisible={true}
-      size={"medium"}
+      buttonStyle={buttonStyle}
+      chevronStyle={chevronStyle}
     >
       <View style={styles.lessonButtonContent}>
         <FontAwesome style={styles.lessonButtonIcon} name={iconName} size={20} color="black" />
@@ -78,8 +100,6 @@ function LessonItem(props: LessonItemProps) {
 const styles = StyleSheet.create({
   scrollView: {
     maxWidth: 960,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
     flexDirection: "row",
     flexWrap: "wrap",
     marginHorizontal: "auto",
@@ -104,7 +124,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 16,
     flex: 1,
-    minHeight: 60,
+    minHeight: 65,
   },
   separator: {
     borderTopColor: '#eee',

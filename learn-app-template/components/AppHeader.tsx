@@ -54,47 +54,64 @@ export function HeaderButton() {
 
 function MenuLinks() {
 
+  const buttonStyle = StyleSheet.create({
+    plainButton: {
+      flex: 1,
+      transitionDuration: "200ms",
+      flexDirection: "row",
+      alignItems: 'center',
+      paddingLeft: 20,
+      paddingRight: 24,
+      borderRadius: 8
+    },
+    plainButtonHovered: {
+      backgroundColor: "rgba(255, 255, 255, 0.6)"
+    },
+    plainButtonPressed: {
+      backgroundColor: "rgba(255, 255, 255, 0.6)"
+    },
+  });
+
+
+  const buttonStyleOutline = {...buttonStyle,  plainButton: {...buttonStyle.plainButton, borderWidth: 2, borderColor: "#bea7ff"}}
+
   return <>
     <View style={styles.menuLinksList}>
       <LinkButton 
         href={{pathname: "/auth"}} 
-        center={true}
-        size='medium'
+        buttonStyle={buttonStyle}
       >
         <View style={styles.buttonContent}>
-        <MaterialCommunityIcons name="login-variant" size={20} color="black" />
-          <Text>Войти/Регистрация</Text>
-        </View>
-      </LinkButton>
-      <LinkButton 
-        href={{pathname: "/buy"}} 
-        type="primary" 
-        center={true}
-        size='medium'
-      >
-        <View style={styles.buttonContent}>
-          <MaterialIcons name="attach-money" size={20} color="white" />
-          <Text style={{color: 'white'}}>Купить PREMIUM план</Text>
+        <MaterialCommunityIcons name="login-variant" size={20} color="white" />
+          <Text style={styles.buttonText}>Войти/Регистрация</Text>
         </View>
       </LinkButton>
       <LinkButton 
         href={{pathname: "/buy"}}
-        center={true}
-        size='medium'
+        buttonStyle={buttonStyleOutline} 
+      >
+        <View style={styles.buttonContent}>
+          <MaterialIcons name="attach-money" size={20} color="#bea7ff" />
+          <Text style={{color: '#bea7ff', fontWeight: '800'}}>Купить PREMIUM план</Text>
+        </View>
+      </LinkButton>
+      <LinkButton 
+        href={{pathname: "/buy"}}
+        buttonStyle={buttonStyle} 
+
       >
           <View style={styles.buttonContent}>
-            <MaterialIcons name="wallet-giftcard" size={20} color="black" />
-            <Text>Промо код</Text>
+            <MaterialIcons name="wallet-giftcard" size={20} color="white" />
+            <Text style={styles.buttonText}>Промо код</Text>
           </View>
       </LinkButton>
       <LinkButton 
         href={{pathname: "/contact"}}
-        center={true}
-        size='medium'
+        buttonStyle={buttonStyle} 
       >
           <View style={styles.buttonContent}>
-          <MaterialIcons name="mail-outline" size={20} color="black" />            
-          <Text>Поддержка</Text>
+          <MaterialIcons name="mail-outline" size={20} color="white" />            
+          <Text style={styles.buttonText}>Поддержка</Text>
           </View>
       </LinkButton>  
     </View>
@@ -146,23 +163,20 @@ const styles = StyleSheet.create({
     fontWeight: 500,    
     left: 16
   },
-  headerNotificationBar: {
-    backgroundColor:'#f9f2d7',
-    fontSize: 14,
-    padding: 4
-  },
   headerButton: {
     paddingLeft: 16,
     alignItems: 'center',
     color: 'white'
   },
   buttonContent: {
-    flex: 1,
-    gap: 12,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    fontWeight: 400
+    gap: 16,
+    flex: 1,
+    minHeight: 45,
+  },
+  buttonText: {
+    color: "white"
   },
   menuLinksList: {
     gap: 12,
