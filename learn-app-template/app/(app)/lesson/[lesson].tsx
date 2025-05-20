@@ -1,16 +1,22 @@
+import LinkButton from "@/components/core/LinkButton";
 import Loader from "@/components/core/Loader";
 import { useLessons } from "@/context/LessonsContext";
 import { loadEncryptedMarkdown } from "@/lib/decrypt";
 import { AntDesign } from "@expo/vector-icons";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { FlatList, ScrollView, StyleSheet, View, Text } from "react-native";
 import Markdown from "react-native-markdown-display";
 
 type LessonTheoryProps = {
   lessonId: string
 }
+
+type PracticeItemProps = {
+  id: string,
+  title: string  
+};
 
 const Tab = createBottomTabNavigator();
 
@@ -70,7 +76,7 @@ export default function Lesson() {
 
         <Tab.Screen
           name="practice"
-          component={LessonPractice}
+          children={() => <LessonPractice lessonId={lesson as string} />}
           options={{
             title: "Практика",
             tabBarIcon: ({focused}: {focused: boolean}) => (
@@ -83,14 +89,78 @@ export default function Lesson() {
   );
 }
 
+type LessonPracticeProps = {
+  lessonId: string,
+};
 
-function LessonPractice () {
+function LessonPractice ({ lessonId }: LessonPracticeProps) {
+  const { lessonsById } = useLessons();
+  const { practicies } = lessonsById[lessonId];
+
   return (
-    <View>
-      Practice
-      {/* here supposed to be a list of links to practice exercises  */}
-    </View>
-  )
+      <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          contentContainerStyle={[styles.scrollView]}
+      >
+        <FlatList
+          data={practicies}
+          renderItem={({ item }) => (
+            <PrecticeItem 
+              id={item.id} 
+              title={item.title} 
+            />)
+          }
+          keyExtractor={(item) => item.id}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+        />
+      </ScrollView>
+  );
+}
+
+function PrecticeItem(props: PracticeItemProps) {
+  
+  const {id, title} = props;
+
+  const buttonStyle = StyleSheet.create({
+    plainButton: {
+      flex: 1,
+      transitionDuration: "200ms",
+      flexDirection: "row",
+      alignItems: 'center',
+      paddingLeft: 20,
+      paddingRight: 16
+    },
+    plainButtonHovered: {
+      backgroundColor: "rgba(0,0,0,0.1)"
+    },
+    plainButtonPressed: {
+      backgroundColor: "rgba(0,0,0,0.1)"
+    },
+  });
+
+  const chevronStyle = {
+    size: 16,
+    color: "#919497"
+  };
+
+  return <>
+    <LinkButton
+      href={{
+        pathname: "/(app)/lesson/[lesson]/practice/[practice]",
+        params: {
+          lesson: id,
+          practice: id
+        },
+      }}
+      buttonStyle={buttonStyle}
+      chevronStyle={chevronStyle}
+    >
+      <View style={styles.practiceButtonContent}>
+        <AntDesign name="loading1" size={24} color="green" />        
+        <Text style={styles.practiceButtonText}>{title}</Text>
+      </View>
+    </LinkButton>
+  </>
 }
 
 function LessonVocabulary () {
@@ -122,7 +192,8 @@ function LessonTheory({ lessonId }: LessonTheoryProps) {
     <>
       {!loading && 
         <ScrollView contentContainerStyle={styles.container} contentInsetAdjustmentBehavior="automatic">
-          <Markdown style={styles.markdownStyle}>{markdownContent}</Markdown>
+          <Markdown>{markdownContent}</Markdown>
+          {/* //style={styles.markdownStyle} */}
         </ScrollView>
       }
       <Loader loading={loading}/>
@@ -147,7 +218,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginHorizontal: "auto",
   },
-  markdownStyle: {
-    
-  }
+  scrollView: {
+    maxWidth: 960,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginHorizontal: "auto",
+    backgroundColor: "white"
+  },
+  separator: {
+    borderTopColor: '#eee',
+    borderTopWidth: 1
+  },
+  practiceButtonContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 16,
+    flex: 1,
+    minHeight: 65,
+  },
+  practiceButtonText: {
+    textAlign: "left",
+    fontWeight: 400,
+    fontSize: 16,
+  },
 });
+

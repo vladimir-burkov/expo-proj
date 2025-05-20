@@ -8,7 +8,7 @@ export type Lesson = {
   icon?: keyof typeof FontAwesome.glyphMap;
   article_url: string;
   vocabulary_url: string;
-  practice: Practice[];
+  practicies: Practice[];
 };
 
 export type Practice = {
@@ -34,7 +34,7 @@ const initialLessons: Lesson[] = [
     icon: 'book',
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
-    practice: [{
+    practicies: [{
       id: 'test',
       title: "Practice",
       url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
@@ -46,7 +46,7 @@ const initialLessons: Lesson[] = [
     icon: 'book', 
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
-    practice: [{
+    practicies: [{
       id: 'test',
       title: "Practice",
       url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
@@ -58,7 +58,7 @@ const initialLessons: Lesson[] = [
     icon: 'book', 
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
-    practice: [{
+    practicies: [{
       id: 'test',
       title: "Practice",
       url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
@@ -70,7 +70,7 @@ const initialLessons: Lesson[] = [
     icon: 'book', 
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
-    practice: [{
+    practicies: [{
       id: 'test',
       title: "Practice",
       url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
@@ -82,7 +82,7 @@ const initialLessons: Lesson[] = [
     icon: 'book', 
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
-    practice: [{
+    practicies: [{
       id: 'test',
       title: "Practice",
       url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
@@ -94,7 +94,7 @@ const initialLessons: Lesson[] = [
     icon: 'file-text-o', 
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
-    practice: [{
+    practicies: [{
       id: 'test',
       title: "Practice",
       url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
@@ -106,7 +106,7 @@ const initialLessons: Lesson[] = [
     icon: 'file-text-o', 
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
-    practice: [{
+    practicies: [{
       id: 'test',
       title: "Practice",
       url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
@@ -118,7 +118,7 @@ const initialLessons: Lesson[] = [
     icon: 'comments-o', 
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
-    practice: [{
+    practicies: [{
       id: 'test',
       title: "Practice",
       url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
@@ -130,7 +130,7 @@ const initialLessons: Lesson[] = [
     icon: 'book', 
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
-    practice: [{
+    practicies: [{
       id: 'test',
       title: "Practice",
       url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
@@ -141,7 +141,7 @@ const initialLessons: Lesson[] = [
     title: 'Числа и числительные, Числа и числительные', 
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
-    practice: [{
+    practicies: [{
       id: 'test',
       title: "Practice",
       url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
@@ -152,7 +152,7 @@ const initialLessons: Lesson[] = [
     title: 'Area on\nthe map', 
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabulary_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
-    practice: [{
+    practicies: [{
       id: 'test',
       title: "Practice",
       url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc'
