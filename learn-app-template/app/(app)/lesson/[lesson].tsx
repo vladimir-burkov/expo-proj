@@ -14,6 +14,7 @@ type LessonTheoryProps = {
 }
 
 type PracticeItemProps = {
+  lessonId: string,
   id: string,
   title: string  
 };
@@ -105,7 +106,8 @@ function LessonPractice ({ lessonId }: LessonPracticeProps) {
         <FlatList
           data={practicies}
           renderItem={({ item }) => (
-            <PrecticeItem 
+            <PrecticeItem
+              lessonId={lessonId}
               id={item.id} 
               title={item.title} 
             />)
@@ -119,7 +121,7 @@ function LessonPractice ({ lessonId }: LessonPracticeProps) {
 
 function PrecticeItem(props: PracticeItemProps) {
   
-  const {id, title} = props;
+  const {lessonId, id, title} = props;
 
   const buttonStyle = StyleSheet.create({
     plainButton: {
@@ -148,7 +150,7 @@ function PrecticeItem(props: PracticeItemProps) {
       href={{
         pathname: "/(app)/lesson/[lesson]/practice/[practice]",
         params: {
-          lesson: id,
+          lesson: lessonId,
           practice: id
         },
       }}

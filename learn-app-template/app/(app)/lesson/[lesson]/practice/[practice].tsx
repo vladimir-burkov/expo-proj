@@ -5,14 +5,14 @@ import { useLessons } from '@/context/LessonsContext';
 
 export default function Practice() {
 
-    const params = useLocalSearchParams();
+    const {lesson, practice: practiceId} = useLocalSearchParams();
     const navigation = useNavigation();
     const { lessonsById } = useLessons();
-  
+
     useEffect(() => {
-      console.log(params);
+      console.log(lesson, practiceId);
       
-      // const { title } = lessonsById[lesson as string];
+      // const { practice } = lessonsById[lesson as string];
   
       navigation.setOptions({
         // title,
@@ -23,7 +23,7 @@ export default function Practice() {
           whiteSpace: 'initial'
         },
       });
-    }, [params]);
+    }, []);
     
   return (
     <View>
