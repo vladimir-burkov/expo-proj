@@ -74,7 +74,7 @@ function MenuLinks() {
   });
 
 
-  const buttonStyleOutline = {...buttonStyle,  plainButton: {...buttonStyle.plainButton, borderWidth: 2, borderColor: "#c215f0"}}
+  const buttonStyleOutline = {...buttonStyle,  plainButton: {...buttonStyle.plainButton, borderWidth: 2, borderColor: "#c215f0", backgroundColor: "#684bbc52"}}
 
   return <>
     <View style={styles.menuLinksList}>
@@ -92,7 +92,6 @@ function MenuLinks() {
         buttonStyle={buttonStyleOutline} 
       >
         <View style={styles.buttonContent}>
-          {/* <MaterialIcons name="attach-money" size={20} color="#7fff00" /> */}
           <MaterialIcons name="workspace-premium" size={20} color="#7fff00" />
           <Text style={{color: '#7fff00', fontWeight: '800'}}>Купить PREMIUM план</Text>
         </View>

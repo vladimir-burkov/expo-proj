@@ -1,7 +1,30 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useLocalSearchParams, useNavigation } from 'expo-router';
+import { useLessons } from '@/context/LessonsContext';
 
 export default function Practice() {
+
+    const params = useLocalSearchParams();
+    const navigation = useNavigation();
+    const { lessonsById } = useLessons();
+  
+    useEffect(() => {
+      console.log(params);
+      
+      // const { title } = lessonsById[lesson as string];
+  
+      navigation.setOptions({
+        // title,
+        title: 'Practice title',
+        headerTitleStyle: {
+          fontSize: 14,
+          fontWeight: 'bold',
+          whiteSpace: 'initial'
+        },
+      });
+    }, [params]);
+    
   return (
     <View>
       <Text>practice</Text>
