@@ -5,18 +5,16 @@ import { useLessons } from '@/context/LessonsContext';
 
 export default function Practice() {
 
-    const {lesson, practice: practiceId} = useLocalSearchParams();
+    const {practice: practiceId} = useLocalSearchParams();
     const navigation = useNavigation();
-    const { lessonsById } = useLessons();
+    const { practiciesById } = useLessons();
 
     useEffect(() => {
-      console.log(lesson, practiceId);
       
-      // const { practice } = lessonsById[lesson as string];
+      const practice = practiciesById[practiceId as string];
   
       navigation.setOptions({
-        // title,
-        title: 'Practice title',
+        title: practice.title,
         headerTitleStyle: {
           fontSize: 14,
           fontWeight: 'bold',

@@ -14,7 +14,6 @@ type LessonTheoryProps = {
 }
 
 type PracticeItemProps = {
-  lessonId: string,
   id: string,
   title: string  
 };
@@ -95,8 +94,7 @@ type LessonPracticeProps = {
 };
 
 function LessonPractice ({ lessonId }: LessonPracticeProps) {
-  const { lessonsById } = useLessons();
-  const { practicies } = lessonsById[lessonId];
+  const { practicies } = useLessons();
 
   return (
       <ScrollView
@@ -106,8 +104,7 @@ function LessonPractice ({ lessonId }: LessonPracticeProps) {
         <FlatList
           data={practicies}
           renderItem={({ item }) => (
-            <PrecticeItem
-              lessonId={lessonId}
+            <PracticeItem
               id={item.id} 
               title={item.title} 
             />)
@@ -119,9 +116,9 @@ function LessonPractice ({ lessonId }: LessonPracticeProps) {
   );
 }
 
-function PrecticeItem(props: PracticeItemProps) {
+function PracticeItem(props: PracticeItemProps) {
   
-  const {lessonId, id, title} = props;
+  const {id, title} = props;
 
   const buttonStyle = StyleSheet.create({
     plainButton: {
@@ -148,9 +145,8 @@ function PrecticeItem(props: PracticeItemProps) {
   return <>
     <LinkButton
       href={{
-        pathname: "/(app)/lesson/[lesson]/practice/[practice]",
+        pathname: "/(app)/lesson/practice/[practice]",
         params: {
-          lesson: lessonId,
           practice: id
         },
       }}
