@@ -1,6 +1,6 @@
 import LinkButton from "@/components/core/LinkButton";
 import Loader from "@/components/core/Loader";
-import { useLessons } from "@/context/LessonsContext";
+import { Practice, useLessons, Vocabulary } from "@/context/LessonsContext";
 import { loadEncryptedMarkdown } from "@/lib/decrypt";
 import { AntDesign } from "@expo/vector-icons";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -23,10 +23,12 @@ const Tab = createBottomTabNavigator();
 export default function Lesson() {
   const { lesson } = useLocalSearchParams();
   const navigation = useNavigation();
-  const { lessonsById } = useLessons();
+  const { lessonsById, practiciesById, vocabulariesById} = useLessons();
+  const [ practicies, setPracticies ] = useState<Practice[]>([]);
+  const [ vocabulary, setVocabulary ] = useState<{[key: string] : string}>({});
 
   useEffect(() => {
-    const { title } = lessonsById[lesson as string];
+    const { title, vocabularyId, practiceIds } = lessonsById[lesson as string];
 
     navigation.setOptions({
       title,
@@ -36,6 +38,10 @@ export default function Lesson() {
         whiteSpace: 'initial'
       },
     });
+
+    setPracticies(practiceIds.map((id) => practiciesById[id]) || []);
+    setVocabulary(vocabulariesById[vocabularyId] || {})
+    
   }, [lesson]);
 
   return (
@@ -65,7 +71,7 @@ export default function Lesson() {
 
         <Tab.Screen
           name="vocabulary"
-          component={LessonVocabulary}
+          children={() => <LessonVocabulary vocabulary={vocabulary} />}
           options={{
             title: "Словарь",
             tabBarIcon: ({focused}: {focused: boolean}) => (
@@ -76,7 +82,7 @@ export default function Lesson() {
 
         <Tab.Screen
           name="practice"
-          children={() => <LessonPractice lessonId={lesson as string} />}
+          children={() => <LessonPractice practicies={practicies} />}
           options={{
             title: "Практика",
             tabBarIcon: ({focused}: {focused: boolean}) => (
@@ -90,11 +96,10 @@ export default function Lesson() {
 }
 
 type LessonPracticeProps = {
-  lessonId: string,
+  practicies: Practice[],
 };
 
-function LessonPractice ({ lessonId }: LessonPracticeProps) {
-  const { practicies } = useLessons();
+function LessonPractice ({ practicies }: LessonPracticeProps) {
 
   return (
       <ScrollView
@@ -161,11 +166,31 @@ function PracticeItem(props: PracticeItemProps) {
   </>
 }
 
-function LessonVocabulary () {
+
+function LessonVocabulary ({vocabulary}: {vocabulary: {[key: string] : string}}) {
+  
+  const data = Object.entries(vocabulary).map(([word, translation]) => ({
+    key: word,
+    word,
+    translation: translation
+  }));
+
+  
+
+  const renderItem = ({ item }: { item: { key: string; word: string; translation: string } }) => (
+    <View style={vocabularyStyles.row}>
+      <Text style={vocabularyStyles.cell}>{item.word}</Text>
+      <Text style={vocabularyStyles.cell}>{item. translation}</Text>
+    </View>
+  );
+
   return (
-    <View>
-      Vocabulary
-      {/* here supposed to be a list of links to practice exercises  */}
+    <View style={vocabularyStyles.container}>
+      <View style={[vocabularyStyles.row, vocabularyStyles.headerRow]}>
+        <Text style={vocabularyStyles.headerCell}>Слово</Text>
+        <Text style={vocabularyStyles.headerCell}>Перевод</Text>
+      </View>
+      <FlatList data={data} renderItem={renderItem} />
     </View>
   )
 }
@@ -241,3 +266,33 @@ const styles = StyleSheet.create({
   },
 });
 
+const vocabularyStyles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 20,
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+    textAlign: "center"
+  },
+  row: {
+    flexDirection: "row",
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    paddingVertical: 8
+  },
+  cell: {
+    flex: 1,
+    fontSize: 14,
+    paddingHorizontal: 4
+  },
+  headerRow: {
+    borderBottomWidth: 2,
+  },
+  headerCell: {
+    flex: 1,
+    fontSize: 16,
+    fontWeight: "bold"
+  }
+});

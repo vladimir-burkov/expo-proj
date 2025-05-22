@@ -8,7 +8,7 @@ export async function loadEncryptedMarkdown(url: string) {
   const bytes = CryptoJS.AES.decrypt(encryptedText, key);
   const decrypted = bytes.toString(CryptoJS.enc.Utf8);
 
-  console.log('Decrypted Markdown:', decrypted);
+  // console.log('Decrypted Markdown:', decrypted);
 
   return decrypted;
 }
