@@ -49,7 +49,7 @@ export default function Lesson() {
       <Tab.Navigator
         screenOptions={{
           tabBarLabelStyle: { fontWeight: "bold", fontSize: 12 },
-          tabBarActiveTintColor: "#000",
+          tabBarActiveTintColor: "#fff",
           tabBarInactiveTintColor: "#999",
           // tabBarLabelPosition: "beside-icon",
           headerShown: false,
@@ -57,7 +57,7 @@ export default function Lesson() {
             height: 22
           },
           tabBarStyle: {
-            backgroundColor: "#f6f6f6",
+            backgroundColor: "#464c55",
             borderColor: "lightgray",
             // borderTopWidth: 
           }
@@ -69,7 +69,7 @@ export default function Lesson() {
           options={{
             title: "Теория",
             tabBarIcon: ({focused}: {focused: boolean}) => (
-              <AntDesign name="book" size={16} color={focused ? "black" : 'darkgray'} />
+              <AntDesign name="book" size={16} color={focused ? "white" : 'darkgray'} />
             ),
           }}
         />
@@ -80,7 +80,7 @@ export default function Lesson() {
           options={{
             title: "Словарь",
             tabBarIcon: ({focused}: {focused: boolean}) => (
-              <AntDesign name="swap" size={16} style={{height: 16}} color={focused ? "black" : 'darkgray'} />
+              <AntDesign name="swap" size={16} style={{height: 16}} color={focused ? "white" : 'darkgray'} />
             ),
           }}
         />
@@ -91,7 +91,7 @@ export default function Lesson() {
           options={{
             title: "Практика",
             tabBarIcon: ({focused}: {focused: boolean}) => (
-              <AntDesign name="form" size={16} color={focused ? "black" : 'darkgray'} />
+              <AntDesign name="form" size={16} color={focused ? "white" : 'darkgray'} />
             ),
           }}
         />
@@ -113,6 +113,7 @@ function LessonPractice ({ practicies }: LessonPracticeProps) {
       >
         <FlatList
           data={practicies}
+          style={{width: "100%"}}
           renderItem={({ item }) => (
             <PracticeItem
               id={item.id} 
@@ -245,10 +246,7 @@ const styles = StyleSheet.create({
     marginHorizontal: "auto",
   },
   scrollView: {
-    maxWidth: 960,
-    flexDirection: "row",
     flexWrap: "wrap",
-    marginHorizontal: "auto",
     backgroundColor: "white"
   },
   separator: {

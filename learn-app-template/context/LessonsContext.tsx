@@ -115,13 +115,13 @@ const initialVocabulary: Vocabulary = {
 const initialPracticies: Practicies = {
   abctest: {
     id: 'abctest',
-    title: "Vocabulary",
+    title: "Слова",
     url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     type: "vocabulary"
   },
   nountest: {
     id: 'nountest',
-    title: "Test",
+    title: "Тесты",
     url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     type: "input",
     tasksTmp: [
