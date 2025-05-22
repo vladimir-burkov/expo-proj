@@ -166,16 +166,12 @@ function PracticeItem(props: PracticeItemProps) {
   </>
 }
 
-
 function LessonVocabulary ({vocabulary}: {vocabulary: {[key: string] : string}}) {
-  
   const data = Object.entries(vocabulary).map(([word, translation]) => ({
     key: word,
     word,
     translation: translation
   }));
-
-  
 
   const renderItem = ({ item }: { item: { key: string; word: string; translation: string } }) => (
     <View style={vocabularyStyles.row}>
@@ -185,13 +181,14 @@ function LessonVocabulary ({vocabulary}: {vocabulary: {[key: string] : string}})
   );
 
   return (
-    <View style={vocabularyStyles.container}>
+    
+    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={vocabularyStyles.container}>
       <View style={[vocabularyStyles.row, vocabularyStyles.headerRow]}>
         <Text style={vocabularyStyles.headerCell}>Слово</Text>
         <Text style={vocabularyStyles.headerCell}>Перевод</Text>
       </View>
       <FlatList data={data} renderItem={renderItem} />
-    </View>
+    </ScrollView>
   )
 }
 
