@@ -48,7 +48,7 @@ export default function Lesson() {
     <>
       <Tab.Navigator
         screenOptions={{
-          tabBarLabelStyle: { fontWeight: "bold" },
+          tabBarLabelStyle: { fontWeight: "bold", fontSize: 12 },
           tabBarActiveTintColor: "#000",
           tabBarInactiveTintColor: "#999",
           // tabBarLabelPosition: "beside-icon",
@@ -69,7 +69,7 @@ export default function Lesson() {
           options={{
             title: "Теория",
             tabBarIcon: ({focused}: {focused: boolean}) => (
-              <AntDesign name="form" size={16} color={focused ? "black" : 'darkgray'} />
+              <AntDesign name="book" size={16} color={focused ? "black" : 'darkgray'} />
             ),
           }}
         />
@@ -216,9 +216,9 @@ function LessonTheory({ lessonId }: LessonTheoryProps) {
   return (
     <>
       {!loading && 
-        <ScrollView contentContainerStyle={styles.container} contentInsetAdjustmentBehavior="automatic">
+      // style={{ backgroundColor: '#f0f0f0' }}
+        <ScrollView style={styles.container}>
           <Markdown>{markdownContent}</Markdown>
-          {/* //style={styles.markdownStyle} */}
         </ScrollView>
       }
       <Loader loading={loading}/>
@@ -228,6 +228,7 @@ function LessonTheory({ lessonId }: LessonTheoryProps) {
 
 
 const styles = StyleSheet.create({
+
   title: {
     fontWeight: "bold",
     fontSize: 36,
@@ -236,7 +237,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: 'white'
+    backgroundColor: "#ffff"
   },
   main: {
     flex: 1,
@@ -273,12 +274,6 @@ const vocabularyStyles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: "white"
   },
-  header: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-    textAlign: "center"
-  },
   row: {
     flexDirection: "row",
     borderBottomWidth: 1,
@@ -295,7 +290,7 @@ const vocabularyStyles = StyleSheet.create({
   },
   headerCell: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold"
   }
 });
