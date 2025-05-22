@@ -55,6 +55,11 @@ export default function Lesson() {
           headerShown: false,
           tabBarIconStyle: {
             height: 22
+          },
+          tabBarStyle: {
+            backgroundColor: "#f6f6f6",
+            borderColor: "lightgray",
+            // borderTopWidth: 
           }
         }}
       >
@@ -64,7 +69,7 @@ export default function Lesson() {
           options={{
             title: "Теория",
             tabBarIcon: ({focused}: {focused: boolean}) => (
-              <AntDesign name="form" size={16} color={focused ? "black" : 'gray'} />
+              <AntDesign name="form" size={16} color={focused ? "black" : 'darkgray'} />
             ),
           }}
         />
@@ -75,7 +80,7 @@ export default function Lesson() {
           options={{
             title: "Словарь",
             tabBarIcon: ({focused}: {focused: boolean}) => (
-              <AntDesign name="swap" size={16} style={{height: 16}} color={focused ? "black" : 'gray'} />
+              <AntDesign name="swap" size={16} style={{height: 16}} color={focused ? "black" : 'darkgray'} />
             ),
           }}
         />
@@ -86,7 +91,7 @@ export default function Lesson() {
           options={{
             title: "Практика",
             tabBarIcon: ({focused}: {focused: boolean}) => (
-              <AntDesign name="form" size={16} color={focused ? "black" : 'gray'} />
+              <AntDesign name="form" size={16} color={focused ? "black" : 'darkgray'} />
             ),
           }}
         />
@@ -182,7 +187,7 @@ function LessonVocabulary ({vocabulary}: {vocabulary: {[key: string] : string}})
 
   return (
     
-    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={vocabularyStyles.container}>
+    <ScrollView contentContainerStyle={vocabularyStyles.container}>
       <View style={[vocabularyStyles.row, vocabularyStyles.headerRow]}>
         <Text style={vocabularyStyles.headerCell}>Слово</Text>
         <Text style={vocabularyStyles.headerCell}>Перевод</Text>
@@ -266,6 +271,7 @@ const styles = StyleSheet.create({
 const vocabularyStyles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
+    backgroundColor: "white"
   },
   header: {
     fontSize: 24,
@@ -276,7 +282,7 @@ const vocabularyStyles = StyleSheet.create({
   row: {
     flexDirection: "row",
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderBottomColor: "#dedbdb",
     paddingVertical: 8
   },
   cell: {
