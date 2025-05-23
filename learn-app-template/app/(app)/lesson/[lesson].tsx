@@ -1,6 +1,6 @@
 import LinkButton from "@/components/core/LinkButton";
 import Loader from "@/components/core/Loader";
-import { useLessons } from "@/context/LessonsContext";
+import { IPracticeConfig, useLessons } from "@/context/LessonsContext";
 import { loadEncryptedMarkdown } from "@/lib/decrypt";
 import { AntDesign } from "@expo/vector-icons";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -19,6 +19,12 @@ type PracticeLink = {
   href: any
 }
 
+type LinkParams = {
+  id: string,
+  title: string, 
+  isVocabulary: boolean
+}
+
 const Tab = createBottomTabNavigator();
 
 export default function LessonPage() {
@@ -35,10 +41,23 @@ export default function LessonPage() {
     setupHeader(title);
     setupPractice(practiceConfig);
     setVocabulary(vocabulariesById[vocabularyId] || {})
-    
   }, [lesson]);
 
-  function setupHeader(title: string) {
+  const makeLink = (id: string, title: string, type: string) => {
+    return {
+        practiceId: id,
+        title: title,
+        href: {
+          pathname: '/(app)/lesson/practice/[practice]',
+          params: {
+            practice: id,
+            type: type,
+          },
+        },
+      }
+  }
+
+  const setupHeader = (title: string) => {
     navigation.setOptions({
       title,
       headerTitleStyle: {
@@ -49,21 +68,32 @@ export default function LessonPage() {
     });
   }
 
-  function setupPractice(practiceConfig: any) {
+  const setupPractice = (practiceConfig: IPracticeConfig) => {
     const links: PracticeLink[] = [];
 
     if (practiceConfig.vocabularId) {
-      links.push({
-        practiceId: practiceConfig.vocabularId,
-        title: 'Словарь',
-        href: {
-          pathname: '/(app)/lesson/practice/[practice]',
-          params: {
-            practice: practiceConfig.vocabularId,
-            vocabulary: true,
-          },
-        },
-      });
+      links.push(makeLink(practiceConfig.vocabularId, "Словарь", 'vocabular'));
+    }
+    
+    const otherTaskIds = [...practiceConfig.testIds, ...practiceConfig.orderIds, ...practiceConfig.inputIds]
+
+    if (otherTaskIds.length) {
+      otherTaskIds.forEach(practiceId => {
+        const practice = practiciesById[practiceId];
+
+        if (practiceConfig.testIds.includes(practiceId)) {
+          links.push(makeLink(practiceId, `${practiceConfig.orderIds.length && practiceConfig.inputIds.length ? "Уровень 1: " : ""}${practice.title}`, 'test'));
+        }
+
+        if (practiceConfig.orderIds.includes(practiceId)) {
+          links.push(makeLink(practiceId, `Уровень 2: ${practice.title}`, 'order'));
+        }
+
+        if (practiceConfig.inputIds.includes(practiceId)) {
+          links.push(makeLink(practiceId, `Уровень 3: ${practice.title}`, 'input'));
+        }
+
+      })
     }
 
     setPracticeLinks(links);
@@ -83,7 +113,7 @@ export default function LessonPage() {
             height: 22
           },
           tabBarStyle: {
-            backgroundColor: "#464c55",
+            backgroundColor: "#25292e",
             borderColor: "lightgray",
             // borderTopWidth: 
           }
@@ -202,7 +232,7 @@ function LessonVocabulary ({vocabulary}: {vocabulary: {[key: string] : string}})
   const renderItem = ({ item }: { item: { key: string; word: string; translation: string } }) => (
     <View style={vocabularyStyles.row}>
       <Text style={vocabularyStyles.cell}>{item.word}</Text>
-      <Text style={vocabularyStyles.cell}>{item. translation}</Text>
+      <Text style={vocabularyStyles.cell}>{item.translation}</Text>
     </View>
   );
 

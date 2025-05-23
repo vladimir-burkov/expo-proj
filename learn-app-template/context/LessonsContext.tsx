@@ -248,9 +248,9 @@ const initialLessons: Lessons = {
     vocabularyId: 'voc1',
     practiceConfig: {
       vocabularId: 'voc1',
-      inputIds: ['ai'],
       testIds: ['ai'],
-      orderIds: ['ai']
+      orderIds: [],
+      inputIds: [],
     }
   },
   noun: {
@@ -262,7 +262,7 @@ const initialLessons: Lessons = {
     practiceConfig: {
       vocabularId: 'voc2',
       inputIds: [],
-      testIds: [],
+      testIds: ['ai'],
       orderIds: []
     }
   },
