@@ -32,41 +32,43 @@ export default function LessonPage() {
   useEffect(() => {
     const { title, vocabularyId, practiceConfig } = lessonsById[lesson as string];
     
-    //////////setup header
+    setupHeader(title);
+    setupPractice(practiceConfig);
+    setVocabulary(vocabulariesById[vocabularyId] || {})
+    
+  }, [lesson]);
+
+  function setupHeader(title: string) {
     navigation.setOptions({
       title,
       headerTitleStyle: {
         fontSize: 14,
         fontWeight: 'bold',
-        whiteSpace: 'initial'
+        whiteSpace: 'initial',
       },
     });
+  }
 
-    /////setup practice
+  function setupPractice(practiceConfig: any) {
     const links: PracticeLink[] = [];
 
     if (practiceConfig.vocabularId) {
-      const vocLink = {
+      links.push({
         practiceId: practiceConfig.vocabularId,
-        title: "Словарь",
+        title: 'Словарь',
         href: {
-          pathname: "/(app)/lesson/practice/[practice]",
+          pathname: '/(app)/lesson/practice/[practice]',
           params: {
             practice: practiceConfig.vocabularId,
-            vocabulary: true
+            vocabulary: true,
           },
-        }
-      }
-
-      links.push(vocLink);
+        },
+      });
     }
 
     setPracticeLinks(links);
+  }
 
-    ////setup vocabulary
-    setVocabulary(vocabulariesById[vocabularyId] || {})
-    
-  }, [lesson]);
 
   return (
     <>
