@@ -5,47 +5,52 @@ import { ITask, useLessons } from '@/context/LessonsContext';
 
 export default function Practice() {
 
-    const {practice: practiceId, vocabulary} = useLocalSearchParams();
+    const {practice: practiceId, type} = useLocalSearchParams();
+    const { practiciesById, vocabulariesById } = useLessons();
+    const [tasks, setTasks] = useState<ITask[]>([]);
+    const [solved, setSolved] = useState<number[]>([]);
+    const [current, setCurrent] = useState<number>(0);
+
     const navigation = useNavigation();
 
-    console.log(practiceId, vocabulary);
+    const setRandomCurrent = () => {
+      const tasksToSolve = Object.keys(tasks).map(Number).filter(item => !solved.includes(item))
+      const randomUnsolvedIndex = Math.floor(Math.random() * tasksToSolve.length);
+      setCurrent(randomUnsolvedIndex);
+    }
     
-    // const { practiciesById, vocabulariesById } = useLessons();
-    // const [tasks, setTasks] = useState<Task[]>([]);
-    // const [unsolved, setUnsolved] = useState<number[]>([]);
-    // const [current, setCurrent] = useState<number>(0);
+    useEffect(() => {
+      let title = "";
 
-    // useEffect(() => {
-      
-    //   const practice = practiciesById[practiceId as string];
-  
-    //   navigation.setOptions({
-    //     title: practice.title,
-    //     headerTitleStyle: {
-    //       fontSize: 14,
-    //       fontWeight: 'bold',
-    //       whiteSpace: 'initial'
-    //     },
-    //   });
+      if (type == "vocabular") {
+        title = "Словарь";
+        const vocabulary = vocabulariesById[practiceId as string];
+        const tasksList = Object.entries(vocabulary).map(([word, translation]) => ({
+          answer: word,
+          question: translation
+        }));
+        setTasks(tasksList);
 
-    //   if (practice.type == 'vocabulary' && practice.vocabularyId) {
-    //     const vocabulary = vocabulariesById[practice.vocabularyId];
+      } else {
+        const practice = practiciesById[practiceId as string];
+        title = practice.title;
+        setTasks(practice.tasks);
+      }
 
-    //     const tasksList = Object.entries(vocabulary).map(([word, translation]) => ({
-    //       id: word,
-    //       answer: word,
-    //       question: translation
-    //     }));
+      navigation.setOptions({
+        title: title,
+        headerTitleStyle: {
+          fontSize: 14,
+          fontWeight: 'bold',
+          whiteSpace: 'initial'
+        },
+      });
 
-    //     setTasks(tasksList);
-    //   } else if (practice.tasksTmp) {
-    //     setTasks(practice.tasksTmp);
-    //   }
+      setRandomCurrent();
 
-    //   setUnsolved(tasks.map((value, index) => index));
-    //   setCurrent(Math.floor(Math.random() * tasks.length - 1));
-    // }, []);
+    }, []);
     
+
   return (
     <View>
       <Text>practice</Text>
@@ -54,10 +59,11 @@ export default function Practice() {
 }
 
 
-function Question() {
+function TaskView(task: ITask) {
   return (
     <View>
-      <Text>[practice]</Text>
+      <Text>{task.question}</Text>
+      <Text>{task.answer}</Text>
     </View>
   )
 }
