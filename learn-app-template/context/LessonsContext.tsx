@@ -2,77 +2,66 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import React, { createContext, ReactNode, useContext, useState } from 'react';
 
+
+export type VocabularyData = {
+  [key: string]: {[key: string] : string}
+}
+
+// -----------------------
 export type Lesson = {
-  id: string;
+  lessonid: string;
   title: string;
   icon?: keyof typeof FontAwesome.glyphMap;
   article_url: string;
   vocabularyId: string;
-  practiceIds: string[];
+  practiceConfig: IPracticeConfig;
 };
+export interface IPracticeConfig {
+  vocabularId: string;
+  inputIds: string[];
+  testIds: string[];
+  orderIds: string[];
+}
 
-export type Practice = {
-  id: string;
+// --------------------
+
+export interface IPractice {
+  practiceid: string;
   title: string;
-  url: string;
-  type: "vocabulary" | "input" | "order" | "test";
-  tasksTmp?: Task[];
+  tasks: (ITask | ITestTask)[];
 };
 
-export type Vocabulary = {
-  [key: string]: {[key: string] : string}
-}
-
-
-export type Task = {
-  id: string;
+export interface ITask {
   question: string;
-  answer: string; 
+  answer: string;
 }
-
-export type MatchTask = {
-  id: string;
-  question: string;
-  answer: string; 
-}
-
-
-export type TestTask = {
-  id: string;
-  question: string;
+export interface ITestTask extends ITask{
   options: string[];
-  answer: string; 
 }
 
-
+// ------------------------
 export type Lessons = {
   [key: string]: Lesson;
 };
 
-export type Practicies = {
-  [key: string]: Practice;
+export type PracticiesData = {
+  [key: string]: IPractice;
 };
 
 type LessonContextType = {
   lessons: Lesson[];
-  practicies: Practice[];
+  practicies: IPractice[];
   lessonsById: Lessons;
-  practiciesById: Practicies;
-  vocabulariesById: Vocabulary;
+  practiciesById: PracticiesData;
+  vocabulariesById: VocabularyData;
 };
 
-const initialVocabulary: Vocabulary = {
+const initialVocabulary: VocabularyData = {
   voc1: {
-    "γιορτή": "праздник",
-    "παιδική χαρά": "детская площадка",
     "αιώνας": "век",
-    "αιχμάλωτος": "военнопленный",
-    "αισθητική": "эстетика",
-    "αιθανόλη": "этанол",
     "λαιμός": "горло, шея",
     "αιχμή": "пик, острие",
     "παιδί": "ребенок",
-    "καινούργιος": "новый",
     "δίαιτα": "диета",
     "καιρός": "погода",
     "πλαίσιο": "рама, рамка (контекст)",
@@ -82,15 +71,19 @@ const initialVocabulary: Vocabulary = {
     "αίνιγμα": "загадка, головоломка",
     "αίμα": "кровь",
     "παίρνω": "брать",
-    "αίσθημα": "чувство, ощущение",
-    "μαινόμενος": "яростный",
-    "μαία": "акушерка",
-    "καίω": "гореть, жечь",
     "βεβαίωση": "сертификат, подтверждение",
-    "τσάι": "чай",
-    "μάιος": "май",
     "λάιμ": "лайм",
     "πλάι-πλάι": "бок о бок",
+    "μαϊμού": "обезьяна",
+    "λαϊκός": "народный",
+    "γάϊδαρος": "осёл",
+    "αϊκίντο": "айкидо",
+    "παϊδάκια": "ребрышки",
+    "αιτία": "причина",
+    "αιφνίδιος": "внезапный",
+    "αιμοδοσία": "донорство крови",
+    "αίτηση": "заявление",
+    "αισιοδοξία": "оптимизм"
   },
   voc2: {
     "αγγελτήριο": "приглашение",
@@ -112,115 +105,282 @@ const initialVocabulary: Vocabulary = {
   },
 }
 
-const initialPracticies: Practicies = {
-  abctest: {
-    id: 'abctest',
-    title: "Слова",
-    url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
-    type: "vocabulary"
-  },
-  nountest: {
-    id: 'nountest',
-    title: "Тесты",
-    url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
-    type: "input",
-    tasksTmp: [
+const initialPracticies: PracticiesData = {
+  ai: {
+    practiceid: 'ai',
+    title: "Тест для сочетаний αι, αί, άι, αΐ",
+    tasks: [
       {
-        id: "1",
-        question: "string",
-        answer: "string",
+        question: "αιώνας",
+        answer: "эо́нас",
+        options: ["айо́нас","эона́с","айона́с"]
+      },
+      {
+        question: "λαιμός",
+        answer: "лемо́с",
+        options: ["лаймо́с","лимо́с","ла́ймос"]
+      },
+      {
+        question: "αιχμή",
+        answer: "эхми́",
+        options: ["айхми́","а́ихми"]
+      },
+      {
+        question: "παιδί",
+        answer: "пэ[ð]и́",
+        options: ["пайди́", "пай[ð]и́", "паи[ð]и́"]
+      },
+      {
+        question: "δίαιτα",
+        answer: "[ð]и́ета",
+        options: ["[ð]иа́ита", "[ð]ие́та"]
+      },
+      {
+        question: "καιρός",
+        answer: "керо́с",
+        options: ["кайро́с", "ка́йрос", "кэ́рос"]
+      },
+      {
+        question: "αρχαίος",
+        answer: "архе́ос",
+        options: ["арха́йос", "а́рхеос", "архаё́с"]
+      },
+      {
+        question: "ωραίος",
+        answer: "орэ́ос",
+        options: ["ора́йос","ораи́ос","ораё́с"]
+      },
+      {
+        question: "μαχαίρι",
+        answer: "махе́ри",
+        options: ["махайри","махэри","маха́йри"]
+      },
+      {
+        question: "αίνιγμα",
+        answer: "э́нигма",
+        options: ["эни́гма","аи́нигма","а́йнигма"]
+      },
+      {
+        question: "αίμα",
+        answer: "э́ма",
+        options: ["айма","аи́ма"]
+      },
+      {
+        question: "παίρνω",
+        answer: "пэ́рно",
+        options: [ "паи́рно","пэрно́"]
+      },
+      {
+        question: "βεβαίωση",
+        answer: "вэве́оси",
+        options: ["вева́йоси","веваи́оси"]
+      },
+      {
+        question: "λάιμ",
+        answer: "ла́йм",
+        options: ["лэ́йм","лаи́м"]
+      },
+      {
+        question: "πλάι-πλάι",
+        answer: "пла́й-пла́й",
+        options: ["плэ́й-плэ́й","плаи́-плаи́"]
+      },
+      {
+        question: "μαϊμού",
+        answer: "майму́",
+        options: ["ма́йму","мэму́","маи́му"]
+      },
+      {
+        question: "λαϊκός",
+        answer: "лайко́с",
+        options: ["леко́с","лэ́кос"]
+      },
+      {
+        question: "γάϊδαρος",
+        answer: "га́й[ð]арос",
+        options: ["ге́[ð]арос","гаи[ð]аро́с"]
+      },
+      {
+        question: "αϊκίντο",
+        answer: "айки́до",
+        options: ["айки́нто","айкидо́"]
+      },
+      {
+        question: "παϊδάκια",
+        answer: "пай[ð]а́кия",
+        options: ["пэ[ð]а́кия","пэ[ð]аки́я"]
+      },
+      {
+        question: "αιτία",
+        answer: "эти́я",
+        options: ["аити́я","аитья"]
+      },
+      {
+        question: "αιφνίδιος",
+        answer: "эфни́[ð]иос",
+        options: ["аифни́[ð]иос","эфни́[ð]ио́с"]
+      },
+      {
+        question: "αιμοδοσία",
+        answer: "эмо[ð]оси́а",
+        options: ["эмо[ð]осья́","аимо[ð]осья́","аимо[ð]оси́а"]
+      },
+      {
+        question: "αίτηση",
+        answer: "э́тиси",
+        options: ["аи́тиси","айтиси"]
+      },
+      {
+        question: "αισιοδοξία",
+        answer: "эсио[ð]окси́а",
+        options: ["эсио[ð]оксья́","аисио[ð]окси́а","аисио[ð]оксья́"]
       }
     ]
-  },
+  }
 }
 
 const initialLessons: Lessons = {
   abc: {
-    id: 'abc',
+    lessonid: 'abc',
     title: 'Алфавит. Правила чтения',
     icon: 'book',
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabularyId: 'voc1',
-    practiceIds: ['abctest', 'nountest']
+    practiceConfig: {
+      vocabularId: 'voc1',
+      inputIds: ['ai'],
+      testIds: ['ai'],
+      orderIds: ['ai']
+    }
   },
   noun: {
-    id: 'noun', 
+    lessonid: 'noun', 
     title: 'Существительные. Определенный Артикль', 
     icon: 'book', 
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabularyId: 'voc2',
-    practiceIds: ['abctest', 'nountest']
+    practiceConfig: {
+      vocabularId: 'voc2',
+      inputIds: [],
+      testIds: [],
+      orderIds: []
+    }
   },
   pronoun1: {
-    id: 'pronoun1', 
+    lessonid: 'pronoun1', 
     title: 'Личные местоимения', 
     icon: 'book', 
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabularyId: 'voc1',
-    practiceIds: ['abctest', 'nountest']
+    practiceConfig: {
+      vocabularId: 'voc1',
+      inputIds: [],
+      testIds: [],
+      orderIds: []
+    }
   },
   eimai: {
-    id: 'eimai', 
+    lessonid: 'eimai', 
     title: 'Личные местоимения. Глагол είμαι', 
     icon: 'book', 
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabularyId: 'voc1',
-    practiceIds: ['abctest', 'nountest']
+    practiceConfig: {
+      vocabularId: 'voc1',
+      inputIds: [],
+      testIds: [],
+      orderIds: []
+    }
   },
   adjective: {
-    id: 'adjective', 
+    lessonid: 'adjective', 
     title: 'Согласование прилагательных', 
     icon: 'book', 
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabularyId: 'voc1',
-    practiceIds: ['abctest', 'nountest']
+    practiceConfig: {
+      vocabularId: 'voc1',
+      inputIds: [],
+      testIds: [],
+      orderIds: []
+    }
   },
   describe: {
-    id: 'describe', 
+    lessonid: 'describe', 
     title: 'Описание объектов', 
     icon: 'file-text-o', 
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabularyId: 'voc1',
-    practiceIds: ['abctest', 'nountest']
+    practiceConfig: {
+      vocabularId: 'voc1',
+      inputIds: [],
+      testIds: [],
+      orderIds: []
+    }
   },
   numbers: {
-    id: 'numbers', 
+    lessonid: 'numbers', 
     title: 'Числа и числительные', 
     icon: 'file-text-o', 
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabularyId: 'voc1',
-    practiceIds: ['abctest', 'nountest']
+    practiceConfig: {
+      vocabularId: 'voc1',
+      inputIds: [],
+      testIds: [],
+      orderIds: []
+    }
   },
   about: {
-    id: 'about', 
+    lessonid: 'about', 
     title: 'Рассказ о себе(после винит и эхо)', 
     icon: 'comments-o', 
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabularyId: 'voc1',
-    practiceIds: ['abctest', 'nountest']
+    practiceConfig: {
+      vocabularId: '',
+      inputIds: [],
+      testIds: [],
+      orderIds: []
+    }
 
   },
   verd: {
-    id: 'verd', 
+    lessonid: 'verd', 
     title: 'Виды глаголов', 
     icon: 'book', 
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabularyId: 'voc1',
-    practiceIds: ['abctest', 'nountest']
+    practiceConfig: {
+      vocabularId: 'voc1',
+      inputIds: [],
+      testIds: [],
+      orderIds: []
+    }
   },
   a8: {
-    id: 'a8', 
+    lessonid: 'a8', 
     title: 'Числа и числительные, Числа и числительные', 
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabularyId: 'voc1',
-    practiceIds: ['abctest', 'nountest']
+    practiceConfig: {
+      vocabularId: 'voc1',
+      inputIds: [],
+      testIds: [],
+      orderIds: []
+    }
   },
   a9: {
-    id: 'a9', 
+    lessonid: 'a9', 
     title: 'Area on\nthe map', 
     article_url: 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc',
     vocabularyId: 'voc1',
-    practiceIds: ['abctest', 'nountest']
+    practiceConfig: {
+      vocabularId: 'voc1',
+      inputIds: [],
+      testIds: [],
+      orderIds: []
+    }
   },
 };
 

@@ -1,10 +1,10 @@
 import LinkButton from "@/components/core/LinkButton";
 import Loader from "@/components/core/Loader";
-import { Practice, useLessons, Vocabulary } from "@/context/LessonsContext";
+import { useLessons } from "@/context/LessonsContext";
 import { loadEncryptedMarkdown } from "@/lib/decrypt";
 import { AntDesign } from "@expo/vector-icons";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import { Href, useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { FlatList, ScrollView, StyleSheet, View, Text } from "react-native";
 import Markdown from "react-native-markdown-display";
@@ -13,23 +13,26 @@ type LessonTheoryProps = {
   lessonId: string
 }
 
-type PracticeItemProps = {
-  id: string,
-  title: string  
-};
+type PracticeLink = {
+  practiceId: string,
+  title: string
+  href: any
+}
 
 const Tab = createBottomTabNavigator();
 
-export default function Lesson() {
+export default function LessonPage() {
   const { lesson } = useLocalSearchParams();
   const navigation = useNavigation();
   const { lessonsById, practiciesById, vocabulariesById} = useLessons();
-  const [ practicies, setPracticies ] = useState<Practice[]>([]);
+  
+  const [ practiceLinks, setPracticeLinks ] = useState<PracticeLink[]>([]);
   const [ vocabulary, setVocabulary ] = useState<{[key: string] : string}>({});
 
   useEffect(() => {
-    const { title, vocabularyId, practiceIds } = lessonsById[lesson as string];
-
+    const { title, vocabularyId, practiceConfig } = lessonsById[lesson as string];
+    
+    //////////setup header
     navigation.setOptions({
       title,
       headerTitleStyle: {
@@ -39,7 +42,28 @@ export default function Lesson() {
       },
     });
 
-    setPracticies(practiceIds.map((id) => practiciesById[id]) || []);
+    /////setup practice
+    const links: PracticeLink[] = [];
+
+    if (practiceConfig.vocabularId) {
+      const vocLink = {
+        practiceId: practiceConfig.vocabularId,
+        title: "Словарь",
+        href: {
+          pathname: "/(app)/lesson/practice/[practice]",
+          params: {
+            practice: practiceConfig.vocabularId,
+            vocabulary: true
+          },
+        }
+      }
+
+      links.push(vocLink);
+    }
+
+    setPracticeLinks(links);
+
+    ////setup vocabulary
     setVocabulary(vocabulariesById[vocabularyId] || {})
     
   }, [lesson]);
@@ -87,7 +111,7 @@ export default function Lesson() {
 
         <Tab.Screen
           name="practice"
-          children={() => <LessonPractice practicies={practicies} />}
+          children={() => <LessonPractice practicies={practiceLinks} />}
           options={{
             title: "Практика",
             tabBarIcon: ({focused}: {focused: boolean}) => (
@@ -101,7 +125,7 @@ export default function Lesson() {
 }
 
 type LessonPracticeProps = {
-  practicies: Practice[],
+  practicies: PracticeLink[],
 };
 
 function LessonPractice ({ practicies }: LessonPracticeProps) {
@@ -116,20 +140,19 @@ function LessonPractice ({ practicies }: LessonPracticeProps) {
           style={{width: "100%"}}
           renderItem={({ item }) => (
             <PracticeItem
-              id={item.id} 
-              title={item.title} 
+              {...item}
             />)
           }
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.practiceId}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
         />
       </ScrollView>
   );
 }
 
-function PracticeItem(props: PracticeItemProps) {
+function PracticeItem(props: PracticeLink) {
   
-  const {id, title} = props;
+  const { title, href} = props;
 
   const buttonStyle = StyleSheet.create({
     plainButton: {
@@ -155,12 +178,7 @@ function PracticeItem(props: PracticeItemProps) {
 
   return <>
     <LinkButton
-      href={{
-        pathname: "/(app)/lesson/practice/[practice]",
-        params: {
-          practice: id
-        },
-      }}
+      href={href}
       buttonStyle={buttonStyle}
       chevronStyle={chevronStyle}
     >

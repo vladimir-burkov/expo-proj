@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 type LessonItemProps = {
-  id: string,
+  lessonid: string,
   title: string,
   iconName?: keyof typeof FontAwesome.glyphMap
 };
@@ -29,7 +29,7 @@ export default function App() {
 
 
 function LessonsList() {
-  const {lessons} = useLessons();
+  const {lessons} = useLessons(); /// 
 
   return (
       <ScrollView
@@ -40,12 +40,12 @@ function LessonsList() {
           data={lessons}
           renderItem={({ item }) => (
             <LessonItem 
-              id={item.id} 
+              lessonid={item.lessonid} 
               title={item.title} 
               iconName={item.icon as keyof typeof FontAwesome.glyphMap}
             />)
           }
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.lessonid}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
         />
       </ScrollView>
@@ -53,7 +53,7 @@ function LessonsList() {
 }
 
 function LessonItem(props: LessonItemProps) {
-  const {id, title, iconName="expeditedssl"} = props;
+  const {lessonid, title, iconName="expeditedssl"} = props;
 
   const buttonStyle = StyleSheet.create({
     plainButton: {
@@ -82,7 +82,7 @@ function LessonItem(props: LessonItemProps) {
       href={{
         pathname: "/(app)/lesson/[lesson]",
         params: {
-          lesson: id,
+          lesson: lessonid,
         },
       }}
       buttonStyle={buttonStyle}
