@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, Button } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { ITask, useLessons } from '@/context/LessonsContext';
@@ -10,13 +10,20 @@ export default function Practice() {
     const [tasks, setTasks] = useState<ITask[]>([]);
     const [solved, setSolved] = useState<number[]>([]);
     const [current, setCurrent] = useState<number>(0);
-
     const navigation = useNavigation();
 
     const setRandomCurrent = () => {
-      const tasksToSolve = Object.keys(tasks).map(Number).filter(item => !solved.includes(item))
+      console.log(tasks);
+      const tasksToSolve = Object.keys(tasks).map(Number).filter(item => !solved.includes(item));
+      console.log(tasksToSolve);
+      
       const randomUnsolvedIndex = Math.floor(Math.random() * tasksToSolve.length);
       setCurrent(randomUnsolvedIndex);
+    }
+
+    const addToSolved = (solvedIndex: number) => {
+      const solvedArray = [...solved, solvedIndex];
+      setSolved(solvedArray);
     }
     
     useEffect(() => {
@@ -45,15 +52,21 @@ export default function Practice() {
           whiteSpace: 'initial'
         },
       });
-
-      setRandomCurrent();
-
+      
     }, []);
+
+    useEffect(() => {
+      setRandomCurrent();
+    }, [tasks]) 
     
 
   return (
     <View>
-      <Text>practice</Text>
+      <Text>{current}</Text>
+      <Button title={'solve'} onPress={() => {
+        addToSolved(current);
+        setRandomCurrent();
+      }}/>
     </View>
   )
 }
