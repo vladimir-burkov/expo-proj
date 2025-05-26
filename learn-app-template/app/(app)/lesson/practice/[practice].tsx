@@ -1,7 +1,8 @@
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { ITask, useLessons } from '@/context/LessonsContext';
+import { Bar } from 'react-native-progress';
 
 export default function Practice() {
 
@@ -61,7 +62,8 @@ export default function Practice() {
     
 
   return (
-    <View>
+    <View style={styles.taskViewContainer}>
+      <Bar progress={solved.length / tasks.length} width={null} />
       <Text>{current}</Text>
       <Button title={'solve'} onPress={() => {
         addToSolved(current);
@@ -80,3 +82,9 @@ function TaskView(task: ITask) {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  taskViewContainer: {
+    padding: 12
+  },
+});
