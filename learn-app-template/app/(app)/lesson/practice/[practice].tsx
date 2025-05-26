@@ -11,20 +11,24 @@ export default function Practice() {
     const [tasks, setTasks] = useState<ITask[]>([]);
     const [solved, setSolved] = useState<number[]>([]);
     const [current, setCurrent] = useState<number>(0);
+    const [percentage, setPercentage] = useState<number>(0);
     const navigation = useNavigation();
 
-    const setRandomCurrent = () => {
-      console.log(tasks);
-      const tasksToSolve = Object.keys(tasks).map(Number).filter(item => !solved.includes(item));
-      console.log(tasksToSolve);
-      
+    const setRandomCurrent = () => {    
+      console.log(percentage);
+  
+      if (percentage >= 1) return;
+      const tasksToSolve = Object.keys(tasks).map(Number).filter(item => !solved.includes(item));      
       const randomUnsolvedIndex = Math.floor(Math.random() * tasksToSolve.length);
       setCurrent(randomUnsolvedIndex);
     }
 
     const addToSolved = (solvedIndex: number) => {
+      if (percentage >= 1) return;      
       const solvedArray = [...solved, solvedIndex];
       setSolved(solvedArray);
+      setRandomCurrent();
+      setPercentage(solved.length / tasks.length);    
     }
     
     useEffect(() => {
@@ -56,19 +60,15 @@ export default function Practice() {
       
     }, []);
 
-    useEffect(() => {
-      setRandomCurrent();
-    }, [tasks]) 
-    
-
   return (
     <View style={styles.taskViewContainer}>
-      <Bar progress={solved.length / tasks.length} width={null} />
+      <Bar progress={percentage} width={null} />
       <Text>{current}</Text>
-      <Button title={'solve'} onPress={() => {
+      {percentage < 1 && <Button title={'solve'} onPress={() => {
         addToSolved(current);
         setRandomCurrent();
       }}/>
+      }
     </View>
   )
 }
