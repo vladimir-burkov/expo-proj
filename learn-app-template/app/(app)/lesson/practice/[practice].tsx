@@ -14,9 +14,7 @@ export default function Practice() {
     const [percentage, setPercentage] = useState<number>(0);
     const navigation = useNavigation();
 
-    const setRandomCurrent = () => {    
-      console.log(percentage);
-  
+    const setRandomCurrent = () => {      
       if (percentage >= 1) return;
       const tasksToSolve = Object.keys(tasks).map(Number).filter(item => !solved.includes(item));      
       const randomUnsolvedIndex = Math.floor(Math.random() * tasksToSolve.length);
@@ -27,8 +25,6 @@ export default function Practice() {
       if (percentage >= 1) return;      
       const solvedArray = [...solved, solvedIndex];
       setSolved(solvedArray);
-      setRandomCurrent();
-      setPercentage(solved.length / tasks.length);    
     }
     
     useEffect(() => {
@@ -60,13 +56,19 @@ export default function Practice() {
       
     }, []);
 
+    useEffect(() => {
+      if (!(solved.length / tasks.length)) return;
+
+      setRandomCurrent();      
+      setPercentage(solved.length / tasks.length);    
+    }, [solved])
+
   return (
     <View style={styles.taskViewContainer}>
       <Bar progress={percentage} width={null} />
       <Text>{current}</Text>
       {percentage < 1 && <Button title={'solve'} onPress={() => {
         addToSolved(current);
-        setRandomCurrent();
       }}/>
       }
     </View>
