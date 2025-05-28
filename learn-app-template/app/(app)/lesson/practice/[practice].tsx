@@ -69,11 +69,14 @@ export default function Practice() {
 
     useEffect(() => {
       setRandomCurrent();
+      const progress = solved.length / tasks.length;
+      setPercentage(progress || 0);
+    }, [solved, solveAgain, tasks]);
 
-      const percetage = solved.length/tasks.length;
-      setPercentage(percetage);
-
-    }, [solved, solveAgain]);
+    useEffect(() => {
+      // here update stat
+      console.log(percentage);
+    }, [percentage]);
 
     
     useEffect(() => {
@@ -112,6 +115,7 @@ export default function Practice() {
             onCorrectAnswer={addToSolved}
             onWrongAnswer={addToSolveAgain}/> */}
           <Bar progress={percentage} width={null} />
+          {percentage}
           <Text>{current}</Text>
           <InputExcercise 
             task={tasks[current]} 
