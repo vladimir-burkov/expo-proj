@@ -2,7 +2,7 @@ import { View, Text, Button, StyleSheet, Animated, TextInput } from 'react-nativ
 import React, { useEffect, useRef, useState } from 'react'
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { ITask, ITestTask, useLessons } from '@/context/LessonsContext';
-import { Bar } from 'react-native-progress';
+import { Bar, Circle } from 'react-native-progress';
 import FadeOverlay from '@/components/core/FadeOverlay';
 
 export default function Practice() {
@@ -22,10 +22,6 @@ export default function Practice() {
     const [showOverlayText, setShowOverlayText] = useState('');
     const [overlayPromiseResolver, setOverlayPromiseResolver] = useState<() => void>();
 
-
-    const getpercentageString = () => {
-      return `(${Math.round((percentage - solveAgain.length/tasks.length) * 100)}%)`
-    }
 
     const showSolvedOverlayAnimated = (text: string) => {
       return new Promise<void>((resolve) => {
@@ -129,19 +125,24 @@ export default function Practice() {
           }
           </>
       }
-      { finished &&
+      {finished && 
         <View style={styles.successViewContainer}>
-          <View>
-            <Text style={styles.successViewContainerText}>
-              Упражнение закончено
-            </Text>
-            <Text style={styles.successViewContainerPercentage}>
-              {getpercentageString()}
-            </Text>
-            <Text style={styles.successViewContainerSubText}>
-              {'(засчитываются только правильные ответы полученные с первой попытки)'}
-            </Text>
-          </View>
+          <Text style={styles.successViewContainerText}>
+            Упражнение закончено
+          </Text>
+          <Circle 
+            progress={percentage} 
+            size={60}
+            color='green'
+            borderColor='none'
+            textStyle={{fontSize: 12, fontWeight: 600}}
+            thickness={5}
+            formatText={() => +percentage.toFixed(2) * 100 + '%'}
+            showsText
+          />
+          <Text style={styles.successViewContainerSubText}>
+            {'(засчитываются только правильные ответы полученные с первой попытки)'}
+          </Text>
           <Button title={'Заново'} onPress={() => { restart()}}/>
         </View>
       }
