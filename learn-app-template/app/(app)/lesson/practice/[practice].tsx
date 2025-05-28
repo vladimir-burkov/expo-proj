@@ -1,7 +1,7 @@
 import { View, Text, Button, StyleSheet, Animated } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { useLocalSearchParams, useNavigation } from 'expo-router';
-import { ITask, useLessons } from '@/context/LessonsContext';
+import { ITask, ITestTask, useLessons } from '@/context/LessonsContext';
 import { Bar } from 'react-native-progress';
 import FadeOverlay from '@/components/core/FadeOverlay';
 
@@ -46,15 +46,15 @@ export default function Practice() {
       setPercentage(0);
     }
 
-    const addToSolveAgain = async(notsolvedIndex: number) => {
+    const addToSolveAgain = async() => {
       await showSolvedOverlayAnimated("Не верно"); 
-      const unsolvedArray = [...solveAgain, notsolvedIndex];
+      const unsolvedArray = [...solveAgain, current];
       setSolveAgain(unsolvedArray);
     }
 
-    const addToSolved = async (solvedIndex: number) => {
+    const addToSolved = async () => {
       await showSolvedOverlayAnimated("Верно!"); 
-      const solvedArray = [...solved, solvedIndex];
+      const solvedArray = [...solved, current];
       setSolved(solvedArray);
     }
     
@@ -106,10 +106,11 @@ export default function Practice() {
       <Text>{current}</Text>
       {
         percentage < 1 && <>
-          <Button title={'solve'} onPress={() => { addToSolved(current);}}/>
-          <Button title={'wrong'} onPress={() => { addToSolveAgain(current);}}/>
+          <DummyTaskForTest 
+            task={tasks[current]} 
+            onCorrectAnswer={addToSolved}
+            onWrongAnswer={addToSolveAgain}/>
         </>
-        
       }
       {  percentage === 1 &&
         <View style={styles.successViewContainer}>
@@ -137,6 +138,21 @@ export default function Practice() {
   )
 }
 
+type TaskExcerciseProps = {
+  task: ITask,
+  onCorrectAnswer: () => void,
+  onWrongAnswer: () => void
+};
+
+
+function DummyTaskForTest(props: TaskExcerciseProps) {
+  const {task, onCorrectAnswer, onWrongAnswer} = props;
+
+  return <>
+    <Button title={'solve'} onPress={onCorrectAnswer}/>
+    <Button title={'wrong'} onPress={onWrongAnswer}/>
+  </>
+}
 function TaskView(task: ITask) {
   return (
     <View>
