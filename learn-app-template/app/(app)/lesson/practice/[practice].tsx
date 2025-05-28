@@ -20,8 +20,11 @@ export default function Practice() {
     const [showOverlayText, setShowOverlayText] = useState('');
     const [overlayPromiseResolver, setOverlayPromiseResolver] = useState<() => void>();
 
+    const calcPercentage = () => {
+      return Math.max((solved.length / tasks.length), 0);
+    }
     const getPercentageString = () => {
-      return `(${Math.round((percentage - (solveAgain.length / tasks.length)) * 100)} %)`
+      return `(${Math.round((calcPercentage() - (solveAgain.length / tasks.length)) * 100)} %)`
     }
 
     const showSolvedOverlayAnimated = (text: string) => {
@@ -35,7 +38,7 @@ export default function Practice() {
       if (percentage >= 1) return;
       const tasksToSolve = Object.keys(tasks).map(Number).filter(item => !solved.includes(item));      
       const randomUnsolvedIndex = Math.floor(Math.random() * tasksToSolve.length);
-      setCurrent(randomUnsolvedIndex);
+      setCurrent(tasksToSolve[randomUnsolvedIndex]);
     }
 
     const restart = () => {
@@ -93,10 +96,10 @@ export default function Practice() {
     }, [restartFlag]);
 
     useEffect(() => {
-      if (!(solved.length / tasks.length)) return;
+      if (!calcPercentage()) return;
 
       setRandomCurrent();      
-      setPercentage(solved.length / tasks.length);
+      setPercentage(calcPercentage());
       // updateStatistics(percentage);    
     }, [solved, solveAgain])
 
@@ -104,8 +107,7 @@ export default function Practice() {
     <View style={styles.taskViewContainer}>
       <Bar progress={percentage} width={null} />
       <Text>{current}</Text>
-      {
-        percentage < 1 && tasks[current] && <>
+      { percentage < 1 && tasks[current] && <>
           {/* <DummyTaskForTest 
             task={tasks[current]} 
             onCorrectAnswer={addToSolved}
@@ -116,7 +118,7 @@ export default function Practice() {
             onWrongAnswer={addToSolveAgain}/>
           </>
       }
-      {  percentage === 1 &&
+      { percentage === 1 &&
         <View style={styles.successViewContainer}>
           <View>
             <Text style={styles.successViewContainerText}>
