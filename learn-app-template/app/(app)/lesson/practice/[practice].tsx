@@ -119,12 +119,14 @@ export default function Practice() {
             onCorrectAnswer={addToSolved}
             onWrongAnswer={addToSolveAgain}/> */}
           <Bar progress={percentage} width={null} />
-          {percentage}
-          <Text>{current}</Text>
-          <InputExcercise 
-            task={tasks[current]} 
-            onCorrectAnswer={addToSolved}
-            onWrongAnswer={addToSolveAgain}/>
+
+          {type == 'vocabular' && 
+            <InputExcercise 
+              task={tasks[current]} 
+              onCorrectAnswer={addToSolved}
+              onWrongAnswer={addToSolveAgain}
+            />
+          }
           </>
       }
       { finished &&
