@@ -7,7 +7,7 @@ import FadeOverlay from '@/components/core/FadeOverlay';
 
 export default function Practice() {
     const {practice: practiceId, type} = useLocalSearchParams();
-    const { practiciesById, vocabulariesById } = useLessons();
+    const {practiciesById, vocabulariesById} = useLessons();
     const [tasks, setTasks] = useState<ITask[]>([]);
     const [solved, setSolved] = useState<number[]>([]);
     const [solveAgain, setSolveAgain] = useState<number[]>([])
@@ -21,11 +21,11 @@ export default function Practice() {
     const [showOverlayText, setShowOverlayText] = useState('');
     const [overlayPromiseResolver, setOverlayPromiseResolver] = useState<() => void>();
 
-    const calcPercentage = () => {
-      return Math.max((solved.length / tasks.length), 0);
+    const calcPercentage = () => {      
+      return Math.max(((solved.length - solveAgain.length) / tasks.length), 0) || 0;
     }
     const getPercentageString = () => {
-      return `(${Math.round((calcPercentage() - (solveAgain.length / tasks.length)) * 100)} %)`
+      return `(${Math.round((calcPercentage()) * 100)} %)`
     }
 
     const showSolvedOverlayAnimated = (text: string) => {
@@ -36,10 +36,12 @@ export default function Practice() {
     };
 
     const setRandomCurrent = () => {      
-      if (percentage >= 1) return;
+      if (!tasks.length) return;
+      setPercentage(calcPercentage());
       const tasksToSolve = Object.keys(tasks).map(Number).filter(item => !solved.includes(item));
       if (!tasksToSolve.length) {
         setFinished(true);
+        return;
       }      
       const randomUnsolvedIndex = Math.floor(Math.random() * tasksToSolve.length);
       setCurrent(tasksToSolve[randomUnsolvedIndex]);
@@ -56,8 +58,10 @@ export default function Practice() {
 
     const addToSolveAgain = async() => {
       await showSolvedOverlayAnimated("Не верно"); 
-      const unsolvedArray = [...solveAgain, current];
-      setSolveAgain(unsolvedArray);
+      if (!solveAgain.includes(current)) {
+        const unsolvedArray = [...solveAgain, current];
+        setSolveAgain(unsolvedArray);
+      }
     }
 
     const addToSolved = async () => {
@@ -65,6 +69,15 @@ export default function Practice() {
       const solvedArray = [...solved, current];
       setSolved(solvedArray);
     }
+
+    useEffect(() => {
+      setRandomCurrent();
+
+      
+      // Update stats here
+      console.log(getPercentageString());
+    }, [solved, solveAgain]);
+
     
     useEffect(() => {
       let title = "";
@@ -76,7 +89,7 @@ export default function Practice() {
           answer: word,
           question: translation
         }));
-        setTasks(tasksList.slice(4, 6));
+        setTasks(tasksList.slice(4, 7));
       } else {
         const practice = practiciesById[practiceId as string];
         title = practice.title;
@@ -91,31 +104,18 @@ export default function Practice() {
           whiteSpace: 'initial'
         },
       });
-
-      return () => {
-        console.log(percentage);
-        //here supposed to be Statistics update
-      }
-      
+    
     }, [restartFlag]);
-
-    useEffect(() => {
-      if (!calcPercentage()) return;
-
-      setRandomCurrent();      
-      setPercentage(calcPercentage());
-      // updateStatistics(percentage);    
-    }, [solved, solveAgain])
 
   return (
     <View style={styles.taskViewContainer}>
-      <Bar progress={percentage} width={null} />
-      <Text>{current}</Text>
       { !finished && tasks[current] && <>
           {/* <DummyTaskForTest 
             task={tasks[current]} 
             onCorrectAnswer={addToSolved}
             onWrongAnswer={addToSolveAgain}/> */}
+          <Bar progress={percentage} width={null} />
+          <Text>{current}</Text>
           <InputExcercise 
             task={tasks[current]} 
             onCorrectAnswer={addToSolved}
@@ -178,21 +178,23 @@ function InputExcercise(props: TaskExcerciseProps) {
   }         
 
   const checkAnswerOnInput = (input: any) => {
-    if (!input) return;
-    const trimmedInput = input.trim() as string;
-    if (trimmedInput.length > answer.length) {
-      onWrongAnswer();
-      clearInput();
-      return;
-    } else if(trimmedInput === answer) {
-      onCorrectAnswer();
-      setInputText(trimmedInput);
-      clearInput();
+    if (!input) {
+      setInputText('');
     } else {
-      setInputText(input.replace(/\s+/g, ' '));
+      const trimmedInput = input.trim() as string;
+      if (trimmedInput.length > answer.length) {
+        onWrongAnswer();
+        clearInput();
+        return;
+      } else if(trimmedInput === answer) {
+        onCorrectAnswer();
+        setInputText(trimmedInput);
+        clearInput();
+      } else {
+        setInputText(input.replace(/\s+/g, ' '));
+      }
     }
-    
-    
+
   }
 
   return <>
