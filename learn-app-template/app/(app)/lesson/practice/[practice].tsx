@@ -14,6 +14,7 @@ export default function Practice() {
     const [current, setCurrent] = useState<number>(0);
     const [percentage, setPercentage] = useState<number>(0);
     const [restartFlag, setRestartFlag] = useState<boolean>(true);
+    const [finished, setFinished] = useState<boolean>(false);
 
     const navigation = useNavigation();
 
@@ -36,7 +37,10 @@ export default function Practice() {
 
     const setRandomCurrent = () => {      
       if (percentage >= 1) return;
-      const tasksToSolve = Object.keys(tasks).map(Number).filter(item => !solved.includes(item));      
+      const tasksToSolve = Object.keys(tasks).map(Number).filter(item => !solved.includes(item));
+      if (!tasksToSolve.length) {
+        setFinished(true);
+      }      
       const randomUnsolvedIndex = Math.floor(Math.random() * tasksToSolve.length);
       setCurrent(tasksToSolve[randomUnsolvedIndex]);
     }
@@ -47,6 +51,7 @@ export default function Practice() {
       setSolveAgain([]);
       setCurrent(0);
       setPercentage(0);
+      setFinished(false);
     }
 
     const addToSolveAgain = async() => {
@@ -71,8 +76,7 @@ export default function Practice() {
           answer: word,
           question: translation
         }));
-        setTasks(tasksList.slice(0, 3));
-        console.log(tasks);
+        setTasks(tasksList.slice(4, 6));
       } else {
         const practice = practiciesById[practiceId as string];
         title = practice.title;
@@ -107,7 +111,7 @@ export default function Practice() {
     <View style={styles.taskViewContainer}>
       <Bar progress={percentage} width={null} />
       <Text>{current}</Text>
-      { percentage < 1 && tasks[current] && <>
+      { !finished && tasks[current] && <>
           {/* <DummyTaskForTest 
             task={tasks[current]} 
             onCorrectAnswer={addToSolved}
@@ -118,7 +122,7 @@ export default function Practice() {
             onWrongAnswer={addToSolveAgain}/>
           </>
       }
-      { percentage === 1 &&
+      { finished &&
         <View style={styles.successViewContainer}>
           <View>
             <Text style={styles.successViewContainerText}>
@@ -209,8 +213,6 @@ function InputExcercise(props: TaskExcerciseProps) {
     </View>
   </>
 }
-
-
 
 function TaskView(task: ITask) {
   return (
