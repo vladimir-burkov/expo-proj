@@ -15,14 +15,14 @@ export default function Practice() {
     const [percentage, setPercentage] = useState<number>(0);
     const navigation = useNavigation();
 
-    const [showOverlay, setShowOverlay] = useState(false);
+    const [showOverlayText, setShowOverlayText] = useState('');
     const [overlayPromiseResolver, setOverlayPromiseResolver] = useState<() => void>();
 
 
-    const showSolvedOverlayAnimated = () => {
+    const showSolvedOverlayAnimated = (text: string) => {
       return new Promise<void>((resolve) => {
         setOverlayPromiseResolver(() => resolve);
-        setShowOverlay(true);
+        setShowOverlayText(text);
       });
     };
 
@@ -33,13 +33,14 @@ export default function Practice() {
       setCurrent(randomUnsolvedIndex);
     }
 
-    const addToSolveAgain = (notsolvedIndex: number) => {
+    const addToSolveAgain = async(notsolvedIndex: number) => {
+      await showSolvedOverlayAnimated("Не правильно!"); 
       const unsolvedArray = [...solveAgain, notsolvedIndex];
       setSolveAgain(unsolvedArray);
     }
 
     const addToSolved = async (solvedIndex: number) => {
-      await showSolvedOverlayAnimated(); 
+      await showSolvedOverlayAnimated("Правильно!"); 
       const solvedArray = [...solved, solvedIndex];
       setSolved(solvedArray);
     }
@@ -94,11 +95,11 @@ export default function Practice() {
       {
         percentage === 1 && <Text>Тест пройден</Text>
       }
-      {showOverlay && (
+      {showOverlayText && (
         <FadeOverlay
-          text="Solved!"
+          text={showOverlayText}
           onAnimationEnd={() => {
-            setShowOverlay(false);
+            setShowOverlayText('');
             overlayPromiseResolver?.();
           }}
         />

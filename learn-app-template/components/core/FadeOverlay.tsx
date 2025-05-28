@@ -19,7 +19,7 @@ const FadeOverlay: React.FC<FadeOverlayProps> = ({ text, onAnimationEnd }) => {
         duration: 300,
         useNativeDriver: true,
       }),
-      Animated.delay(200),
+      Animated.delay(400),
       Animated.timing(fadeAnim, {
         toValue: 0,
         duration: 300,
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     left: 0,
     width,
     height,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 9999,
