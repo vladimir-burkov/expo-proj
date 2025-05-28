@@ -69,7 +69,7 @@ export default function Practice() {
           question: translation
         }));
         setTasks(tasksList.slice(0, 3));
-
+        console.log(tasks);
       } else {
         const practice = practiciesById[practiceId as string];
         title = practice.title;
@@ -114,7 +114,7 @@ export default function Practice() {
             task={tasks[current]} 
             onCorrectAnswer={addToSolved}
             onWrongAnswer={addToSolveAgain}/>
-        </>
+          </>
       }
       {  percentage === 1 &&
         <View style={styles.successViewContainer}>
@@ -164,19 +164,29 @@ function InputExcercise(props: TaskExcerciseProps) {
   const [inputText, setInputText] = useState('');
   const [height, setHeight] = useState(42);
 
-  const checkAnswerOnInput = (props: any) => {
-    setInputText(() => {
-      if (props.length > answer.length) {
-        onWrongAnswer();
-        return '';
-      } else if(props === answer) {
-        onCorrectAnswer();
-        setTimeout(() => {
-          return '';
-        }, 1200);
-      }
-      return props;
-    })
+  const clearInput = () => {
+    setTimeout(() => {
+      setInputText('');
+      return;
+    }, 1200);
+  }         
+
+  const checkAnswerOnInput = (input: any) => {
+    if (!input) return;
+    const trimmedInput = input.trim() as string;
+    if (trimmedInput.length > answer.length) {
+      onWrongAnswer();
+      clearInput();
+      return;
+    } else if(trimmedInput === answer) {
+      onCorrectAnswer();
+      setInputText(trimmedInput);
+      clearInput();
+    } else {
+      setInputText(input.replace(/\s+/g, ' '));
+    }
+    
+    
   }
 
   return <>
