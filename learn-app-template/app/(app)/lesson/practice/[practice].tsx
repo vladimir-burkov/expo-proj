@@ -21,11 +21,9 @@ export default function Practice() {
     const [showOverlayText, setShowOverlayText] = useState('');
     const [overlayPromiseResolver, setOverlayPromiseResolver] = useState<() => void>();
 
-    const calcPercentage = () => {      
-      return Math.max(((solved.length - solveAgain.length) / tasks.length), 0) || 0;
-    }
-    const getPercentageString = () => {
-      return `(${Math.round((calcPercentage()) * 100)} %)`
+
+    const getpercentageString = () => {
+      return `(${Math.round((percentage - solveAgain.length/tasks.length) * 100)}%)`
     }
 
     const showSolvedOverlayAnimated = (text: string) => {
@@ -37,7 +35,6 @@ export default function Practice() {
 
     const setRandomCurrent = () => {      
       if (!tasks.length) return;
-      setPercentage(calcPercentage());
       const tasksToSolve = Object.keys(tasks).map(Number).filter(item => !solved.includes(item));
       if (!tasksToSolve.length) {
         setFinished(true);
@@ -73,9 +70,9 @@ export default function Practice() {
     useEffect(() => {
       setRandomCurrent();
 
-      
-      // Update stats here
-      console.log(getPercentageString());
+      const percetage = solved.length/tasks.length;
+      setPercentage(percetage);
+
     }, [solved, solveAgain]);
 
     
@@ -126,7 +123,10 @@ export default function Practice() {
         <View style={styles.successViewContainer}>
           <View>
             <Text style={styles.successViewContainerText}>
-              Упражнение закончено {getPercentageString()}
+              Упражнение закончено
+            </Text>
+            <Text style={styles.successViewContainerPercentage}>
+              {getpercentageString()}
             </Text>
             <Text style={styles.successViewContainerSubText}>
               {'(засчитываются только правильные ответы полученные с первой попытки)'}
@@ -172,10 +172,14 @@ function InputExcercise(props: TaskExcerciseProps) {
 
   const clearInput = () => {
     setTimeout(() => {
-      setInputText('');
+      // setInputText('');
       return;
     }, 1200);
-  }         
+  }
+  
+  useEffect(() => {
+    setInputText(answer.substring(0, answer.length - 1));
+  }, [task])
 
   const checkAnswerOnInput = (input: any) => {
     if (!input) {
@@ -255,6 +259,12 @@ const styles = StyleSheet.create({
   },
   successViewContainerText: {
     fontSize: 32,
+    color: '#484848',
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  successViewContainerPercentage: {
+    fontSize: 26,
     color: '#484848',
     fontWeight: 'bold',
     textAlign: 'center'
