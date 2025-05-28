@@ -10,7 +10,8 @@ export default function Practice() {
     const {practiciesById, vocabulariesById} = useLessons();
     const [tasks, setTasks] = useState<ITask[]>([]);
     const [solved, setSolved] = useState<number[]>([]);
-    const [solveAgain, setSolveAgain] = useState<number[]>([])
+    const [solveAgain, setSolveAgain] = useState<number[]>([]);
+    const [wrongs, setWrongs] = useState<number[]>([]);
     const [current, setCurrent] = useState<number>(0);
     const [percentage, setPercentage] = useState<number>(0);
     const [restartFlag, setRestartFlag] = useState<boolean>(true);
@@ -35,7 +36,7 @@ export default function Practice() {
 
     const setRandomCurrent = () => {      
       if (!tasks.length) return;
-      const tasksToSolve = Object.keys(tasks).map(Number).filter(item => !solved.includes(item));
+      const tasksToSolve = Object.keys(tasks).map(Number).filter(item => !solved.includes(item) && !wrongs.includes(item));
       if (!tasksToSolve.length) {
         setFinished(true);
         return;
@@ -48,6 +49,7 @@ export default function Practice() {
       setRestartFlag(!restartFlag);
       setSolved([]);
       setSolveAgain([]);
+      setWrongs([]);
       setCurrent(0);
       setPercentage(0);
       setFinished(false);
@@ -56,8 +58,10 @@ export default function Practice() {
     const addToSolveAgain = async() => {
       await showSolvedOverlayAnimated("Не верно"); 
       if (!solveAgain.includes(current)) {
-        const unsolvedArray = [...solveAgain, current];
-        setSolveAgain(unsolvedArray);
+        setSolveAgain([...solveAgain, current]);
+      } else {
+        setWrongs([...wrongs, current]);
+        setSolveAgain([...solveAgain.filter(item => item != current)]);
       }
     }
 
