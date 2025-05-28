@@ -34,13 +34,13 @@ export default function Practice() {
     }
 
     const addToSolveAgain = async(notsolvedIndex: number) => {
-      await showSolvedOverlayAnimated("Не правильно!"); 
+      await showSolvedOverlayAnimated("Не верно"); 
       const unsolvedArray = [...solveAgain, notsolvedIndex];
       setSolveAgain(unsolvedArray);
     }
 
     const addToSolved = async (solvedIndex: number) => {
-      await showSolvedOverlayAnimated("Правильно!"); 
+      await showSolvedOverlayAnimated("Верно!"); 
       const solvedArray = [...solved, solvedIndex];
       setSolved(solvedArray);
     }
