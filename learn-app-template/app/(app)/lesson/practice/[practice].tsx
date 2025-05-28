@@ -13,11 +13,16 @@ export default function Practice() {
     const [solveAgain, setSolveAgain] = useState<number[]>([])
     const [current, setCurrent] = useState<number>(0);
     const [percentage, setPercentage] = useState<number>(0);
+    const [restartFlag, setRestartFlag] = useState<boolean>(true);
+
     const navigation = useNavigation();
 
     const [showOverlayText, setShowOverlayText] = useState('');
     const [overlayPromiseResolver, setOverlayPromiseResolver] = useState<() => void>();
 
+    const getPercentageString = () => {
+      return `(${Math.round((percentage - (solveAgain.length / tasks.length)) * 100)} %)`
+    }
 
     const showSolvedOverlayAnimated = (text: string) => {
       return new Promise<void>((resolve) => {
@@ -31,6 +36,14 @@ export default function Practice() {
       const tasksToSolve = Object.keys(tasks).map(Number).filter(item => !solved.includes(item));      
       const randomUnsolvedIndex = Math.floor(Math.random() * tasksToSolve.length);
       setCurrent(randomUnsolvedIndex);
+    }
+
+    const restart = () => {
+      setRestartFlag(!restartFlag);
+      setSolved([]);
+      setSolveAgain([]);
+      setCurrent(0);
+      setPercentage(0);
     }
 
     const addToSolveAgain = async(notsolvedIndex: number) => {
@@ -55,7 +68,7 @@ export default function Practice() {
           answer: word,
           question: translation
         }));
-        setTasks(tasksList);
+        setTasks(tasksList.slice(0, 3));
 
       } else {
         const practice = practiciesById[practiceId as string];
@@ -71,14 +84,20 @@ export default function Practice() {
           whiteSpace: 'initial'
         },
       });
+
+      return () => {
+        console.log(percentage);
+        //here supposed to be Statistics update
+      }
       
-    }, []);
+    }, [restartFlag]);
 
     useEffect(() => {
       if (!(solved.length / tasks.length)) return;
 
       setRandomCurrent();      
-      setPercentage(solved.length / tasks.length);    
+      setPercentage(solved.length / tasks.length);
+      // updateStatistics(percentage);    
     }, [solved, solveAgain])
 
   return (
@@ -92,10 +111,20 @@ export default function Practice() {
         </>
         
       }
-      {
-        percentage === 1 && <Text>Тест пройден</Text>
+      {  percentage === 1 &&
+        <View style={styles.successViewContainer}>
+          <View>
+            <Text style={styles.successViewContainerText}>
+              Упражнение закончено {getPercentageString()}
+            </Text>
+            <Text style={styles.successViewContainerSubText}>
+              {'(засчитываются только правильные ответы полученные с первой попытки)'}
+            </Text>
+          </View>
+          <Button title={'Заново'} onPress={() => { restart()}}/>
+        </View>
       }
-      {showOverlayText && (
+      {showOverlayText && 
         <FadeOverlay
           text={showOverlayText}
           onAnimationEnd={() => {
@@ -103,7 +132,7 @@ export default function Practice() {
             overlayPromiseResolver?.();
           }}
         />
-      )}
+      }
     </View>
   )
 }
@@ -118,23 +147,25 @@ function TaskView(task: ITask) {
 }
 
 const styles = StyleSheet.create({
-  taskViewContainer: {
-    padding: 12
-  },
-  overlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
+  successViewContainer: {
     width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    height: 400,
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 9999,
+    gap: 16
   },
-  overlayText: {
+  successViewContainerText: {
     fontSize: 32,
-    color: 'white',
+    color: '#484848',
     fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  successViewContainerSubText: {
+    paddingTop: 8,
+    fontSize: 14,
+    textAlign: 'center'
+  },
+  taskViewContainer: {
+    padding: 12
   },
 });
