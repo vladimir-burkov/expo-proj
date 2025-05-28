@@ -135,7 +135,7 @@ export default function Practice() {
           <Button title={'Заново'} onPress={() => { restart()}}/>
         </View>
       }
-      {showOverlayText && 
+      {!!showOverlayText && 
         <FadeOverlay
           text={showOverlayText}
           onAnimationEnd={() => {
