@@ -8,7 +8,7 @@ import FadeOverlay from '@/components/core/FadeOverlay';
 export default function Practice() {
     const {practice: practiceId, type} = useLocalSearchParams();
     const {practiciesById, vocabulariesById} = useLessons();
-    const [tasks, setTasks] = useState<ITask[]>([]);
+    const [tasks, setTasks] = useState<(ITask | ITestTask)[]>([]);
     const [solved, setSolved] = useState<number[]>([]);
     const [solveAgain, setSolveAgain] = useState<number[]>([]);
     const [wrongs, setWrongs] = useState<number[]>([]);
@@ -123,6 +123,13 @@ export default function Practice() {
               onWrongAnswer={addToSolveAgain}
             />
           }
+          {type == 'test' && 
+            <TestExcercise
+              task={tasks[current] as ITestTask} 
+              onCorrectAnswer={addToSolved}
+              onWrongAnswer={addToSolveAgain}
+            />
+          }
           </>
       }
       {finished && 
@@ -166,14 +173,14 @@ type TaskExcerciseProps = {
 };
 
 
-function DummyTaskForTest(props: TaskExcerciseProps) {
-  const {task, onCorrectAnswer, onWrongAnswer} = props;
+// function DummyTaskForTest(props: TaskExcerciseProps) {
+//   const {task, onCorrectAnswer, onWrongAnswer} = props;
 
-  return <>
-    <Button title={'solve'} onPress={onCorrectAnswer}/>
-    <Button title={'wrong'} onPress={onWrongAnswer}/>
-  </>
-}
+//   return <>
+//     <Button title={'solve'} onPress={onCorrectAnswer}/>
+//     <Button title={'wrong'} onPress={onWrongAnswer}/>
+//   </>
+// }
 
 function InputExcercise(props: TaskExcerciseProps) {
   const {task, onCorrectAnswer, onWrongAnswer} = props;
@@ -183,13 +190,13 @@ function InputExcercise(props: TaskExcerciseProps) {
 
   const clearInput = () => {
     setTimeout(() => {
-      // setInputText('');
+      setInputText('');
       return;
     }, 1200);
   }
   
   useEffect(() => {
-    setInputText(answer.substring(0, answer.length - 1));
+    setInputText(answer);
   }, [task])
 
   const checkAnswerOnInput = (input: any) => {
@@ -231,6 +238,35 @@ function InputExcercise(props: TaskExcerciseProps) {
   </>
 }
 
+
+type TestExcerciseProps = {
+  task: ITestTask,
+  onCorrectAnswer: () => void,
+  onWrongAnswer: () => void
+};
+
+function TestExcercise(props: TestExcerciseProps) {
+  const {task, onCorrectAnswer, onWrongAnswer} = props;
+  const {answer, question, options} = task;
+  console.log(options);
+  
+  const insertRandom = (array: string[], element: string) => {
+    const index = Math.floor(Math.random() * (array.length + 1));
+    return [...array.slice(0, index), element, ...array.slice(index)];
+  };
+
+  return <>
+    <View style={styles.inputExcercise}>
+      <Text style={styles.questionString}>{question}</Text>
+      <View style={styles.optionsContainer}>
+        {
+          insertRandom([...options,...options], answer).map(item => <Button title={item} onPress={() => console.log(item)}/>)
+        }
+      </View>
+    </View>
+  </>
+}
+
 function TaskView(task: ITask) {
   return (
     <View>
@@ -259,7 +295,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#484848',
     paddingHorizontal: 8
-
+  },
+  optionsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: "center",
+    gap: 8
   },
   successViewContainer: {
     width: '100%',
