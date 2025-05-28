@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet, Animated } from 'react-native'
+import { View, Text, Button, StyleSheet, Animated, TextInput } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { ITask, ITestTask, useLessons } from '@/context/LessonsContext';
@@ -105,8 +105,12 @@ export default function Practice() {
       <Bar progress={percentage} width={null} />
       <Text>{current}</Text>
       {
-        percentage < 1 && <>
-          <DummyTaskForTest 
+        percentage < 1 && tasks[current] && <>
+          {/* <DummyTaskForTest 
+            task={tasks[current]} 
+            onCorrectAnswer={addToSolved}
+            onWrongAnswer={addToSolveAgain}/> */}
+          <InputExcercise 
             task={tasks[current]} 
             onCorrectAnswer={addToSolved}
             onWrongAnswer={addToSolveAgain}/>
@@ -153,6 +157,49 @@ function DummyTaskForTest(props: TaskExcerciseProps) {
     <Button title={'wrong'} onPress={onWrongAnswer}/>
   </>
 }
+
+function InputExcercise(props: TaskExcerciseProps) {
+  const {task, onCorrectAnswer, onWrongAnswer} = props;
+  const {answer, question} = task;
+  const [inputText, setInputText] = useState('');
+  const [height, setHeight] = useState(42);
+
+  const checkAnswerOnInput = (props: any) => {
+    setInputText(() => {
+      if (props.length > answer.length) {
+        onWrongAnswer();
+        return '';
+      } else if(props === answer) {
+        onCorrectAnswer();
+        setTimeout(() => {
+          return '';
+        }, 1200);
+      }
+      return props;
+    })
+  }
+
+  return <>
+    <View style={styles.inputExcercise}>
+      <Text style={styles.questionString}>{question}</Text>
+      <TextInput
+        style={[styles.answerInput, { height }]}
+        autoCorrect={false}
+        autoCapitalize="none"
+        spellCheck={false}
+        value={inputText}
+        onChangeText={checkAnswerOnInput}
+        multiline
+        onContentSizeChange={(e) =>
+          setHeight(e.nativeEvent.contentSize.height)
+        }
+      />
+    </View>
+  </>
+}
+
+
+
 function TaskView(task: ITask) {
   return (
     <View>
@@ -163,9 +210,29 @@ function TaskView(task: ITask) {
 }
 
 const styles = StyleSheet.create({
+  inputExcercise: {
+    width: '100%',
+    minHeight: 400,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 16
+  },
+  questionString: {
+    fontSize: 22,
+    color: '#484848',
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  answerInput: {
+    fontSize: 22,
+    borderWidth: 1,
+    borderColor: '#484848',
+    paddingHorizontal: 8
+
+  },
   successViewContainer: {
     width: '100%',
-    height: 400,
+    minHeight: 400,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 16
