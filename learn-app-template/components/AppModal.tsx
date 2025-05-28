@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { useNavigation } from 'expo-router';
 
 
-
 type Props = PropsWithChildren<{
   isVisible: boolean;
   title?: string;

@@ -1,18 +1,30 @@
-import { View, Text, Button, StyleSheet } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { View, Text, Button, StyleSheet, Animated } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { ITask, useLessons } from '@/context/LessonsContext';
 import { Bar } from 'react-native-progress';
+import FadeOverlay from '@/components/core/FadeOverlay';
 
 export default function Practice() {
-
     const {practice: practiceId, type} = useLocalSearchParams();
     const { practiciesById, vocabulariesById } = useLessons();
     const [tasks, setTasks] = useState<ITask[]>([]);
     const [solved, setSolved] = useState<number[]>([]);
+    const [solveAgain, setSolveAgain] = useState<number[]>([])
     const [current, setCurrent] = useState<number>(0);
     const [percentage, setPercentage] = useState<number>(0);
     const navigation = useNavigation();
+
+    const [showOverlay, setShowOverlay] = useState(false);
+    const [overlayPromiseResolver, setOverlayPromiseResolver] = useState<() => void>();
+
+
+    const showSolvedOverlayAnimated = () => {
+      return new Promise<void>((resolve) => {
+        setOverlayPromiseResolver(() => resolve);
+        setShowOverlay(true);
+      });
+    };
 
     const setRandomCurrent = () => {      
       if (percentage >= 1) return;
@@ -21,8 +33,13 @@ export default function Practice() {
       setCurrent(randomUnsolvedIndex);
     }
 
-    const addToSolved = (solvedIndex: number) => {
-      if (percentage >= 1) return;      
+    const addToSolveAgain = (notsolvedIndex: number) => {
+      const unsolvedArray = [...solveAgain, notsolvedIndex];
+      setSolveAgain(unsolvedArray);
+    }
+
+    const addToSolved = async (solvedIndex: number) => {
+      await showSolvedOverlayAnimated(); 
       const solvedArray = [...solved, solvedIndex];
       setSolved(solvedArray);
     }
@@ -61,20 +78,34 @@ export default function Practice() {
 
       setRandomCurrent();      
       setPercentage(solved.length / tasks.length);    
-    }, [solved])
+    }, [solved, solveAgain])
 
   return (
     <View style={styles.taskViewContainer}>
       <Bar progress={percentage} width={null} />
       <Text>{current}</Text>
-      {percentage < 1 && <Button title={'solve'} onPress={() => {
-        addToSolved(current);
-      }}/>
+      {
+        percentage < 1 && <>
+          <Button title={'solve'} onPress={() => { addToSolved(current);}}/>
+          <Button title={'wrong'} onPress={() => { addToSolveAgain(current);}}/>
+        </>
+        
       }
+      {
+        percentage === 1 && <Text>Тест пройден</Text>
+      }
+      {showOverlay && (
+        <FadeOverlay
+          text="Solved!"
+          onAnimationEnd={() => {
+            setShowOverlay(false);
+            overlayPromiseResolver?.();
+          }}
+        />
+      )}
     </View>
   )
 }
-
 
 function TaskView(task: ITask) {
   return (
@@ -88,5 +119,21 @@ function TaskView(task: ITask) {
 const styles = StyleSheet.create({
   taskViewContainer: {
     padding: 12
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 9999,
+  },
+  overlayText: {
+    fontSize: 32,
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
