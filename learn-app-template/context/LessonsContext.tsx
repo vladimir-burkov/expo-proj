@@ -247,7 +247,12 @@ const initialPracticies: PracticiesData = {
       {
         question: "большое прибольшое спасибо",
         answer: "ευχαριστώ πάρα πολύ",
-      }]
+      },
+      {
+        question: "всего хорошего, на здоровье",
+        answer: "Να είσαι καλά",
+      },
+    ]
   }
 }
 

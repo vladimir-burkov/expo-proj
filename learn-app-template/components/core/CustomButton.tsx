@@ -14,6 +14,7 @@ type CustomButtonProps = {
   style?: ViewStyle;
   textStyle?: TextStyle;
   disabled?: boolean;
+  closable?: boolean;
 }
 const CustomButton = (props: CustomButtonProps) => {
   const {
@@ -28,6 +29,7 @@ const CustomButton = (props: CustomButtonProps) => {
     style,
     textStyle,
     disabled = false,
+    closable = false
   } = props;
 
   return (
@@ -54,6 +56,14 @@ const CustomButton = (props: CustomButtonProps) => {
           />
         )}
         <Text style={[styles.text, { color: textColor }, textStyle]}>{title}</Text>
+        {closable && (
+          <Ionicons
+            name={'close'}
+            size={12}
+            color={iconColor}
+            style={{ marginLeft: 4 }}
+          />
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -70,6 +80,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontWeight: '500',
+    bottom: 2
   },
   content: {
     flexDirection: 'row',

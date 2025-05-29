@@ -261,14 +261,22 @@ function OrderExcercise(props: TaskExcerciseProps) {
   useEffect(() => {
     const optionsArray = answer.split(" ");
     setOptions(shuffleArray(optionsArray));
-  }, [])
+  }, [task])
 
-  // const clearInput = () => {
-  //   setTimeout(() => {
-  //     setInputText('');
-  //     return;
-  //   }, 1200);
-  // }
+  useEffect(() => {
+    if (inputArray.join(" ") == answer) {
+      onCorrectAnswer();
+      clearInput();
+    } else if (inputArray.join(" ").length * 0.8 > answer.length) {
+      onWrongAnswer();
+      clearInput();
+    }
+  }, [inputArray])
+
+
+  const clearInput = () => {
+    setInputArray([]);
+  }
 
   const insertToAnswerArray = (input: string) => {
     setInputArray([...inputArray, input]);
@@ -288,6 +296,7 @@ function OrderExcercise(props: TaskExcerciseProps) {
                   key={item}
                   title={item}
                   onPress={() => removeFromAnswerArray(item)}
+                  closable
                   style={{paddingHorizontal: 4, paddingVertical: 2, borderRadius: 4, backgroundColor: '#3154ab'}}
                 />
             )
