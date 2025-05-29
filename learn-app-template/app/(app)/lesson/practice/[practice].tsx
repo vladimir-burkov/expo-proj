@@ -260,7 +260,14 @@ function TestExcercise(props: TestExcerciseProps) {
       <Text style={styles.questionString}>{question}</Text>
       <View style={styles.optionsContainer}>
         {
-          insertRandom([...options,...options], answer).map(item => <Button title={item} onPress={() => console.log(item)}/>)
+          insertRandom([...options,...options], answer)
+            .map(item => 
+              <Button
+                color={'#7272d2'}
+                title={item}
+                onPress={() => console.log(item)}
+              />
+            )
         }
       </View>
     </View>
@@ -279,10 +286,10 @@ function TaskView(task: ITask) {
 const styles = StyleSheet.create({
   inputExcercise: {
     width: '100%',
-    minHeight: 400,
+    minHeight: 500,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 16
+    gap: 32
   },
   questionString: {
     fontSize: 22,
@@ -302,9 +309,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 8
   },
+  optionsButton: {
+    paddingHorizontal: 12,
+    borderRadius: 12
+  },
   successViewContainer: {
     width: '100%',
-    minHeight: 400,
+    minHeight: 500,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 16
