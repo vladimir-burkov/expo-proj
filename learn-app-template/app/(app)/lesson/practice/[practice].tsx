@@ -121,7 +121,7 @@ export default function Practice() {
             onWrongAnswer={addToSolveAgain}/> */}
           <Bar progress={percentage} width={null} color='#3154ab'/>
           <View><Text style={styles.instruction}>{instruction}</Text></View>
-          {type == 'vocabular' && 
+          {type == 'vocabular' || type == 'input' && 
             <InputExcercise 
               task={tasks[current]}
               onCorrectAnswer={addToSolved}
@@ -191,15 +191,6 @@ type TaskExcerciseProps = {
 };
 
 
-// function DummyTaskForTest(props: TaskExcerciseProps) {
-//   const {task, onCorrectAnswer, onWrongAnswer} = props;
-
-//   return <>
-//     <Button title={'solve'} onPress={onCorrectAnswer}/>
-//     <Button title={'wrong'} onPress={onWrongAnswer}/>
-//   </>
-// }
-
 function InputExcercise(props: TaskExcerciseProps) {
   const {task, onCorrectAnswer, onWrongAnswer} = props;
   const {answer, question } = task;
@@ -218,7 +209,7 @@ function InputExcercise(props: TaskExcerciseProps) {
       setInputText('');
     } else {
       const trimmedInput = input.trim() as string;
-      if (trimmedInput.length > answer.length) {
+      if (trimmedInput.length > answer.length + 1) {
         onWrongAnswer();
         clearInput();
         return;
