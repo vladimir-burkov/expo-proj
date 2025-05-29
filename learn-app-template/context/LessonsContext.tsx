@@ -238,6 +238,16 @@ const initialPracticies: PracticiesData = {
         options: ["эсио[ð]оксья́","аисио[ð]окси́а","аисио[ð]оксья́"]
       }
     ]
+  },
+  thanksgivig: {
+    practiceid: 'thanksgivig',
+    title: "Благодарности",
+    instruction: "Составьте перевод предложения из предложенных слов",
+    tasks: [
+      {
+        question: "большое прибольшое спасибо",
+        answer: "ευχαριστώ πάρα πολύ",
+      }]
   }
 }
 
@@ -251,7 +261,7 @@ const initialLessons: Lessons = {
     practiceConfig: {
       vocabularId: 'voc1',
       testIds: ['ai'],
-      orderIds: [],
+      orderIds: ['thanksgivig'],
       inputIds: [],
     }
   },

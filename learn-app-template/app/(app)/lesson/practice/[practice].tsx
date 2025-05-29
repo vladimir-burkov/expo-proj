@@ -135,6 +135,13 @@ export default function Practice() {
               onWrongAnswer={addToSolveAgain}
             />
           }
+          {type == 'order' && 
+            <OrderExcercise
+              task={tasks[current] as ITask}
+              onCorrectAnswer={addToSolved}
+              onWrongAnswer={addToSolveAgain}
+            />
+          } 
           </>
       }
       {finished && 
@@ -205,10 +212,6 @@ function InputExcercise(props: TaskExcerciseProps) {
       return;
     }, 1200);
   }
-  
-  useEffect(() => {
-    setInputText(answer);
-  }, [task])
 
   const checkAnswerOnInput = (input: any) => {
     if (!input) {
@@ -249,6 +252,64 @@ function InputExcercise(props: TaskExcerciseProps) {
   </>
 }
 
+function OrderExcercise(props: TaskExcerciseProps) {
+  const {task, onCorrectAnswer, onWrongAnswer} = props;
+  const {answer, question} = task;
+  const [inputArray, setInputArray] = useState<string[]>([]);
+  const [options, setOptions] = useState<string[]>([]);
+
+  useEffect(() => {
+    const optionsArray = answer.split(" ");
+    setOptions(shuffleArray(optionsArray));
+  }, [])
+
+  // const clearInput = () => {
+  //   setTimeout(() => {
+  //     setInputText('');
+  //     return;
+  //   }, 1200);
+  // }
+
+  const insertToAnswerArray = (input: string) => {
+    setInputArray([...inputArray, input]);
+  }
+
+  const removeFromAnswerArray = (input: string) => {
+    setInputArray([...inputArray].filter(item => item !== input));
+  }
+  return <>
+    <View style={styles.inputExcercise}>
+      <Text style={styles.questionString}>{question}</Text>
+      <View style={styles.answerButtons}>
+        {
+          [...inputArray]
+            .map(item => 
+                <CustomButton
+                  key={item}
+                  title={item}
+                  onPress={() => removeFromAnswerArray(item)}
+                  style={{paddingHorizontal: 4, paddingVertical: 2, borderRadius: 4, backgroundColor: '#3154ab'}}
+                />
+            )
+        }
+      </View>
+      <View style={styles.optionsContainer}>
+        {
+          [...options]
+            .filter(item => !inputArray.includes(item))
+            .map(item => 
+                <CustomButton
+                  key={item}
+                  title={item}
+                  onPress={() => insertToAnswerArray(item)}
+                  backgroundColor="#28a745"
+                />
+            )
+        }
+      </View>
+    </View>
+  </>
+}
 
 type TestExcerciseProps = {
   task: ITestTask,
@@ -259,11 +320,6 @@ type TestExcerciseProps = {
 function TestExcercise(props: TestExcerciseProps) {
   const {task, onCorrectAnswer, onWrongAnswer} = props;
   const {answer, question, options} = task;
-  
-  const insertRandom = (array: string[], element: string) => {
-    const index = Math.floor(Math.random() * (array.length + 1));
-    return [...array.slice(0, index), element, ...array.slice(index)];
-  };
 
   const checkAnswer = (answerInput: string) => {
     
@@ -294,6 +350,20 @@ function TestExcercise(props: TestExcerciseProps) {
   </>
 }
 
+const insertRandom = (array: string[], element: string) => {
+  const index = Math.floor(Math.random() * (array.length + 1));
+  return [...array.slice(0, index), element, ...array.slice(index)];
+};
+
+function shuffleArray(array: Array<any>) {
+  const arr = [...array]; // copy to avoid mutating original
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+    [arr[i], arr[j]] = [arr[j], arr[i]]; // swap
+  }
+  return arr;
+}
+  
 function TaskView(task: ITask) {
   return (
     <View>
@@ -304,12 +374,16 @@ function TaskView(task: ITask) {
 }
 
 const styles = StyleSheet.create({
+  answerButtons: {
+    flexDirection: 'row',
+    gap: 6
+  },
   inputExcercise: {
     width: '100%',
     minHeight: screenHeight*0.6,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 48
+    gap: 40
   },
   instruction: {
     fontSize: 16,
