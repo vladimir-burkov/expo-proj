@@ -75,9 +75,9 @@ export default function LessonPage() {
       links.push(makeLink(practiceConfig.vocabularId, "Словарь", 'vocabular'));
     }
     
-    const otherTaskIds = [...practiceConfig.testIds, ...practiceConfig.orderIds, ...practiceConfig.inputIds]
-
-    if (otherTaskIds.length) {
+    const otherTaskIds = new Set([...practiceConfig.testIds, ...practiceConfig.orderIds, ...practiceConfig.inputIds])
+    
+    if (otherTaskIds.size) {
       otherTaskIds.forEach(practiceId => {
         const practice = practiciesById[practiceId];
 
@@ -160,8 +160,7 @@ type LessonPracticeProps = {
   practicies: PracticeLink[],
 };
 
-function LessonPractice ({ practicies }: LessonPracticeProps) {
-
+function LessonPractice ({ practicies }: LessonPracticeProps) {  
   return (
       <ScrollView
           contentInsetAdjustmentBehavior="automatic"
@@ -175,7 +174,7 @@ function LessonPractice ({ practicies }: LessonPracticeProps) {
               {...item}
             />)
           }
-          keyExtractor={(item) => item.practiceId}
+          keyExtractor={(item, index) => item.practiceId+index}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
         />
       </ScrollView>

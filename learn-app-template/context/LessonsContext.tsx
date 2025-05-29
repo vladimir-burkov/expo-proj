@@ -250,7 +250,7 @@ const initialPracticies: PracticiesData = {
       },
       {
         question: "всего хорошего, на здоровье",
-        answer: "Να είσαι καλά",
+        answer: "να είσαι καλά",
       },
     ]
   }
@@ -267,7 +267,7 @@ const initialLessons: Lessons = {
       vocabularId: 'voc1',
       testIds: ['ai'],
       orderIds: ['thanksgivig'],
-      inputIds: [],
+      inputIds: ['thanksgivig'],
     }
   },
   noun: {
