@@ -250,24 +250,22 @@ function OrderExcercise(props: TaskExcerciseProps) {
   const [options, setOptions] = useState<string[]>([]);
 
   useEffect(() => {
+    if (inputArray.length) {
+      setInputArray([]);
+    } 
+
     const optionsArray = answer.split(" ");
     setOptions(shuffleArray(optionsArray));
+    
   }, [task])
 
   useEffect(() => {
     if (inputArray.join(" ") == answer) {
       onCorrectAnswer();
-      clearInput();
     } else if (inputArray.join(" ").length * 0.8 > answer.length) {
       onWrongAnswer();
-      clearInput();
     }
   }, [inputArray])
-
-
-  const clearInput = () => {
-    setInputArray([]);
-  }
 
   const insertToAnswerArray = (input: string) => {
     setInputArray([...inputArray, input]);
@@ -362,15 +360,6 @@ function shuffleArray(array: Array<any>) {
     [arr[i], arr[j]] = [arr[j], arr[i]]; // swap
   }
   return arr;
-}
-  
-function TaskView(task: ITask) {
-  return (
-    <View>
-      <Text>{task.question}</Text>
-      <Text>{task.answer}</Text>
-    </View>
-  )
 }
 
 const styles = StyleSheet.create({
