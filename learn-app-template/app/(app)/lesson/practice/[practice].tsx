@@ -259,12 +259,20 @@ type TestExcerciseProps = {
 function TestExcercise(props: TestExcerciseProps) {
   const {task, onCorrectAnswer, onWrongAnswer} = props;
   const {answer, question, options} = task;
-  console.log(options);
   
   const insertRandom = (array: string[], element: string) => {
     const index = Math.floor(Math.random() * (array.length + 1));
     return [...array.slice(0, index), element, ...array.slice(index)];
   };
+
+  const checkAnswer = (answerInput: string) => {
+    
+    if (answer == answerInput) {
+      onCorrectAnswer();
+    } else {
+      onWrongAnswer();
+    }
+  }
 
   return <>
     <View style={styles.inputExcercise}>
@@ -276,7 +284,7 @@ function TestExcercise(props: TestExcerciseProps) {
                 <CustomButton
                   key={item}
                   title={item}
-                  onPress={() => console.log(item)}
+                  onPress={() => checkAnswer(item)}
                   backgroundColor="#28a745"
                 />
             )
