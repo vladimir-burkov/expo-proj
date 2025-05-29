@@ -215,7 +215,7 @@ function PracticeItem(props: PracticeLink) {
       chevronStyle={chevronStyle}
     >
       <View style={styles.practiceButtonContent}>
-        <AntDesign name="loading1" size={24} color="green" />        
+        <AntDesign name="loading1" size={24} color="#28a745" />        
         <Text style={styles.practiceButtonText}>{title}</Text>
       </View>
     </LinkButton>

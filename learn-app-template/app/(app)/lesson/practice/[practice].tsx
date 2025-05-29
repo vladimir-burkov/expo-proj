@@ -1,9 +1,11 @@
-import { View, Text, Button, StyleSheet, Animated, TextInput } from 'react-native'
+import { View, Text, Button, StyleSheet, Animated, TextInput, Dimensions } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { ITask, ITestTask, useLessons } from '@/context/LessonsContext';
 import { Bar, Circle } from 'react-native-progress';
 import FadeOverlay from '@/components/core/FadeOverlay';
+import CustomButton from '@/components/core/CustomButton';
+const { height: screenHeight } = Dimensions.get('window');
 
 export default function Practice() {
     const {practice: practiceId, type} = useLocalSearchParams();
@@ -16,6 +18,7 @@ export default function Practice() {
     const [percentage, setPercentage] = useState<number>(0);
     const [restartFlag, setRestartFlag] = useState<boolean>(true);
     const [finished, setFinished] = useState<boolean>(false);
+    const [instruction, setInstruction] = useState<string>('');
 
     const navigation = useNavigation();
 
@@ -90,10 +93,12 @@ export default function Practice() {
           question: translation
         }));
         setTasks(tasksList.slice(4, 7));
+        setInstruction("Напишите перевод слова на греческий язык правильно поставив ударение");
       } else {
         const practice = practiciesById[practiceId as string];
         title = practice.title;
         setTasks(practice.tasks);
+        setInstruction(practice.instruction || "Укажите правильный ответ");
       }
 
       navigation.setOptions({
@@ -114,18 +119,18 @@ export default function Practice() {
             task={tasks[current]} 
             onCorrectAnswer={addToSolved}
             onWrongAnswer={addToSolveAgain}/> */}
-          <Bar progress={percentage} width={null} />
-
+          <Bar progress={percentage} width={null} color='#3154ab'/>
+          <View><Text style={styles.instruction}>{instruction}</Text></View>
           {type == 'vocabular' && 
             <InputExcercise 
-              task={tasks[current]} 
+              task={tasks[current]}
               onCorrectAnswer={addToSolved}
               onWrongAnswer={addToSolveAgain}
             />
           }
           {type == 'test' && 
             <TestExcercise
-              task={tasks[current] as ITestTask} 
+              task={tasks[current] as ITestTask}
               onCorrectAnswer={addToSolved}
               onWrongAnswer={addToSolveAgain}
             />
@@ -140,17 +145,23 @@ export default function Practice() {
           <Circle 
             progress={percentage} 
             size={60}
-            color='green'
+            color='#28a745'
             borderColor='none'
             textStyle={{fontSize: 12, fontWeight: 600}}
             thickness={5}
             formatText={() => +percentage.toFixed(2) * 100 + '%'}
             showsText
           />
+          <CustomButton
+            title={'Повторить'}
+            onPress={() => restart()}
+            backgroundColor="#3154ab"
+            iconName="refresh"
+            textStyle={{fontSize: 18}}
+          />
           <Text style={styles.successViewContainerSubText}>
-            {'(засчитываются только правильные ответы полученные с первой попытки)'}
+            {'* учитываются только правильные ответы полученные с первой попытки'}
           </Text>
-          <Button title={'Заново'} onPress={() => { restart()}}/>
         </View>
       }
       {!!showOverlayText && 
@@ -184,7 +195,7 @@ type TaskExcerciseProps = {
 
 function InputExcercise(props: TaskExcerciseProps) {
   const {task, onCorrectAnswer, onWrongAnswer} = props;
-  const {answer, question} = task;
+  const {answer, question } = task;
   const [inputText, setInputText] = useState('');
   const [height, setHeight] = useState(42);
 
@@ -223,7 +234,7 @@ function InputExcercise(props: TaskExcerciseProps) {
     <View style={styles.inputExcercise}>
       <Text style={styles.questionString}>{question}</Text>
       <TextInput
-        style={[styles.answerInput, { height }]}
+        style={[styles.answerInput, { height, overflow: 'hidden'}]}
         autoCorrect={false}
         autoCapitalize="none"
         spellCheck={false}
@@ -260,13 +271,14 @@ function TestExcercise(props: TestExcerciseProps) {
       <Text style={styles.questionString}>{question}</Text>
       <View style={styles.optionsContainer}>
         {
-          insertRandom([...options,...options], answer)
+          insertRandom([...options], answer)
             .map(item => 
-              <Button
-                color={'#7272d2'}
-                title={item}
-                onPress={() => console.log(item)}
-              />
+                <CustomButton
+                  key={item}
+                  title={item}
+                  onPress={() => console.log(item)}
+                  backgroundColor="#28a745"
+                />
             )
         }
       </View>
@@ -286,13 +298,17 @@ function TaskView(task: ITask) {
 const styles = StyleSheet.create({
   inputExcercise: {
     width: '100%',
-    minHeight: 500,
+    minHeight: screenHeight*0.6,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 32
+    gap: 48
+  },
+  instruction: {
+    fontSize: 16,
+    paddingTop: 12
   },
   questionString: {
-    fontSize: 22,
+    fontSize: 26,
     color: '#484848',
     fontWeight: 'bold',
     textAlign: 'center'
@@ -307,7 +323,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: "center",
-    gap: 8
+    gap: 12
   },
   optionsButton: {
     paddingHorizontal: 12,
@@ -334,7 +350,7 @@ const styles = StyleSheet.create({
   },
   successViewContainerSubText: {
     paddingTop: 8,
-    fontSize: 14,
+    fontSize: 16,
     textAlign: 'center'
   },
   taskViewContainer: {

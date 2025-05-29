@@ -28,6 +28,7 @@ export interface IPracticeConfig {
 export interface IPractice {
   practiceid: string;
   title: string;
+  instruction?: string;
   tasks: (ITask | ITestTask)[];
 };
 
@@ -109,6 +110,7 @@ const initialPracticies: PracticiesData = {
   ai: {
     practiceid: 'ai',
     title: "Тест для сочетаний αι, αί, άι, αΐ",
+    instruction: "Выберете подходящую транскрипцию, проговаривая правильное произношение вслух",
     tasks: [
       {
         question: "αιώνας",
