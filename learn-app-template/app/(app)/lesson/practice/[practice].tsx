@@ -1,19 +1,18 @@
-import { View, Text, Button, StyleSheet, Animated, TextInput, Dimensions } from 'react-native'
-import React, { useEffect, useRef, useState } from 'react'
+import { View, Text, StyleSheet, TextInput, Dimensions } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { ITask, ITestTask, useLessons } from '@/context/LessonsContext';
 import { Bar, Circle } from 'react-native-progress';
 import FadeOverlay from '@/components/core/FadeOverlay';
 import CustomButton from '@/components/core/CustomButton';
-import { PracticeStat, useStorage } from '@/context/StorageContext';
+import { PracticeStat, useStorage, lsKeys, getProgressColor } from '@/context/StorageContext';
 const { height: screenHeight } = Dimensions.get('window');
-
-const LS_PRACTICE_KEY = 'GU_practice_stat';
 
 export default function Practice() {
     const {practice: practiceId, type} = useLocalSearchParams();
     const {practiciesById, vocabulariesById} = useLessons();
     const {setLSItem, getLSItem} = useStorage();
+    const {LS_PRACTICE_KEY} = lsKeys;
     const [tasks, setTasks] = useState<(ITask | ITestTask)[]>([]);
     const [solved, setSolved] = useState<number[]>([]);
     const [solveAgain, setSolveAgain] = useState<number[]>([]);
@@ -23,9 +22,7 @@ export default function Practice() {
     const [restartFlag, setRestartFlag] = useState<boolean>(true);
     const [finished, setFinished] = useState<boolean>(false);
     const [instruction, setInstruction] = useState<string>('');
-
     const navigation = useNavigation();
-
     const [showOverlayText, setShowOverlayText] = useState('');
     const [overlayPromiseResolver, setOverlayPromiseResolver] = useState<() => void>();
 
@@ -135,10 +132,6 @@ export default function Practice() {
   return (
     <View style={styles.taskViewContainer}>
       { !finished && tasks[current] && <>
-          {/* <DummyTaskForTest 
-            task={tasks[current]} 
-            onCorrectAnswer={addToSolved}
-            onWrongAnswer={addToSolveAgain}/> */}
           <Bar progress={percentage} width={null} color='#3154ab'/>
           <View><Text style={styles.instruction}>{instruction}</Text></View>
           {type == 'vocabular' || type == 'input' && 
@@ -172,9 +165,9 @@ export default function Practice() {
           <Circle 
             progress={percentage} 
             size={60}
-            color='#28a745'
+            color={getProgressColor(percentage)}
             borderColor='none'
-            textStyle={{fontSize: 12, fontWeight: 600}}
+            textStyle={{fontSize: 16, fontWeight: 600, color: getProgressColor(percentage)}}
             thickness={5}
             formatText={() => +percentage.toFixed(2) * 100 + '%'}
             showsText

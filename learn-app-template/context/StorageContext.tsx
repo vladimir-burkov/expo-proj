@@ -18,7 +18,24 @@ interface StorageProviderProps {
   children: ReactNode;
 }
 
+export const lsKeys = {
+  LS_PRACTICE_KEY: 'GU_practice_stat'
+}
+
+export function getProgressColor(progress: number) {  
+  if (progress > 0.9) {
+    return '#28a745';
+  } else if (progress > 0.4) {
+    return '#ee9228';
+  } else if (progress > 0) {
+    return '#c62c2c'
+  } else {
+    return 'gray'
+  }
+}
+
 export const StorageProvider: React.FC<StorageProviderProps> = ({ children }) => {
+  
   const setLSItem = async <T,>(key: string, value: T): Promise<void> => {
     try {
       const serialized = JSON.stringify(value);
