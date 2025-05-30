@@ -5,11 +5,15 @@ import { ITask, ITestTask, useLessons } from '@/context/LessonsContext';
 import { Bar, Circle } from 'react-native-progress';
 import FadeOverlay from '@/components/core/FadeOverlay';
 import CustomButton from '@/components/core/CustomButton';
+import { PracticeStat, useStorage } from '@/context/StorageContext';
 const { height: screenHeight } = Dimensions.get('window');
+
+const LS_PRACTICE_KEY = 'GU_practice_stat';
 
 export default function Practice() {
     const {practice: practiceId, type} = useLocalSearchParams();
     const {practiciesById, vocabulariesById} = useLessons();
+    const {setLSItem, getLSItem} = useStorage();
     const [tasks, setTasks] = useState<(ITask | ITestTask)[]>([]);
     const [solved, setSolved] = useState<number[]>([]);
     const [solveAgain, setSolveAgain] = useState<number[]>([]);
@@ -25,6 +29,13 @@ export default function Practice() {
     const [showOverlayText, setShowOverlayText] = useState('');
     const [overlayPromiseResolver, setOverlayPromiseResolver] = useState<() => void>();
 
+    // useEffect(() => {
+    //   const load = async () => {
+    //     const stat = await getLSItem<PracticeStat>(LS_PRACTICE_KEY);
+    //     console.log('Stat:', stat);
+    //   };
+    //   load();
+    // }, [getLSItem]);
 
     const showSolvedOverlayAnimated = (text: string) => {
       return new Promise<void>((resolve) => {
@@ -70,6 +81,11 @@ export default function Practice() {
       setSolved(solvedArray);
     }
 
+    const updateStats = async (statKey: string, percentage: number) => {
+      const stat = await getLSItem<PracticeStat>(LS_PRACTICE_KEY) || {};
+      setLSItem(LS_PRACTICE_KEY, {...stat, [statKey]: percentage});
+    }
+
     useEffect(() => {
       setRandomCurrent();
       const progress = solved.length / tasks.length;
@@ -77,8 +93,12 @@ export default function Practice() {
     }, [solved, solveAgain, tasks]);
 
     useEffect(() => {
-      // here update stat
-      console.log(percentage);
+      if (percentage > 0) {
+        const taskStatKey = `${practiceId}${type}`; 
+        updateStats(taskStatKey, percentage);
+        console.log(type, practiceId);
+        console.log(percentage);
+      }
     }, [percentage]);
 
     
@@ -286,7 +306,7 @@ function OrderExcercise(props: TaskExcerciseProps) {
                   title={item}
                   onPress={() => removeFromAnswerArray(item)}
                   closable
-                  style={{paddingHorizontal: 4, paddingVertical: 2, borderRadius: 4, backgroundColor: '#3154ab'}}
+                  style={{paddingLeft: 6, paddingRight: 4, paddingVertical: 2, borderRadius: 4, backgroundColor: '#3154ab'}}
                 />
             )
         }
