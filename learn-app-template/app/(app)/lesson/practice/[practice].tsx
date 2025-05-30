@@ -134,7 +134,7 @@ export default function Practice() {
       { !finished && tasks[current] && <>
           <Bar progress={percentage} width={null} color='#3154ab'/>
           <View><Text style={styles.instruction}>{instruction}</Text></View>
-          {type == 'vocabular' || type == 'input' && 
+          {(type == 'vocabular' || type == 'input') && 
             <InputExcercise 
               task={tasks[current]}
               onCorrectAnswer={addToSolved}
