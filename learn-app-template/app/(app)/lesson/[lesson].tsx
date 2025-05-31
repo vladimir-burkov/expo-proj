@@ -2,7 +2,7 @@ import LinkButton from "@/components/core/LinkButton";
 import Loader from "@/components/core/Loader";
 import { IPracticeConfig, useLessons } from "@/context/LessonsContext";
 import { getProgressColor, lsKeys, PracticeStat, useStorage } from "@/context/StorageContext";
-import { loadEncryptedMarkdown } from "@/lib/decrypt";
+import { loadEncryptedContent } from "@/lib/decrypt";
 import { AntDesign } from "@expo/vector-icons";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useLocalSearchParams, useNavigation } from "expo-router";
@@ -267,12 +267,13 @@ function LessonVocabulary ({vocabulary}: {vocabulary: {[key: string] : string}})
 }
 
 function LessonTheory({ lessonId }: LessonTheoryProps) {
+  const {lessonsById} = useLessons();
   const [markdownContent, setMarkdownContent] = useState('');
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
     setLoading(true);
-    loadEncryptedMarkdown("https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc")
+    loadEncryptedContent(lessonsById[lessonId].article_url)
       .then(setMarkdownContent)
       .catch(() => {
         setMarkdownContent("Loading error")

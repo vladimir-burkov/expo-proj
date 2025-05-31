@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js';
 
-export async function loadEncryptedMarkdown(url: string) {
+export async function loadEncryptedContent(url: string) {
   const key = 'vova'; // Keep it safe!
   const response = await fetch(url);
   const encryptedText = await response.text();
