@@ -124,7 +124,7 @@ function MenuButton({ onPress }: HeaderButtonProps) {
   return (
     <View>
       <Pressable onPress={onPress}>
-        <MaterialCommunityIcons name="menu-open" size={30} color="white"/> 
+        <FontAwesome name={'navicon'} size={30} color="white" /> 
       </Pressable>
     </View>
   );

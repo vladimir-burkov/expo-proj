@@ -29,9 +29,10 @@ const FadeOverlay: React.FC<FadeOverlayProps> = ({ text, onAnimationEnd }) => {
   }, []);
 
   return (
+    <View>
     <Animated.View style={[styles.overlay, { opacity: fadeAnim }]}>
       <Text style={styles.text}>{text}</Text>
-    </Animated.View>
+    </Animated.View></View>
   );
 };
 

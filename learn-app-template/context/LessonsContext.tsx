@@ -404,7 +404,7 @@ type LessonContextType = {
 // };
 const GU_lessons_url = 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lessons.json.enc';
 const GU_practice_url = 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/practice.json.enc';
-const GU_vocabulary_url = 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/practice.json.enc';
+const GU_vocabulary_url = 'https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/vocabulary.json.enc';
 const LessonContext = createContext<LessonContextType | undefined>(undefined);
 
 export const LessonProvider = ({ children }: { children: ReactNode }) => {

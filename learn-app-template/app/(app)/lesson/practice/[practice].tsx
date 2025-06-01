@@ -26,14 +26,6 @@ export default function Practice() {
     const [showOverlayText, setShowOverlayText] = useState('');
     const [overlayPromiseResolver, setOverlayPromiseResolver] = useState<() => void>();
 
-    // useEffect(() => {
-    //   const load = async () => {
-    //     const stat = await getLSItem<PracticeStat>(LS_PRACTICE_KEY);
-    //     console.log('Stat:', stat);
-    //   };
-    //   load();
-    // }, [getLSItem]);
-
     const showSolvedOverlayAnimated = (text: string) => {
       return new Promise<void>((resolve) => {
         setOverlayPromiseResolver(() => resolve);
@@ -93,8 +85,6 @@ export default function Practice() {
       if (percentage > 0) {
         const taskStatKey = `${practiceId}${type}`; 
         updateStats(taskStatKey, percentage);
-        console.log(type, practiceId);
-        console.log(percentage);
       }
     }, [percentage]);
 
@@ -109,7 +99,7 @@ export default function Practice() {
           answer: word,
           question: translation
         }));
-        setTasks(tasksList.slice(4, 7));
+        setTasks(tasksList);
         setInstruction("Напишите перевод слова на греческий язык правильно поставив ударение");
       } else {
         const practice = practiciesById[practiceId as string];
