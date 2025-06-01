@@ -224,7 +224,7 @@ function PracticeItem(props: PracticeLink) {
     >
       <View style={styles.practiceButtonContent}>
         {/* <AntDesign name="loading1" size={24} color="#28a745" />         */}
-        <Circle 
+        {/* <Circle 
           progress={progress} 
           size={45}
           color={getProgressColor(progress)}
@@ -233,7 +233,7 @@ function PracticeItem(props: PracticeLink) {
           thickness={3}
           formatText={() => progress * 100 + '%'}
           showsText
-        />
+        /> */}
         <Text style={styles.practiceButtonText}>{title}</Text>
       </View>
     </LinkButton>
