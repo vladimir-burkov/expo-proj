@@ -1,0 +1,8 @@
+{
+  "expo": {
+    "android": {
+      "package": "com.nocompo.appap",
+      "versionCode": 1
+    }
+  }
+}
