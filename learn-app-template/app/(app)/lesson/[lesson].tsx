@@ -861,7 +861,7 @@ const mdstyles = StyleSheet.create({
   },
   paragraph: {
     lineHeight: 20,
-    fontSize: 16,
+    fontSize: 14,
     margin: 0,
     textAlign: "justify",
   },
