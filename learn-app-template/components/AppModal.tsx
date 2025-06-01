@@ -46,6 +46,7 @@ export default function AppModal({ isVisible, title, children, onClose }: Props)
           </TouchableWithoutFeedback>
         }
         <View style={styles.headerModalMenuContainer}>
+          children
           {children}
         </View>  
       </View>
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#25292e',
     position: 'absolute',
-    bottom: 0,
+    bottom: -20,
   },
   title: {
     color: '#fff',

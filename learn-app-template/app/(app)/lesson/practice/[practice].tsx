@@ -174,7 +174,7 @@ export default function Practice() {
           </Text>
         </View>
       }
-      {!!showOverlayText && 
+      {/* {!!showOverlayText && 
         <FadeOverlay
           text={showOverlayText}
           onAnimationEnd={() => {
@@ -182,7 +182,7 @@ export default function Practice() {
             overlayPromiseResolver?.();
           }}
         />
-      }
+      } */}
     </View>
   )
 }
