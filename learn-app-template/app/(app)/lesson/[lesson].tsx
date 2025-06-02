@@ -809,7 +809,6 @@ const mdstyles = StyleSheet.create({
     // borderColor: '#b2b2b2',
     backgroundColor:"#f2f2f2",
     paddingLeft: 6,
-    paddingBottom: 4,
     marginTop: 12,
     // borderBottomLeftRadius: 6,
     // borderTopLeftRadius: 6

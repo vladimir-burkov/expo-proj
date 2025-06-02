@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     minWidth: 250,
     justifyContent: 'center',
-    paddingBottom: 25
+    paddingBottom: 12
   }
 });
 

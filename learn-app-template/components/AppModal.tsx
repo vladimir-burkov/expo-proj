@@ -33,6 +33,11 @@ export default function AppModal({ isVisible, title, children, onClose }: Props)
   return (
     <View>
     <Modal animationType="slide" transparent={true} visible={isVisible}>
+      {isVisible && 
+        <TouchableWithoutFeedback onPress={onClose}>
+          <View style={styles.modalOverlay} />
+        </TouchableWithoutFeedback>
+      }
       <View style={styles.modalContent}>
         <View style={containerStyles.titleContainer}>
           {title && <Text style={styles.title}>{title}</Text>}
@@ -40,11 +45,6 @@ export default function AppModal({ isVisible, title, children, onClose }: Props)
             <MaterialIcons name="close" color="#fff" size={22} />
           </Pressable>
         </View>
-        {isVisible && 
-          <TouchableWithoutFeedback onPress={onClose}>
-            <View style={styles.modalOverlay} />
-          </TouchableWithoutFeedback>
-        }
         <View style={styles.headerModalMenuContainer}>
           {children}
         </View>  
@@ -60,19 +60,20 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#25292e',
     position: 'absolute',
-    bottom: -20,
+    bottom: 0,
+    zIndex: 0,
   },
   title: {
     color: '#fff',
     fontSize: 16,
   },
   modalOverlay: {
-    // position: 'fixed',
-    // top: 0,
-    // height: '100%',
-    // left: 0,
-    // right: 0,
-    // zIndex: -9999,
+    position: 'sticky',
+    top: 0,
+    height: '60%',
+    width: '100%',
+    left: 0,
+    right: 0,
   },
   headerModalMenuContainer: {
     flex: 1,
