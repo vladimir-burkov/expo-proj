@@ -201,7 +201,7 @@ function PracticeItem(props: PracticeLink) {
       transitionDuration: "200ms",
       flexDirection: "row",
       alignItems: 'center',
-      paddingLeft: 14,
+      paddingLeft: 20,
       paddingRight: 16
     },
     plainButtonHovered: {
@@ -224,7 +224,6 @@ function PracticeItem(props: PracticeLink) {
       chevronStyle={chevronStyle}
     >
       <View style={styles.practiceButtonContent}>
-        {/* <AntDesign name="loading1" size={24} color="#28a745" />         */}
         <Circle 
           progress={progress} 
           size={45}
@@ -695,8 +694,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 6,
+    paddingHorizontal: 18,
+    paddingTop: 4,
     backgroundColor: "#ffff"
   },
   main: {
@@ -705,6 +704,7 @@ const styles = StyleSheet.create({
     marginHorizontal: "auto",
   },
   scrollView: {
+    paddingVertical: 4,
     flexWrap: "wrap",
     backgroundColor: "white"
   },
@@ -715,7 +715,7 @@ const styles = StyleSheet.create({
   practiceButtonContent: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 16,
+    gap: 20,
     flex: 1,
     minHeight: 65,
   },
@@ -723,7 +723,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontWeight: 400,
     fontSize: 16,
-    paddingRight: 42
+    paddingRight: 48
   },
 });
 
@@ -755,16 +755,7 @@ const vocabularyStyles = StyleSheet.create({
 });
 
 const mdstyles = StyleSheet.create({
-  root: {
-    padding: 16,
-    backgroundColor: '#fff',
-    textAlign: "justify"
-  },
-  view: {
-    marginVertical: 8,
-    textAlign: "justify"
 
-  },
   codeBlock: {
     backgroundColor: '#f5f5f5',
     padding: 12,
@@ -806,7 +797,7 @@ const mdstyles = StyleSheet.create({
   heading4: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 16,
+    // marginTop: 16,
   },
   heading5: {
     fontSize: 16,
@@ -873,10 +864,9 @@ const mdstyles = StyleSheet.create({
     fontSize: 14,
     margin: 0,
     textAlign: "justify",
+    paddingBottom: 8,
+
   },
-  // hardbreak: {
-  //   height: 10,
-  // },
   strong: {
     fontWeight: 'bold',
   },

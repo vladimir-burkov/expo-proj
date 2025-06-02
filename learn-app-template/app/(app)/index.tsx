@@ -62,7 +62,7 @@ function LessonItem(props: LessonItemProps) {
       transitionDuration: "200ms",
       flexDirection: "row",
       alignItems: 'center',
-      paddingLeft: 20,
+      paddingLeft: 26,
       paddingRight: 16,
     },
     plainButtonHovered: {
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   headerNotificationBar: {
     backgroundColor:'#f9f2d7',
     fontSize: 14,
-    paddingHorizontal: 20,
+    paddingHorizontal: 26,
     paddingVertical: 12
   },
   lessonButtonText: {
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   lessonButtonContent: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 16,
+    gap: 18,
     flex: 1,
     minHeight: 65,
   },

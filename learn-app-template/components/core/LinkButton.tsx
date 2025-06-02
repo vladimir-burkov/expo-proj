@@ -47,7 +47,7 @@ const LinkButton = (props: LinkButtonProps) => {
             >  
               {children} 
               {chevronStyle && 
-                <View style={{ flexDirection: "row", paddingLeft: 16 }}>
+                <View style={{ flexDirection: "row", paddingLeft: 16, paddingRight: 10 }}>
                   <FontAwesome
                       name="chevron-right"
                       size={chevronStyle.size}

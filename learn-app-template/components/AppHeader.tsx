@@ -7,7 +7,7 @@ import LinkButton from "@/components/core/LinkButton";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useState } from "react";
-import { FontAwesome, SimpleLineIcons } from '@expo/vector-icons';
+import { SimpleLineIcons } from '@expo/vector-icons';
 
 type HeaderButtonProps = {
   onPress: () => void;
@@ -38,7 +38,7 @@ export const AppHeader = () => {
 function UserButton() {
   return (
     <View>
-      <SimpleLineIcons name="user" size={24} color="white" style={{paddingRight: 16}}/>    
+      <SimpleLineIcons name="user" size={24} color="white" style={{paddingRight: 10}}/>    
     </View>
   )
 }
@@ -135,7 +135,7 @@ function MenuButton({ onPress }: HeaderButtonProps) {
   return (
     <View>
       <Pressable onPress={onPress}>
-        <FontAwesome name={'navicon'} size={30} color="white" /> 
+        <MaterialIcons name="menu" size={30} color="white" />
       </Pressable>
     </View>
   );
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     left: 16
   },
   headerButton: {
-    paddingLeft: 16,
+    paddingLeft: 6,
     alignItems: 'center',
     color: 'white',
     maxWidth: 40
