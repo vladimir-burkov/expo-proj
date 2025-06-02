@@ -121,6 +121,7 @@ export default function LessonPage() {
           tabBarIconStyle: {
             height: 22
           },
+          animationEnabled: false,
           tabBarStyle: {
             backgroundColor: "#25292e",
             borderColor: "lightgray",
