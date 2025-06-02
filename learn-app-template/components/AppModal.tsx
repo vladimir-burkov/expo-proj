@@ -67,12 +67,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   modalOverlay: {
-    position: 'fixed',
-    top: 0,
-    height: '100%',
-    left: 0,
-    right: 0,
-    zIndex: -9999,
+    // position: 'fixed',
+    // top: 0,
+    // height: '100%',
+    // left: 0,
+    // right: 0,
+    // zIndex: -9999,
   },
   headerModalMenuContainer: {
     flex: 1,

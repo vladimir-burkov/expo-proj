@@ -200,7 +200,11 @@ const styles = StyleSheet.create({
     color: "white"
   },
   menuLinksList: {
-    gap: 12,
+    flex: 1,
+    flexDirection: 'column',
+    minWidth: 250,
+    justifyContent: 'center',
+    paddingBottom: 25
   }
 });
 
