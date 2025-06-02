@@ -31,8 +31,8 @@ export default function AppLayout() {
                 },
                 navigationBarColor: '#25292e',
                 headerTitle: AppHeader,
-                headerLeft: HeaderButton,
-                headerRight: UserButton
+                // headerLeft: HeaderButton,
+                // headerRight: UserButton
               }}
           />
           <Stack.Screen name="buy"/>
@@ -40,13 +40,4 @@ export default function AppLayout() {
           <Stack.Screen name="auth"/>
         </Stack>
   );
-}
-
-
-function UserButton() {
-  return (
-    <View>
-      <SimpleLineIcons name="user" size={24} color="white" style={{paddingRight: 16}}/>    
-    </View>
-  )
 }

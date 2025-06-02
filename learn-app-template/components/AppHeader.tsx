@@ -7,14 +7,16 @@ import LinkButton from "@/components/core/LinkButton";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useState } from "react";
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, SimpleLineIcons } from '@expo/vector-icons';
 
 type HeaderButtonProps = {
   onPress: () => void;
 };
 
 export const AppHeader = () => {
-  return ( 
+  return (
+    <View style={styles.header}>
+      <HeaderButton/>
       <View style={styles.headerTitleContainer}>
         <View style={styles.textContainer}>
           <Image
@@ -28,8 +30,18 @@ export const AppHeader = () => {
           <Text style={styles.subtitle}>Ελληνικά-A1</Text>
         </View>
       </View>
+      <UserButton/>
+    </View>
   );
 };
+
+function UserButton() {
+  return (
+    <View>
+      <SimpleLineIcons name="user" size={24} color="white" style={{paddingRight: 16}}/>    
+    </View>
+  )
+}
 
 export function HeaderButton() {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
@@ -44,7 +56,7 @@ export function HeaderButton() {
   return (<>
       <View style={styles.headerButton}>
         <MenuButton onPress={onModalOpen}/>
-          <AppModal isVisible={isModalVisible} onClose={onModalClose}>
+        <AppModal isVisible={isModalVisible} onClose={onModalClose}>
           <MenuLinks/>
         </AppModal>
     </View>
@@ -130,8 +142,13 @@ function MenuButton({ onPress }: HeaderButtonProps) {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: "center",
+    width: "100%"
+  },
   headerTitleContainer: {
-    width: 200,
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: 'transparent',

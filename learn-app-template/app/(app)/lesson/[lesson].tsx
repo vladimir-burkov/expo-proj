@@ -762,7 +762,7 @@ const mdstyles = StyleSheet.create({
   },
   view: {
     marginVertical: 8,
-        textAlign: "justify"
+    textAlign: "justify"
 
   },
   codeBlock: {
@@ -804,7 +804,7 @@ const mdstyles = StyleSheet.create({
     fontWeight: 'bold',
   },
   heading4: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     marginTop: 16,
   },
