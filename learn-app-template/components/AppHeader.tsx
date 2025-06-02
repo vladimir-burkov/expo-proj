@@ -14,8 +14,7 @@ type HeaderButtonProps = {
 };
 
 export const AppHeader = () => {
-  return (
-    <>
+  return ( 
       <View style={styles.headerTitleContainer}>
         <View style={styles.textContainer}>
           <Image
@@ -29,7 +28,6 @@ export const AppHeader = () => {
           <Text style={styles.subtitle}>Ελληνικά-A1</Text>
         </View>
       </View>
-    </>
   );
 };
 
@@ -43,13 +41,14 @@ export function HeaderButton() {
   const onModalClose = () => {
     setIsModalVisible(false);
   };
-  return (
-    <View style={styles.headerButton}>
-      <MenuButton onPress={onModalOpen}/>
-      <AppModal isVisible={isModalVisible} onClose={onModalClose}>
-        <MenuLinks/>
-      </AppModal>
+  return (<>
+      <View style={styles.headerButton}>
+        <MenuButton onPress={onModalOpen}/>
+          <AppModal isVisible={isModalVisible} onClose={onModalClose}>
+          <MenuLinks/>
+        </AppModal>
     </View>
+  </>
   );
 }
 
@@ -132,6 +131,7 @@ function MenuButton({ onPress }: HeaderButtonProps) {
 
 const styles = StyleSheet.create({
   headerTitleContainer: {
+    width: 200,
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: 'transparent',
@@ -168,7 +168,8 @@ const styles = StyleSheet.create({
   headerButton: {
     paddingLeft: 16,
     alignItems: 'center',
-    color: 'white'
+    color: 'white',
+    maxWidth: 40
   },
   buttonContent: {
     flexDirection: "row",

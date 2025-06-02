@@ -35,6 +35,7 @@ function LessonsList() {
       <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           contentContainerStyle={[styles.scrollView]}
+          nestedScrollEnabled={true}
       >
         <FlatList
           data={lessons}
@@ -62,7 +63,7 @@ function LessonItem(props: LessonItemProps) {
       flexDirection: "row",
       alignItems: 'center',
       paddingLeft: 20,
-      paddingRight: 16
+      paddingRight: 16,
     },
     plainButtonHovered: {
       backgroundColor: "rgba(0,0,0,0.1)"
@@ -115,6 +116,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontWeight: 400,
     fontSize: 16,
+    paddingRight: 35
   },
   lessonButtonIcon: {
     minWidth: 20

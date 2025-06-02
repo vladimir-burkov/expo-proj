@@ -46,7 +46,6 @@ export default function AppModal({ isVisible, title, children, onClose }: Props)
           </TouchableWithoutFeedback>
         }
         <View style={styles.headerModalMenuContainer}>
-          children
           {children}
         </View>  
       </View>

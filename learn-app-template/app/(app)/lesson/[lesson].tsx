@@ -65,7 +65,7 @@ export default function LessonPage() {
     navigation.setOptions({
       title,
       headerTitleStyle: {
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: 'bold',
         whiteSpace: 'initial',
       },
@@ -145,7 +145,7 @@ export default function LessonPage() {
           options={{
             title: "Словарь",
             tabBarIcon: ({focused}: {focused: boolean}) => (
-              <AntDesign name="swap" size={16} style={{height: 16}} color={focused ? "white" : 'darkgray'} />
+              <AntDesign name="retweet" size={18} style={{height: 16}} color={focused ? "white" : 'darkgray'} />
             ),
           }}
         />
@@ -174,6 +174,7 @@ function LessonPractice ({ practicies }: LessonPracticeProps) {
       <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           contentContainerStyle={[styles.scrollView]}
+          nestedScrollEnabled={true}
       >
         <FlatList
           data={practicies}
@@ -231,7 +232,7 @@ function PracticeItem(props: PracticeLink) {
           borderColor={progress == 1 ? 'none' : getProgressColor(progress)}
           textStyle={{fontSize: 12, fontWeight: 600, color: getProgressColor(progress)}}
           thickness={3}
-          formatText={() => progress * 100 + '%'}
+          formatText={() => +progress.toFixed(2) * 100 + '%'}
           showsText
         />
         <Text style={styles.practiceButtonText}>{title}</Text>
@@ -256,7 +257,10 @@ function LessonVocabulary ({vocabulary}: {vocabulary: {[key: string] : string}})
 
   return (
     
-    <ScrollView contentContainerStyle={vocabularyStyles.container}>
+    <ScrollView 
+      contentContainerStyle={vocabularyStyles.container} 
+      nestedScrollEnabled={true}
+    >
       <View style={[vocabularyStyles.row, vocabularyStyles.headerRow]}>
         <Text style={vocabularyStyles.headerCell}>Слово</Text>
         <Text style={vocabularyStyles.headerCell}>Перевод</Text>
@@ -669,7 +673,10 @@ function LessonTheory({ lessonId }: LessonTheoryProps) {
     <>
       {!loading && 
       // style={{ backgroundColor: '#f0f0f0' }}
-        <ScrollView style={styles.container}>
+        <ScrollView 
+          style={styles.container} 
+          nestedScrollEnabled={true}
+        >
           <Markdown style={mdstyles}>{markdownContent}</Markdown>
         </ScrollView>
       }
@@ -689,7 +696,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
-    paddingVertical: 6,
+    paddingTop: 6,
     backgroundColor: "#ffff"
   },
   main: {
@@ -716,12 +723,14 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontWeight: 400,
     fontSize: 16,
+    paddingRight: 42
   },
 });
 
 const vocabularyStyles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
+    paddingVertical: 8,
     backgroundColor: "white"
   },
   row: {
@@ -800,7 +809,7 @@ const mdstyles = StyleSheet.create({
     marginTop: 16,
   },
   heading5: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     // borderLeftWidth: 2,
     // borderBottomWidth: 1.5,

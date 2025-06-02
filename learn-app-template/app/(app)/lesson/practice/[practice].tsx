@@ -111,7 +111,7 @@ export default function Practice() {
       navigation.setOptions({
         title: title,
         headerTitleStyle: {
-          fontSize: 14,
+          fontSize: 16,
           fontWeight: 'bold',
           whiteSpace: 'initial'
         },
@@ -174,7 +174,7 @@ export default function Practice() {
           </Text>
         </View>
       }
-      {/* {!!showOverlayText && 
+      {!!showOverlayText && 
         <FadeOverlay
           text={showOverlayText}
           onAnimationEnd={() => {
@@ -182,7 +182,7 @@ export default function Practice() {
             overlayPromiseResolver?.();
           }}
         />
-      } */}
+      }
     </View>
   )
 }
@@ -233,6 +233,10 @@ function InputExcercise(props: TaskExcerciseProps) {
       <TextInput
         style={[styles.answerInput, { height, overflow: 'hidden'}]}
         autoCorrect={false}
+        contextMenuHidden={true}
+        textContentType={'none'}
+        // keyboardType="visible-password"
+        autoComplete="off"
         autoCapitalize="none"
         spellCheck={false}
         value={inputText}
@@ -388,10 +392,11 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   answerInput: {
-    fontSize: 22,
+    fontSize: 18,
     borderWidth: 1,
     borderColor: '#484848',
-    paddingHorizontal: 8
+    paddingHorizontal: 8,
+    minWidth: 200
   },
   optionsContainer: {
     flexDirection: 'row',

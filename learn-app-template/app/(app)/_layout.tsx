@@ -14,6 +14,7 @@ export default function AppLayout() {
             headerTitleStyle: {
               fontWeight: 400,
             },
+
         }}
         >
           <Stack.Screen
@@ -25,13 +26,13 @@ export default function AppLayout() {
                 headerTintColor: '#fff',
                 headerTitleAlign: "center",
                 headerTitleStyle: {
-                  fontSize: 14,
+                  fontSize: 16,
                   paddingLeft: 15
                 },
+                navigationBarColor: '#25292e',
                 headerTitle: AppHeader,
                 headerLeft: HeaderButton,
                 headerRight: UserButton
-
               }}
           />
           <Stack.Screen name="buy"/>
