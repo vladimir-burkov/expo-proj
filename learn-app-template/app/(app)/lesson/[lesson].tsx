@@ -249,11 +249,12 @@ function PracticeItem(props: PracticeLink) {
       <View style={styles.practiceButtonContent}>
         <Circle
           progress={progress}
-          size={45}
+          size={44}
           color={getProgressColor(progress)}
           borderColor={progress == 1 ? 'none' : getProgressColor(progress)}
           textStyle={{ fontSize: 12, fontWeight: 600, color: getProgressColor(progress) }}
           thickness={3}
+          borderWidth={0.5}
           formatText={() => +progress.toFixed(2) * 100 + '%'}
           showsText
         />

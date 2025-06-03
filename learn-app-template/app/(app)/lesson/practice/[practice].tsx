@@ -147,16 +147,17 @@ export default function Practice() {
           } 
           </>
       }
-      {finished && 
+      {true && 
         <View style={styles.successViewContainer}>
           <Text style={styles.successViewContainerText}>
             Упражнение закончено
           </Text>
           <Circle 
             progress={percentage} 
-            size={60}
+            size={57}
             color={getProgressColor(percentage)}
-            borderColor='none'
+            borderColor={getProgressColor(percentage)}
+            borderWidth={0.5}
             textStyle={{fontSize: 16, fontWeight: 600, color: getProgressColor(percentage)}}
             thickness={5}
             formatText={() => +percentage.toFixed(2) * 100 + '%'}
