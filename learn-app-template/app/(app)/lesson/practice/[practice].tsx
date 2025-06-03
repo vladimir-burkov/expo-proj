@@ -147,7 +147,7 @@ export default function Practice() {
           } 
           </>
       }
-      {true && 
+      {finished && 
         <View style={styles.successViewContainer}>
           <Text style={styles.successViewContainerText}>
             Упражнение закончено
