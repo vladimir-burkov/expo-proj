@@ -84,26 +84,31 @@ export default function LessonPage() {
     const otherTaskIds = new Set([...practiceConfig.testIds, ...practiceConfig.orderIds, ...practiceConfig.inputIds])
     
     if (otherTaskIds.size) {
-      otherTaskIds.forEach(practiceId => {
-        const practice = practiciesById[practiceId];
-
-        if (practiceConfig.testIds.includes(practiceId)) {
+      [...otherTaskIds]
+        .filter(practiceId => practiceConfig.testIds.includes(practiceId))
+        .forEach(practiceId => {
+          const practice = practiciesById[practiceId];
           const stat = currentStat[practiceId + 'test'] || 0;
-          links.push(makeLink(practiceId, `${practiceConfig.orderIds.length && practiceConfig.inputIds.length ? "Уровень 1: " : ""}${practice.title}`, 'test', stat));
-        }
+          links.push(makeLink(practiceId, `${practice.title}${practiceConfig.orderIds.length && practiceConfig.inputIds.length ? " - 1" : ""}`, 'test', stat));
+        });
 
-        if (practiceConfig.orderIds.includes(practiceId)) {
+      [...otherTaskIds]
+        .filter(practiceId => practiceConfig.orderIds.includes(practiceId))
+        .forEach(practiceId => {
+          const practice = practiciesById[practiceId];
           const stat = currentStat[practiceId + 'order'] || 0;
-          links.push(makeLink(practiceId, `Уровень 2: ${practice.title}`, 'order', stat));
-        }
+          links.push(makeLink(practiceId, `${practice.title}${practiceConfig.testIds.length && practiceConfig.inputIds.length ? " - 2" : ""}`, 'order', stat));
+        });
 
-        if (practiceConfig.inputIds.includes(practiceId)) {
+      [...otherTaskIds]
+        .filter(practiceId => practiceConfig.inputIds.includes(practiceId))
+        .forEach(practiceId => {
+          const practice = practiciesById[practiceId];
           const stat = currentStat[practiceId + 'input'] || 0;
-          links.push(makeLink(practiceId, `Уровень 3: ${practice.title}`, 'input', stat));
-        }
-
-      })
+          links.push(makeLink(practiceId, `${practice.title}${practiceConfig.orderIds.length && practiceConfig.testIds.length ? " - 3" : ""}`, 'input', stat));
+        });
     }
+    
 
     setPracticeLinks(links);
   }
