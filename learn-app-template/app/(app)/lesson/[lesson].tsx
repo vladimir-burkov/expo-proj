@@ -6,10 +6,11 @@ import { loadEncryptedContent } from "@/lib/decrypt";
 import { AntDesign } from "@expo/vector-icons";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FlatList, ScrollView, StyleSheet, View, Text } from "react-native";
 import Markdown from "react-native-markdown-display";
 import { Circle } from "react-native-progress";
+import { useFocusEffect } from '@react-navigation/native';
 
 type LessonTheoryProps = {
   lessonId: string
@@ -18,13 +19,13 @@ type LessonTheoryProps = {
 type PracticeLink = {
   practiceId: string,
   title: string,
-  progress: number, 
+  progress: number,
   href: any
 }
 
 type LinkParams = {
   id: string,
-  title: string, 
+  title: string,
   isVocabulary: boolean
 }
 
@@ -32,34 +33,15 @@ const Tab = createBottomTabNavigator();
 
 export default function LessonPage() {
   const { lesson } = useLocalSearchParams();
-  const { getLSItem} = useStorage();
-  const { LS_PRACTICE_KEY } = lsKeys;
-  const { lessonsById, practiciesById, vocabulariesById} = useLessons();
+  const { lessonsById, vocabulariesById } = useLessons();
   const navigation = useNavigation();
-  const [ practiceLinks, setPracticeLinks ] = useState<PracticeLink[]>([]);
-  const [ vocabulary, setVocabulary ] = useState<{[key: string] : string}>({});
+  const [vocabulary, setVocabulary] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
-    const { title, vocabularyId, practiceConfig } = lessonsById[lesson as string];
+    const { title, vocabularyId } = lessonsById[lesson as string];
     setupHeader(title);
-    setupPractice(practiceConfig);
     setVocabulary(vocabulariesById[vocabularyId] || {})
   }, [lesson]);
-
-  const makeLink = (id: string, title: string, type: string, progress: number) => {
-    return {
-        practiceId: id,
-        title,
-        href: {
-          pathname: '/(app)/lesson/practice/[practice]',
-          params: {
-            practice: id,
-            type: type,
-          },
-        },
-        progress
-      }
-  }
 
   const setupHeader = (title: string) => {
     navigation.setOptions({
@@ -71,48 +53,6 @@ export default function LessonPage() {
       },
     });
   }
-
-  const setupPractice = async (practiceConfig: IPracticeConfig) => {
-    const links: PracticeLink[] = [];
-    const currentStat = await getLSItem<PracticeStat>(LS_PRACTICE_KEY) || {};
-
-    if (practiceConfig.vocabularId) {
-      const stat = currentStat[practiceConfig.vocabularId + 'vocabular'] || 0;
-      links.push(makeLink(practiceConfig.vocabularId, "Словарь", 'vocabular', stat));
-    }
-    
-    const otherTaskIds = new Set([...practiceConfig.testIds, ...practiceConfig.orderIds, ...practiceConfig.inputIds])
-    
-    if (otherTaskIds.size) {
-      [...otherTaskIds]
-        .filter(practiceId => practiceConfig.testIds.includes(practiceId))
-        .forEach(practiceId => {
-          const practice = practiciesById[practiceId];
-          const stat = currentStat[practiceId + 'test'] || 0;
-          links.push(makeLink(practiceId, `${practice.title}${practiceConfig.orderIds.length && practiceConfig.inputIds.length ? " - 1" : ""}`, 'test', stat));
-        });
-
-      [...otherTaskIds]
-        .filter(practiceId => practiceConfig.orderIds.includes(practiceId))
-        .forEach(practiceId => {
-          const practice = practiciesById[practiceId];
-          const stat = currentStat[practiceId + 'order'] || 0;
-          links.push(makeLink(practiceId, `${practice.title}${practiceConfig.testIds.length && practiceConfig.inputIds.length ? " - 2" : ""}`, 'order', stat));
-        });
-
-      [...otherTaskIds]
-        .filter(practiceId => practiceConfig.inputIds.includes(practiceId))
-        .forEach(practiceId => {
-          const practice = practiciesById[practiceId];
-          const stat = currentStat[practiceId + 'input'] || 0;
-          links.push(makeLink(practiceId, `${practice.title}${practiceConfig.orderIds.length && practiceConfig.testIds.length ? " - 3" : ""}`, 'input', stat));
-        });
-    }
-    
-
-    setPracticeLinks(links);
-  }
-
 
   return (
     <>
@@ -139,7 +79,7 @@ export default function LessonPage() {
           children={() => <LessonTheory lessonId={lesson as string} />}
           options={{
             title: "Теория",
-            tabBarIcon: ({focused}: {focused: boolean}) => (
+            tabBarIcon: ({ focused }: { focused: boolean }) => (
               <AntDesign name="book" size={16} color={focused ? "white" : 'darkgray'} />
             ),
           }}
@@ -150,18 +90,18 @@ export default function LessonPage() {
           children={() => <LessonVocabulary vocabulary={vocabulary} />}
           options={{
             title: "Словарь",
-            tabBarIcon: ({focused}: {focused: boolean}) => (
-              <AntDesign name="retweet" size={18} style={{height: 16}} color={focused ? "white" : 'darkgray'} />
+            tabBarIcon: ({ focused }: { focused: boolean }) => (
+              <AntDesign name="retweet" size={18} style={{ height: 16 }} color={focused ? "white" : 'darkgray'} />
             ),
           }}
         />
 
         <Tab.Screen
           name="practice"
-          children={() => <LessonPractice practicies={practiceLinks} />}
+          children={() => <LessonPractice />}
           options={{
             title: "Практика",
-            tabBarIcon: ({focused}: {focused: boolean}) => (
+            tabBarIcon: ({ focused }: { focused: boolean }) => (
               <AntDesign name="form" size={16} color={focused ? "white" : 'darkgray'} />
             ),
           }}
@@ -170,36 +110,113 @@ export default function LessonPage() {
     </>
   );
 }
+function LessonPractice() {
+  const { lesson } = useLocalSearchParams();
+  const { getLSItem } = useStorage();
+  const { LS_PRACTICE_KEY } = lsKeys;
+  const { practiciesById, lessonsById } = useLessons();
+  const [practiceLinks, setPracticeLinks] = useState<PracticeLink[]>([]);
 
-type LessonPracticeProps = {
-  practicies: PracticeLink[],
-};
+  useFocusEffect(
+    useCallback(() => {
+      let isActive = true;
 
-function LessonPractice ({ practicies }: LessonPracticeProps) {  
+      const fetchPracticeLinks = async () => {
+        const { practiceConfig } = lessonsById[lesson as string];
+        const practiceLinks = await setupPractice(practiceConfig);
+
+        if (isActive) {
+          setPracticeLinks(practiceLinks);
+        }
+      };
+
+      fetchPracticeLinks();
+
+      return () => {
+        isActive = false;
+      };
+    }, [lesson])
+  );
+
+  const makeLink = (id: string, title: string, type: string, progress: number) => {
+    return {
+      practiceId: id,
+      title,
+      href: {
+        pathname: '/(app)/lesson/practice/[practice]',
+        params: {
+          practice: id,
+          type: type,
+        },
+      },
+      progress
+    }
+  }
+
+  const setupPractice = async (practiceConfig: IPracticeConfig) => {
+
+    const links: PracticeLink[] = [];
+    const currentStat = await getLSItem<PracticeStat>(LS_PRACTICE_KEY) || {};
+
+    if (practiceConfig.vocabularId) {
+      const stat = currentStat[practiceConfig.vocabularId + 'vocabular'] || 0;
+      links.push(makeLink(practiceConfig.vocabularId, "Словарь", 'vocabular', stat));
+    }
+
+    const otherTaskIds = new Set([...practiceConfig.testIds, ...practiceConfig.orderIds, ...practiceConfig.inputIds])
+
+    if (otherTaskIds.size) {
+      [...otherTaskIds]
+        .filter(practiceId => practiceConfig.testIds.includes(practiceId))
+        .forEach(practiceId => {
+          const practice = practiciesById[practiceId];
+          const stat = currentStat[practiceId + 'test'] || 0;
+          links.push(makeLink(practiceId, `${practice.title}${practiceConfig.orderIds.length && practiceConfig.inputIds.length ? " - 1" : ""}`, 'test', stat));
+        });
+
+      [...otherTaskIds]
+        .filter(practiceId => practiceConfig.orderIds.includes(practiceId))
+        .forEach(practiceId => {
+          const practice = practiciesById[practiceId];
+          const stat = currentStat[practiceId + 'order'] || 0;
+          links.push(makeLink(practiceId, `${practice.title}${practiceConfig.testIds.length && practiceConfig.inputIds.length ? " - 2" : ""}`, 'order', stat));
+        });
+
+      [...otherTaskIds]
+        .filter(practiceId => practiceConfig.inputIds.includes(practiceId))
+        .forEach(practiceId => {
+          const practice = practiciesById[practiceId];
+          const stat = currentStat[practiceId + 'input'] || 0;
+          links.push(makeLink(practiceId, `${practice.title}${practiceConfig.orderIds.length && practiceConfig.testIds.length ? " - 3" : ""}`, 'input', stat));
+        });
+    };
+    return links;
+  }
+
   return (
-      <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          contentContainerStyle={[styles.scrollView]}
-          nestedScrollEnabled={true}
-      >
-        <FlatList
-          data={practicies}
-          style={{width: "100%"}}
-          renderItem={({ item }) => (
-            <PracticeItem
-              {...item}
-            />)
-          }
-          keyExtractor={(item, index) => item.practiceId+index}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
-        />
-      </ScrollView>
+    <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
+      contentContainerStyle={[styles.scrollView]}
+      nestedScrollEnabled={true}
+    >
+      <FlatList
+        data={practiceLinks}
+        style={{ width: "100%" }}
+        renderItem={({ item }) => (
+          <PracticeItem
+            {...item}
+          />)
+        }
+        keyExtractor={(item, index) => item.practiceId + index}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
+      />
+    </ScrollView>
   );
 }
 
 function PracticeItem(props: PracticeLink) {
-  
-  const { title, href, progress} = props;
+
+  const { title, href, progress } = props;
 
   const buttonStyle = StyleSheet.create({
     plainButton: {
@@ -230,12 +247,12 @@ function PracticeItem(props: PracticeLink) {
       chevronStyle={chevronStyle}
     >
       <View style={styles.practiceButtonContent}>
-        <Circle 
-          progress={progress} 
+        <Circle
+          progress={progress}
           size={45}
           color={getProgressColor(progress)}
           borderColor={progress == 1 ? 'none' : getProgressColor(progress)}
-          textStyle={{fontSize: 12, fontWeight: 600, color: getProgressColor(progress)}}
+          textStyle={{ fontSize: 12, fontWeight: 600, color: getProgressColor(progress) }}
           thickness={3}
           formatText={() => +progress.toFixed(2) * 100 + '%'}
           showsText
@@ -246,7 +263,7 @@ function PracticeItem(props: PracticeLink) {
   </>
 }
 
-function LessonVocabulary ({vocabulary}: {vocabulary: {[key: string] : string}}) {
+function LessonVocabulary({ vocabulary }: { vocabulary: { [key: string]: string } }) {
   const data = Object.entries(vocabulary).map(([word, translation]) => ({
     key: word,
     word,
@@ -261,9 +278,9 @@ function LessonVocabulary ({vocabulary}: {vocabulary: {[key: string] : string}})
   );
 
   return (
-    
-    <ScrollView 
-      contentContainerStyle={vocabularyStyles.container} 
+
+    <ScrollView
+      contentContainerStyle={vocabularyStyles.container}
       nestedScrollEnabled={true}
     >
       <View style={[vocabularyStyles.row, vocabularyStyles.headerRow]}>
@@ -298,7 +315,7 @@ function LessonVocabulary ({vocabulary}: {vocabulary: {[key: string] : string}})
 // **Название:** дельта
 // **Звучит как:** как *th* в слове *this*, далее в транскрипциях будет обозначаться как ~~[ð]~~
 // **Пример:** ~~δ~~ρόμος [~~ð~~ро́мос] - дорога  
-  
+
 // ##### Ε ε
 // **Название:** эпсилон
 // **Звучит как:** [е] или [э]
@@ -318,7 +335,7 @@ function LessonVocabulary ({vocabulary}: {vocabulary: {[key: string] : string}})
 // **Название:** фита
 // **Звучит как:** как *th* в слове *think*, далее в транскрипциях будет обозначаться как ~~[θ]~~
 // **Пример:** ~~θ~~εραπεία [~~θ~~ерапи́а] - терапия  
-  
+
 // ##### Ι ι
 // **Название:** йота
 // **Звучит как:** [и]
@@ -398,7 +415,7 @@ function LessonVocabulary ({vocabulary}: {vocabulary: {[key: string] : string}})
 // **Название:** омега  
 // **Звучит как:** [о]  
 // **Пример:** ~~ω~~φέλεια [~~о~~фе́лиа] - польза  
-  
+
 // **! Обратите внимание** - некоторые буквы имеют одинаковое звучание. Так, буквы **η, ι, υ** *(ита, йота, ипсилон)* могут читаться как **[и]**, а буквы **ω** и **ο** *(омега и омикрон)* могут читаться как **[o]**. Однако так бывает не всегда. В греческом языке так же имеются различные буквосочетания, которые звучат по определенным правилам.
 
 // #### **Буквосочетания**
@@ -411,7 +428,7 @@ function LessonVocabulary ({vocabulary}: {vocabulary: {[key: string] : string}})
 // **При­меры**:
 // > ~~αί~~μα [~~э́~~ма] - кровь  
 // > κ~~αι~~ [к~~е~~] - союз "и" 
-  
+
 // **Сочетания**: άι, αΐ, αϊ  
 // **Звучит как**: [аи] или [ай]  
 // **При­меры**: 
@@ -484,7 +501,7 @@ function LessonVocabulary ({vocabulary}: {vocabulary: {[key: string] : string}})
 // > ~~αυ~~γό [~~ав~~го́] - яйцо  
 // > ~~αυ~~λή [~~ав~~ли́] - двор  
 // > ~~αύ~~ριο [~~а́в~~рио] - завтра
- 
+
 // А так же:
 // > ~~Αυ~~δής [~~Ав~~зи́с] - фамилия  
 // > ~~Αυ~~ζώτης [~~Ав~~зо́тис] - фамилия  
@@ -546,7 +563,7 @@ function LessonVocabulary ({vocabulary}: {vocabulary: {[key: string] : string}})
 // **Сочетание**: τσ  
 // **Чи­та­ет­ся как**: [ц]  
 // **При­мер**: ~~τσ~~έπη [~~ц~~е́пи] - карман 
- 
+
 // **Сочетание**: τζ  
 // **Чи­та­ет­ся как**: [дз] 
 // **При­мер**: ~~τζ~~ιπ [~~дз~~и́п] - джип 
@@ -653,10 +670,10 @@ function LessonVocabulary ({vocabulary}: {vocabulary: {[key: string] : string}})
 const MD = '';
 
 function LessonTheory({ lessonId }: LessonTheoryProps) {
-  const {lessonsById} = useLessons();
+  const { lessonsById } = useLessons();
   const [markdownContent, setMarkdownContent] = useState('');
   const [loading, setLoading] = useState(false);
-  
+
   useEffect(() => {
     if (!MD) {
       setLoading(true);
@@ -665,8 +682,8 @@ function LessonTheory({ lessonId }: LessonTheoryProps) {
         .catch(() => {
           setMarkdownContent("Loading error")
         })
-        .finally(() => { 
-            setLoading(false);
+        .finally(() => {
+          setLoading(false);
         });
     } else {
       setMarkdownContent(MD);
@@ -676,16 +693,16 @@ function LessonTheory({ lessonId }: LessonTheoryProps) {
 
   return (
     <>
-      {!loading && 
-      // style={{ backgroundColor: '#f0f0f0' }}
-        <ScrollView 
-          style={styles.container} 
+      {!loading &&
+        // style={{ backgroundColor: '#f0f0f0' }}
+        <ScrollView
+          style={styles.container}
           nestedScrollEnabled={true}
         >
           <Markdown style={mdstyles}>{markdownContent}</Markdown>
         </ScrollView>
       }
-      <Loader loading={loading}/>
+      <Loader loading={loading} />
     </>
   )
 }
@@ -812,7 +829,7 @@ const mdstyles = StyleSheet.create({
     // borderBottomWidth: 1.5,
     // borderTopWidth: 2,
     // borderColor: '#b2b2b2',
-    backgroundColor:"#f2f2f2",
+    backgroundColor: "#f2f2f2",
     paddingLeft: 6,
     marginTop: 12,
     // borderBottomLeftRadius: 6,
