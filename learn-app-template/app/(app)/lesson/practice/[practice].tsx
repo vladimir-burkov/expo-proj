@@ -236,7 +236,8 @@ function InputExcercise(props: TaskExcerciseProps) {
         autoCorrect={false}
         contextMenuHidden={true}
         textContentType={'none'}
-        // keyboardType="visible-password"
+        keyboardType="visible-password"
+        secureTextEntry={false}
         autoComplete="off"
         autoCapitalize="none"
         spellCheck={false}
