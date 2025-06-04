@@ -217,7 +217,7 @@ function InputExcercise(props: TaskExcerciseProps) {
         onWrongAnswer();
         clearInput();
         return;
-      } else if(trimmedInput === answer) {
+      } else if(trimmedInput.toLowerCase() === answer.toLowerCase()) {
         onCorrectAnswer();
         setInputText(trimmedInput);
         clearInput();
