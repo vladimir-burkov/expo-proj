@@ -1,0 +1,169 @@
+{
+  "abc": {
+    "lessonid": "abc",
+    "title": "Алфавит",
+    "icon": "font",
+    "article_url": "https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/abc.md.enc",
+    "vocabularyId": "abc",
+    "practiceConfig": {
+      "vocabularId": "abc",
+      "testIds": ["abcnext"],
+      "orderIds": ["abcorder"],
+      "inputIds": ["abcnext"]
+    }
+  },
+  "ai": {
+    "lessonid": "ai",
+    "title": "Правила чтения. Сочетания гласных.",
+    "icon": "font",
+    "article_url": "https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/ai.md.enc",
+    "vocabularyId": "ai",
+    "practiceConfig": {
+      "vocabularId": "ai",
+      "testIds": ["aitest", "avevtest", "iatest"],
+      "orderIds": [],
+      "inputIds": []
+    }
+  },
+  "tz": {
+    "lessonid": "tz",
+    "title": "Правила чтения. Сочетания согласных.",
+    "icon": "font",
+    "article_url": "https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/tz.md.enc",
+    "vocabularyId": "voc1",
+    "practiceConfig": {
+      "vocabularId": "voc1",
+      "testIds": ["ai"],
+      "orderIds": ["thanksgivig"],
+      "inputIds": ["thanksgivig"]
+    }
+  },
+  "noun": {
+    "lessonid": "noun",
+    "title": "Существительные. Определенный Артикль",
+    "icon": "book",
+    "article_url": "https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson2.md.enc",
+    "vocabularyId": "voc2",
+    "practiceConfig": {
+      "vocabularId": "voc2",
+      "inputIds": [],
+      "testIds": ["ai"],
+      "orderIds": []
+    }
+  },
+  "pronoun1": {
+    "lessonid": "pronoun1",
+    "title": "Личные местоимения",
+    "icon": "book",
+    "article_url": "https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc",
+    "vocabularyId": "voc1",
+    "practiceConfig": {
+      "vocabularId": "voc1",
+      "inputIds": [],
+      "testIds": [],
+      "orderIds": []
+    }
+  },
+  "eimai": {
+    "lessonid": "eimai",
+    "title": "Личные местоимения. Глагол είμαι",
+    "icon": "book",
+    "article_url": "https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson2.md.enc",
+    "vocabularyId": "voc1",
+    "practiceConfig": {
+      "vocabularId": "voc1",
+      "inputIds": [],
+      "testIds": [],
+      "orderIds": []
+    }
+  },
+  "adjective": {
+    "lessonid": "adjective",
+    "title": "Согласование прилагательных",
+    "icon": "book",
+    "article_url": "https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc",
+    "vocabularyId": "voc1",
+    "practiceConfig": {
+      "vocabularId": "voc1",
+      "inputIds": [],
+      "testIds": [],
+      "orderIds": []
+    }
+  },
+  "describe": {
+    "lessonid": "describe",
+    "title": "Описание объектов",
+    "icon": "file-text-o",
+    "article_url": "https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc",
+    "vocabularyId": "voc1",
+    "practiceConfig": {
+      "vocabularId": "voc1",
+      "inputIds": [],
+      "testIds": [],
+      "orderIds": []
+    }
+  },
+  "numbers": {
+    "lessonid": "numbers",
+    "title": "Числа и числительные",
+    "icon": "file-text-o",
+    "article_url": "https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc",
+    "vocabularyId": "voc1",
+    "practiceConfig": {
+      "vocabularId": "voc1",
+      "inputIds": [],
+      "testIds": [],
+      "orderIds": []
+    }
+  },
+  "about": {
+    "lessonid": "about",
+    "title": "Рассказ о себе(после винит и эхо)",
+    "icon": "comments-o",
+    "article_url": "https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc",
+    "vocabularyId": "voc1",
+    "practiceConfig": {
+      "vocabularId": "",
+      "inputIds": [],
+      "testIds": [],
+      "orderIds": []
+    }
+  },
+  "verd": {
+    "lessonid": "verd",
+    "title": "Виды глаголов",
+    "icon": "book",
+    "article_url": "https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc",
+    "vocabularyId": "voc1",
+    "practiceConfig": {
+      "vocabularId": "voc1",
+      "inputIds": [],
+      "testIds": [],
+      "orderIds": []
+    }
+  },
+  "a8": {
+    "lessonid": "a8",
+    "title": "Числа и числительные, Числа и числительные",
+    "article_url": "https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc",
+    "vocabularyId": "voc1",
+    "practiceConfig": {
+      "vocabularId": "voc1",
+      "inputIds": [],
+      "testIds": [],
+      "orderIds": []
+    }
+  },
+  "a9": {
+    "lessonid": "a9",
+    "title": "Area on\nthe map",
+    "article_url": "https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson1.md.enc",
+    "vocabularyId": "voc1",
+    "practiceConfig": {
+      "vocabularId": "voc1",
+      "inputIds": [],
+      "testIds": [],
+      "orderIds": []
+    }
+  }
+}
