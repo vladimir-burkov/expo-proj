@@ -14,28 +14,28 @@
   },
   "ai": {
     "lessonid": "ai",
-    "title": "Правила чтения. Сочетания гласных.",
+    "title": "Фонетика. Сочетания гласных",
     "icon": "font",
     "article_url": "https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/ai.md.enc",
     "vocabularyId": "ai",
     "practiceConfig": {
       "vocabularId": "ai",
-      "testIds": ["aitest", "avevtest", "iatest"],
+      "testIds": ["aitest", "avevtest", "iatest", "iatest"],
       "orderIds": [],
       "inputIds": []
     }
   },
   "tz": {
     "lessonid": "tz",
-    "title": "Правила чтения. Сочетания согласных.",
+    "title": "Фонетика. Сочетания согласных",
     "icon": "font",
     "article_url": "https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/tz.md.enc",
-    "vocabularyId": "voc1",
+    "vocabularyId": "tz",
     "practiceConfig": {
-      "vocabularId": "voc1",
-      "testIds": ["ai"],
-      "orderIds": ["thanksgivig"],
-      "inputIds": ["thanksgivig"]
+      "vocabularId": "tz",
+      "testIds": ["tztest","ngtest","dbtest"],
+      "orderIds": [""],
+      "inputIds": [""]
     }
   },
   "noun": {
