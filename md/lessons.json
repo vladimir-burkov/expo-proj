@@ -34,8 +34,8 @@
     "practiceConfig": {
       "vocabularId": "tz",
       "testIds": ["tztest","ngtest","dbtest"],
-      "orderIds": [""],
-      "inputIds": [""]
+      "orderIds": [],
+      "inputIds": []
     }
   },
   "noun": {
