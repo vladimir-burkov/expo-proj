@@ -413,7 +413,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#484848',
     paddingHorizontal: 8,
-    minWidth: 200
+    minWidth: 200,
+    color: '#484848'
   },
   optionsContainer: {
     flexDirection: 'row',
