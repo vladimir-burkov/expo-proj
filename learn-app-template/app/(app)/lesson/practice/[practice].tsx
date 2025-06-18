@@ -126,7 +126,7 @@ export default function Practice() {
   return (
     <View style={styles.taskViewContainer}>
       { !finished && tasks[current] && <>
-          <Bar progress={percentage} width={null} color='#3154ab'/>
+          <Bar progress={percentage + wrongs.length / tasks.length} width={null} color='#3154ab'/>
           <View><Text style={styles.instruction}>{instruction}</Text></View>
           {(type == 'vocabular' || type == 'input') && 
             <InputExcercise 
