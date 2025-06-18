@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, Dimensions } from 'react-native'
+import { View, Text, StyleSheet, TextInput, Dimensions, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { ITask, ITestTask, useLessons } from '@/context/LessonsContext';
@@ -59,9 +59,13 @@ export default function Practice() {
       if (!solveAgain.includes(current)) {
         setSolveAgain([...solveAgain, current]);
       } else {
-        setWrongs([...wrongs, current]);
-        setSolveAgain([...solveAgain.filter(item => item != current)]);
+        addToWrongs()
       }
+    }
+
+    const addToWrongs = () => {
+      setWrongs([...wrongs, current]);
+      setSolveAgain([...solveAgain.filter(item => item != current)]);
     }
 
     const addToSolved = async () => {
@@ -129,6 +133,7 @@ export default function Practice() {
               task={tasks[current]}
               onCorrectAnswer={addToSolved}
               onWrongAnswer={addToSolveAgain}
+              onSkip={addToWrongs}
             />
           }
           {type == 'test' && 
@@ -191,12 +196,13 @@ export default function Practice() {
 type TaskExcerciseProps = {
   task: ITask,
   onCorrectAnswer: () => void,
-  onWrongAnswer: () => void
+  onWrongAnswer: () => void,
+  onSkip?: () => void,
 };
 
 
 function InputExcercise(props: TaskExcerciseProps) {
-  const {task, onCorrectAnswer, onWrongAnswer} = props;
+  const {task, onCorrectAnswer, onWrongAnswer, onSkip} = props;
   const {answer, question } = task;
   const [inputText, setInputText] = useState('');
   const [height, setHeight] = useState(42);
@@ -248,6 +254,10 @@ function InputExcercise(props: TaskExcerciseProps) {
           setHeight(e.nativeEvent.contentSize.height)
         }
       />
+      {/* не знаю */}
+      <Pressable onPress={onSkip}>
+        <Text style={styles.idk}>Не знаю</Text>
+      </Pressable>
     </View>
   </>
 }
@@ -372,6 +382,11 @@ function shuffleArray(array: Array<any>) {
 }
 
 const styles = StyleSheet.create({
+  idk: {
+    color: 'gray',
+    textDecorationLine: 'underline',
+    fontSize: 16,
+  },
   answerButtons: {
     flexDirection: 'row',
     gap: 6
