@@ -240,11 +240,11 @@ function InputExcercise(props: TaskExcerciseProps) {
       <TextInput
         style={[styles.answerInput, { height, overflow: 'hidden'}]}
         autoCorrect={false}
-        // contextMenuHidden={true}
-        textContentType={'none'}
-        keyboardType="visible-password"
-        secureTextEntry={false}
+        contextMenuHidden={true}
         autoComplete="off"
+        textContentType="none"
+        keyboardType="visible-password"
+        secureTextEntry={true}
         autoCapitalize="none"
         spellCheck={false}
         value={inputText}
