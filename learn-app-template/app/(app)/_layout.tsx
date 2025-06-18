@@ -14,7 +14,7 @@ export default function AppLayout() {
             headerTitleStyle: {
               fontWeight: 400,
             },
-
+            navigationBarColor: '#25292e',
         }}
         >
           <Stack.Screen

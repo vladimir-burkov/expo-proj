@@ -170,9 +170,9 @@ export default function Practice() {
             iconName="refresh"
             textStyle={{fontSize: 18}}
           />
-          <Text style={styles.successViewContainerSubText}>
+          {/* <Text style={styles.successViewContainerSubText}>
             {'* учитываются только правильные ответы полученные с первой попытки'}
-          </Text>
+          </Text> */}
         </View>
       }
       {!!showOverlayText && 
@@ -234,7 +234,7 @@ function InputExcercise(props: TaskExcerciseProps) {
       <TextInput
         style={[styles.answerInput, { height, overflow: 'hidden'}]}
         autoCorrect={false}
-        contextMenuHidden={true}
+        // contextMenuHidden={true}
         textContentType={'none'}
         keyboardType="visible-password"
         secureTextEntry={false}
