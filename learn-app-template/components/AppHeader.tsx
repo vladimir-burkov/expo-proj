@@ -79,7 +79,7 @@ function MenuLinks() {
   });
 
 
-  const buttonStyleOutline = {...buttonStyle,  plainButton: {...buttonStyle.plainButton, borderWidth: 2, borderColor: "#c215f0", backgroundColor: "#684bbc52"}}
+  const buttonStyleOutline = {...buttonStyle,  plainButton: {...buttonStyle.plainButton, borderWidth: 2, borderColor: "#c215f0", backgroundColor: "#623EC952"}}
 
   return <>
     <View style={styles.menuLinksList}>

@@ -8,7 +8,7 @@ export default function AppLayout() {
         <Stack 
           screenOptions={{
             headerStyle: {
-              backgroundColor: '#684bbc',
+              backgroundColor: '#623EC9',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
@@ -21,7 +21,7 @@ export default function AppLayout() {
               name="index"
               options={{
                 headerStyle: {
-                  backgroundColor: '#684bbc',
+                  backgroundColor: '#623EC9',
                 },
                 headerTintColor: '#fff',
                 headerTitleAlign: "center",

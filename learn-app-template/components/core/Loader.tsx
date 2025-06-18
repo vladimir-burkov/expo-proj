@@ -10,7 +10,7 @@ const Loader = ({loading}: LoadingProps) => {
     <>
       {loading && 
         <View style={styles.loader}>
-            <ActivityIndicator  size="large" color="#684bbc" />
+            <ActivityIndicator  size="large" color="#623EC9" />
             <Text>Загрузка...</Text>
         </View>
       }
