@@ -1,7 +1,7 @@
 import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
-const logo = require('@/assets/images/book1.svg');
+const logo = require('@/assets/images/logo.svg');
 import AppModal from '@/components/AppModal';
 import LinkButton from "@/components/core/LinkButton";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -18,17 +18,11 @@ export const AppHeader = () => {
     <View style={styles.header}>
       <HeaderButton/>
       <View style={styles.headerTitleContainer}>
-        <View style={styles.textContainer}>
-          <Image
-            source={logo}
-            style={styles.image}
-            contentFit='contain'
-          />
-          <Text style={styles.title}>Gramm<Text style={styles.up}>UP</Text></Text>
-        </View>
-        <View>
-          <Text style={styles.subtitle}>Ελληνικά-A1</Text>
-        </View>
+        <Image
+          source={logo}
+          style={styles.image}
+          contentFit='contain'
+        />
       </View>
       <UserButton/>
     </View>
@@ -154,7 +148,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   image: {
-    width: 30,
+    width: 90,
     height: 30,
     position: 'relative',
     top: 4,

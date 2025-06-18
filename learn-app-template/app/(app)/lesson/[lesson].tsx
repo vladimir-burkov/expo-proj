@@ -719,7 +719,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 18,
-    paddingTop: 4,
+    paddingTop: 10,
+    paddingBottom: 8,
     backgroundColor: "#ffff"
   },
   main: {
@@ -800,6 +801,10 @@ const mdstyles = StyleSheet.create({
   em: {
     fontStyle: 'italic',
   },
+  text: {
+    margin: 0,
+    textAlign: 'justify'
+  },
   headingContainer: {
     marginVertical: 8,
   },
@@ -819,8 +824,11 @@ const mdstyles = StyleSheet.create({
     fontWeight: 'bold',
   },
   heading4: {
+    color: '#3154ab',
     fontSize: 18,
     fontWeight: 'bold',
+    marginTop: 16,
+    marginHorizontal: -4,
     // marginTop: 16,
   },
   heading5: {
@@ -832,7 +840,9 @@ const mdstyles = StyleSheet.create({
     // borderColor: '#b2b2b2',
     backgroundColor: "#f2f2f2",
     paddingLeft: 6,
-    marginTop: 12,
+    marginTop: 6,
+    marginBottom: 6,
+    marginHorizontal: -6
     // borderBottomLeftRadius: 6,
     // borderTopLeftRadius: 6
   },
@@ -848,7 +858,7 @@ const mdstyles = StyleSheet.create({
   blockquote: {
     backgroundColor: 'none',
     paddingHorizontal: 12,
-    paddingVertical: 8,
+    // paddingVertical: 8,
     borderLeftWidth: 4,
     borderLeftColor: '#ccc',
     marginBottom: 6
@@ -885,10 +895,11 @@ const mdstyles = StyleSheet.create({
   paragraph: {
     lineHeight: 20,
     fontSize: 14,
-    margin: 0,
+    marginBottom: 0,
+    marginTop: 0,
     textAlign: "justify",
     paddingBottom: 8,
-
+    color: '#333',
   },
   strong: {
     fontWeight: 'bold',
@@ -915,11 +926,6 @@ const mdstyles = StyleSheet.create({
   },
   tableRowCell: {
     padding: 8,
-  },
-  text: {
-    margin: 0,
-    color: '#333',
-    textAlign: 'justify'
   },
   strikethrough: {
     textDecorationLine: 'line-through',
