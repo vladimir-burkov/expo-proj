@@ -40,14 +40,14 @@
   },
   "noun": {
     "lessonid": "noun",
-    "title": "Существительные. Определенный Артикль",
+    "title": "Существительные: артикли, именительный падеж",
     "icon": "book",
-    "article_url": "https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/lesson2.md.enc",
-    "vocabularyId": "voc2",
+    "article_url": "https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/noun.md.enc",
+    "vocabularyId": "tz",
     "practiceConfig": {
-      "vocabularId": "voc2",
-      "inputIds": [],
-      "testIds": ["ai"],
+      "vocabularId": "tz",
+      "inputIds": ["tztest"],
+      "testIds": [],
       "orderIds": []
     }
   },
