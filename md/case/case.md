@@ -1,3 +1,61 @@
+1. Nominative Case – Subject
+Used to ask who/what is doing something.
+
+Ποιος / Ποια / Ποιο; – Who? (masc./fem./neut.)
+
+Τι; – What?
+
+Examples:
+
+Ποιος ήρθε; – Who came?
+
+Τι συμβαίνει; – What is happening?
+
+🟪 2. Genitive Case – Possession / Source
+Used to ask whose, or from whom/where.
+
+Τίνος; – Whose?
+
+Από πού; – From where?
+
+Από ποιον / ποια / ποιο; – From whom? (depending on gender)
+
+Examples:
+
+Τίνος είναι αυτό το βιβλίο; – Whose is this book?
+
+Από ποιον το έμαθες; – From whom did you learn it?
+
+🟥 3. Accusative Case – Object / Destination
+Used to ask whom or what something affects or where someone is going.
+
+Ποιον / Ποια / Ποιο; – Whom? (masc./fem./neut.)
+
+Τι; – What?
+
+Πού; – Where (to)?
+
+Examples:
+
+Ποιον είδες; – Whom did you see?
+
+Τι ψάχνεις; – What are you looking for?
+
+Πού πας; – Where are you going?
+
+🟨 4. Vocative Case – Direct address
+Used to call or address someone directly.
+
+No specific question form, but questions may include direct address:
+
+Γιώργο, πού είσαι; – George, where are you?
+
+Μαρία, τι κάνεις; – Maria, how are you?
+
+
+
+
+
 #### Падеж имен существительных  
 В греческом языке всего четыре падежа: 
 ⇨ **Именительный**: отвечает на вопросы **ποιος; (кто?) τι; (что?)** - обозначает* описываемого связанным глаголом . 
