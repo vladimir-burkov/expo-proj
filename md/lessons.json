@@ -43,11 +43,11 @@
     "title": "Существительные: артикли, именительный падеж",
     "icon": "book",
     "article_url": "https://raw.githubusercontent.com/vladimir-burkov/lang-gr-public/refs/heads/master/noun.md.enc",
-    "vocabularyId": "tz",
+    "vocabularyId": "noun",
     "practiceConfig": {
-      "vocabularId": "tz",
-      "inputIds": ["tztest"],
-      "testIds": [],
+      "vocabularId": "noun",
+      "inputIds": ["nounmany", "oartest", "nartest"],
+      "testIds": ["oartest", "nartest", "nounmany"],
       "orderIds": []
     }
   },
