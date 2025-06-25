@@ -46,8 +46,8 @@
     "vocabularyId": "noun",
     "practiceConfig": {
       "vocabularId": "noun",
-      "inputIds": ["nounmany", "oartest", "nartest"],
-      "testIds": ["oartest", "nartest", "nounmany"],
+      "inputIds": ["noungeneral"],
+      "testIds": ["oartest", "nartest"],
       "orderIds": []
     }
   },
