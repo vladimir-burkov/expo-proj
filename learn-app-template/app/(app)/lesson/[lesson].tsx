@@ -920,9 +920,12 @@ const mdstyles = StyleSheet.create({
   tr: {
     borderBottomWidth: 1,
     borderColor: '#ddd',
+    justifyContent: "center",
+    fontSize: 12
   },
   th: {
-    fontWeight: 600
+    fontWeight: 600,
+    fontSize: 12
   },
   tableRowCell: {
     padding: 8,
